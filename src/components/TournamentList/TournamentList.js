@@ -8,8 +8,8 @@ const TournamentList = () => {
   });
 
   return (
-    <div class="tournament-list-container">
-      <ul class="tournament-list">
+    <div className="tournament-list-container">
+      <ul className="tournament-list">
         <li>{eventId}</li>
       </ul>
     </div>
