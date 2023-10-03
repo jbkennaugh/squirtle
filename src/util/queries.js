@@ -1,5 +1,4 @@
 import queries from "../data/all-queries.json";
-import tournamentNames from "../data/tournaments.json";
 
 const apiKey = process.env.REACT_APP_STARTGG_API_KEY;
 const url = "https://api.start.gg/gql/alpha";

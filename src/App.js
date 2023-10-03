@@ -15,10 +15,10 @@ function App() {
   return (
     <div className="App">
       <h1 className="text-6xl py-5 text-center text-[#77CA00]">Stream Sets:</h1>
-      {activeDiv == "streamQueue" && (
+      {activeDiv === "streamQueue" && (
         <StreamQueue setSelectedSet={setSelectedSet}></StreamQueue>
       )}
-      {activeDiv == "setChosen" && (
+      {activeDiv === "setChosen" && (
         <p className="text-3xl py-5 text-center text-[#77CA00]">
           Chosen set here...
         </p>
