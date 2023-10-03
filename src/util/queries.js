@@ -1,4 +1,5 @@
-import queries from "./all-queries.json";
+import queries from "../data/all-queries.json";
+import tournamentNames from "../data/tournaments.json";
 
 const apiKey = process.env.REACT_APP_STARTGG_API_KEY;
 const url = "https://api.start.gg/gql/alpha";
@@ -8,9 +9,13 @@ const headers = {
   Authorization: "Bearer " + apiKey,
 };
 
-export async function getEventId(tournamentName, eventName) {
+// gets event details from ID and Name
+export async function getEvent(tournamentName, eventName) {
   const eventSlug = `tournament/${tournamentName}/event/${eventName}`;
-  let eventId;
+  const event = {
+    id: null,
+    name: null,
+  };
   await fetch(url, {
     method: "POST",
     headers: {
@@ -19,7 +24,7 @@ export async function getEventId(tournamentName, eventName) {
       Authorization: "Bearer " + apiKey,
     },
     body: JSON.stringify({
-      query: queries.eventId,
+      query: queries.event,
       variables: {
         slug: eventSlug,
       },
@@ -27,9 +32,10 @@ export async function getEventId(tournamentName, eventName) {
   })
     .then((r) => r.json())
     .then((data) => {
-      eventId = data.data.event.id;
+      event.id = data.data.event.id;
+      event.name = data.data.event.name;
     });
-  return eventId;
+  return event;
 }
 
 export async function getPhaseId(tournamentName, eventName) {
@@ -102,6 +108,26 @@ export async function getStandingsByEvent(eventId) {
   })
     .then((r) => r.json())
     .then((data) => console.log(JSON.stringify(data.data, null, 2)));
+}
+
+export async function getStreamQueueByTournament(name) {
+  const slug = `tournament/${name}`;
+  let streamQueue;
+
+  await fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify({
+      query: queries.streamQueue,
+      variables: {
+        slug: slug,
+      },
+    }),
+  })
+    .then((r) => r.json())
+    .then((data) => (streamQueue = data.data.tournament.streamQueue[0].sets));
+
+  return streamQueue;
 }
 
 // export async function updateSeeding(phaseId, seedMapping) {

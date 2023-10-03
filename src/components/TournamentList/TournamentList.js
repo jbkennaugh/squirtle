@@ -1,16 +1,14 @@
 import "./style.css";
-import * as queries from "../../util/queries";
+import tournaments from "../../data/tournaments.json";
 
 const TournamentList = () => {
-  let eventId;
-  queries.getPhaseId("meltingpoint-146", "bracket").then((res) => {
-    eventId = res;
-  });
-
   return (
     <div className="tournament-list-container">
       <ul className="tournament-list">
-        <li>{eventId}</li>
+        {Object.keys(tournaments).map((tournamentName) => {
+          console.log(tournamentName);
+          return <li>{tournamentName}</li>;
+        })}
       </ul>
     </div>
   );
