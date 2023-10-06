@@ -1,4 +1,5 @@
 import "./App.css";
+import CounterPick from "./components/CounterPick/CounterPick";
 import StreamQueue from "./components/StreamQueue/StreamQueue";
 import { useEffect, useState } from "react";
 
@@ -19,9 +20,7 @@ function App() {
         <StreamQueue setSelectedSet={setSelectedSet}></StreamQueue>
       )}
       {activeDiv === "setChosen" && (
-        <p className="text-3xl py-5 text-center text-[#77CA00]">
-          Chosen set here...
-        </p>
+        <CounterPick set={selectedSet}></CounterPick>
       )}
     </div>
   );

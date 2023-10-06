@@ -31,8 +31,8 @@ export async function getEvent(tournamentName, eventName) {
   })
     .then((r) => r.json())
     .then((data) => {
-      event.id = data.data.event.id;
-      event.name = data.data.event.name;
+      event.id = data.data.event?.id;
+      event.name = data.data.event?.name;
     });
   return event;
 }
@@ -52,7 +52,7 @@ export async function getPhaseId(tournamentName, eventName) {
   })
     .then((r) => r.json())
     .then((data) => {
-      phaseId = data.data.event.phases[0].id;
+      phaseId = data.data.event?.phases[0].id;
     });
   return phaseId;
 }
@@ -84,7 +84,7 @@ export async function getAllSetsByEvent(eventId) {
   })
     .then((r) => r.json())
     .then((data) => {
-      data.data["event"].forEach((round) => {
+      data.data.event?.forEach((round) => {
         console.log(
           `${round["slots"][0]["entrant"]["name"]} VERSUS ${round["slots"][1]["entrant"]["name"]}`
         );
@@ -124,9 +124,23 @@ export async function getStreamQueueByTournament(name) {
     }),
   })
     .then((r) => r.json())
-    .then((data) => (streamQueue = data.data.tournament.streamQueue[0].sets));
+    .then(
+      (data) => (streamQueue = data.data.tournament?.streamQueue?.[0].sets)
+    );
 
   return streamQueue;
+}
+
+// very temporary function to allow it to know which MeltingPoint weekly it is being used for
+// before making it available to select a tournament.
+export function getWeeklyName() {
+  const startDate = new Date("2023-09-28");
+  const difference = new Date() - startDate;
+
+  const weeklyName = `meltingpoint-${
+    147 + Math.ceil(difference / (1000 * 60 * 60 * 24) / 7)
+  }`;
+  return weeklyName;
 }
 
 // export async function updateSeeding(phaseId, seedMapping) {
