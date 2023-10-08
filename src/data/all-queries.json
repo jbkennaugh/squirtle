@@ -1,9 +1,8 @@
 {
   "event": "query EventQuery($slug:String) {event(slug: $slug) {id name}}",
   "phaseId": "query PhaseQuery($slug:String) {event(slug: $slug) {phases {id}}}",
-  "adminTournaments": "",
-  "streamQueue": "query StreamQueueByTournament($slug: String!) {tournament(slug: $slug) {id streamQueue {stream {streamSource streamName} sets {id fullRoundText slots {entrant {id name seeds {seedNum}}}}}}}",
-  "streamEntrant": "",
+  "streamQueue": "query StreamQueueOnTournament($slug: String!) {tournament(slug: $slug) {id streamQueue {stream {streamSource streamName} sets {id fullRoundText slots {entrant {name seeds {seedNum}}}}}}}",
   "standings": "query EventStandings($eventId: ID!, $page: Int!, $perPage: Int!) {event(id: $eventId) {id name standings(query: {perPage: $perPage,page: $page}){nodes {placement entrant {id name}}}}}",
-  "sets": "query EventSets($eventId: ID!, $page: Int!, $perPage: Int!) { event(id: $eventId) {sets(page: $page perPage: $perPage sortType: STANDARD) {pageInfo {total} nodes {id slots {entrant {name}}}}}}"
+  "sets": "query EventSets($eventId: ID!, $page: Int!, $perPage: Int!) { event(id: $eventId) {sets(page: $page perPage: $perPage sortType: STANDARD) {pageInfo {total} nodes {id slots {entrant {name}}}}}}",
+  "tournamentsByRole": "query TournamentsByAdmin($userId: ID!, $role: String!) {user(id: $userId) {tournaments(query: {filter: {tournamentView:'admin' upcoming: true}}) {nodes {name}}}}"
 }

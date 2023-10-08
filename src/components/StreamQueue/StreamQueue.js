@@ -1,5 +1,6 @@
 import "./style.css";
 import * as queries from "../../util/queries";
+import * as rankings from "../../data/top-10k-players";
 import { useState } from "react";
 
 const StreamQueue = ({ setSelectedSet }) => {
@@ -24,8 +25,7 @@ const StreamQueue = ({ setSelectedSet }) => {
           <h1 className="text-4xl py-5 text-center text-white">
             Loading sets...
           </h1>
-        ) : // <img src="./loading.gif" alt="loading icon"></img>
-        sets == null ? (
+        ) : sets == null ? (
           <h1 className="text-4xl py-5 text-center text-white">
             No sets queued for stream.
           </h1>
