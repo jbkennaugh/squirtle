@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import counterpicks from "../../data/counterpicks.json";
 import backArrow from "./back-arrow.png";
 
-const CounterPick = ({ set }) => {
+const CounterPick = ({ set, setActiveDiv }) => {
   const [character1, setCharacter1] = useState();
   const [character2, setCharacter2] = useState();
-  const [charactersChosen, setChosen] = useState(false);
+  const [charactersChosen, setCharChosen] = useState(false);
 
   const allCharacters = counterpicks.characters;
 
@@ -19,7 +19,7 @@ const CounterPick = ({ set }) => {
 
   useEffect(() => {
     if (character1 && character2) {
-      setChosen(true);
+      setCharChosen(true);
     }
   }, [character1, character2]);
 
@@ -40,15 +40,18 @@ const CounterPick = ({ set }) => {
 
   return (
     <div>
-      {charactersChosen && (
-        <div
-          className="back-to-char-select flex absolute items-center cursor-pointer top-7 left-5"
-          onClick={() => setChosen(false)}
-        >
-          <img src={backArrow} alt="Back arrow." width="50px"></img>
-          <h1 className="text-2xl text-[#77CA00]">Re-select</h1>
-        </div>
-      )}
+      <h1 className="text-6xl py-5 mb-10 text-center text-[#77CA00]">{`${set.slots[0].entrant.name} vs ${set.slots[1].entrant.name}`}</h1>
+      <div
+        className="back-to-char-select flex absolute items-center cursor-pointer top-7 left-5"
+        onClick={
+          charactersChosen
+            ? () => setCharChosen(false)
+            : () => setActiveDiv("streamQueue")
+        }
+      >
+        <img src={backArrow} alt="Back arrow." width="50px"></img>
+        <h1 className="text-2xl text-[#77CA00]">Re-select</h1>
+      </div>
       <div className="container w-2/3 mx-auto">
         {!charactersChosen && (
           <div className="character-select flex justify-around">
