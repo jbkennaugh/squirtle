@@ -1,0 +1,22 @@
+.dropdown-item-1,
+.dropdown-item-2 {
+  display: none;
+  z-index: 1;
+}
+
+#player1-character:hover .dropdown-item-1,
+#player2-character:hover .dropdown-item-2 {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+#player1-character:hover,
+#player2-character:hover {
+  height: 78vh;
+}
+
+.dropdown-item-1:hover,
+.dropdown-item-2:hover {
+  background-color: darkgreen;
+}

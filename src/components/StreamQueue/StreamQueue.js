@@ -39,6 +39,8 @@ const StreamQueue = ({ setSelectedSet }) => {
           </h1>
         ) : (
           sets.map((set) => {
+            const player1Name = set.slots[0].entrant?.participants[0].gamerTag;
+            const player2Name = set.slots[1].entrant?.participants[0].gamerTag;
             return (
               <li
                 className={
@@ -52,12 +54,13 @@ const StreamQueue = ({ setSelectedSet }) => {
                     ? () => setSelectedSet(set)
                     : null
                 }
+                key={`${player1Name}Vs${player2Name}Rnd${set.fullRoundText}`}
               >
                 <div className="round text-3xl">{`${set.fullRoundText}`}</div>
                 <div className="flex justify-around pb-5">
                   {set.slots[0].entrant ? (
                     <div className="entrant">
-                      <p className="text-2xl">{`${set.slots[0].entrant.name}`}</p>
+                      <p className="text-2xl">{`${player1Name}`}</p>
                       <p className="text-xl text-gray-600">{`seed: ${set.slots[0].entrant.seeds[0].seedNum}`}</p>
                     </div>
                   ) : (
@@ -67,7 +70,7 @@ const StreamQueue = ({ setSelectedSet }) => {
                   )}
                   {set.slots[1].entrant ? (
                     <div className="entrant">
-                      <p className="text-2xl">{`${set.slots[1].entrant.name}`}</p>
+                      <p className="text-2xl">{`${player2Name}`}</p>
                       <p className="text-xl text-gray-600">{`seed: ${set.slots[1].entrant.seeds[0].seedNum}`}</p>
                     </div>
                   ) : (

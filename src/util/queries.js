@@ -218,6 +218,44 @@ export function getWeeklyName() {
   return weeklyName;
 }
 
+export async function buildCharacterData() {
+  let characterData = {};
+
+  await fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify({
+      query: `query CharactersByGame($gameId: ID!) {
+        videogame(id: $gameId) {
+          id
+          characters {
+            id
+            name
+            images {
+              url
+            }
+          }
+        }
+      }
+      `,
+      variables: {
+        gameId: 1386,
+      },
+    }),
+  })
+    .then((r) => r.json())
+    .then((data) => {
+      data.data.videogame.characters.forEach((char) => {
+        characterData[char.name] = {
+          id: char.id,
+          image: char.images[1].url,
+        };
+      });
+    });
+
+  return characterData;
+}
+
 // export async function updateSeeding(phaseId, seedMapping) {
 //   await fetch(url, {
 //     method: "POST",

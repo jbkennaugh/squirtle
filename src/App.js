@@ -1,7 +1,7 @@
 import "./App.css";
 import * as queries from "./util/queries";
 import refreshIcon from "./media/icons8-refresh-50.png";
-import CounterPick from "./components/CounterPick/CounterPick";
+import Counterpick from "./components/Counterpick/Counterpick";
 import StreamQueue from "./components/StreamQueue/StreamQueue";
 import { useEffect, useState } from "react";
 
@@ -15,12 +15,22 @@ function App() {
     }
   }, [selectedSet]);
 
+  const getCharacterData = async () => {
+    let characterData;
+    queries.buildCharacterData().then((data) => {
+      console.log(JSON.stringify(data));
+      characterData = data;
+    });
+    return characterData;
+  };
+
   return (
     <div className="App">
       <button
         className="absolute top-7 right-10"
         onClick={() => {
-          window.location.reload(false);
+          // window.location.reload(false);
+          getCharacterData().then((data) => console.log(data));
         }}
       >
         <img src={refreshIcon} alt="Refresh icon."></img>
@@ -29,10 +39,10 @@ function App() {
         <StreamQueue setSelectedSet={setSelectedSet}></StreamQueue>
       )}
       {activeDiv === "setChosen" && (
-        <CounterPick
+        <Counterpick
           set={selectedSet}
           setActiveDiv={setActiveDiv}
-        ></CounterPick>
+        ></Counterpick>
       )}
     </div>
   );

@@ -1,21 +1,16 @@
+import "./style.css";
+import backArrow from "./images/back-arrow.png";
+
+import CharacterSelect from "../CharacterSelect/CharacterSelect";
 import { useState, useEffect } from "react";
-import counterpicks from "../../data/counterpicks.json";
-import backArrow from "./back-arrow.png";
 
 const CounterPick = ({ set, setActiveDiv }) => {
   const [character1, setCharacter1] = useState();
   const [character2, setCharacter2] = useState();
   const [charactersChosen, setCharChosen] = useState(false);
 
-  const allCharacters = counterpicks.characters;
-
-  const characterSelectDropdown = allCharacters.map((character) => {
-    return (
-      <option className="dropdown-item" value={character}>
-        {character}
-      </option>
-    );
-  });
+  const player1Name = set.slots[0].entrant.participants[0].gamerTag;
+  const player2Name = set.slots[1].entrant.participants[0].gamerTag;
 
   useEffect(() => {
     if (character1 && character2) {
@@ -23,24 +18,9 @@ const CounterPick = ({ set, setActiveDiv }) => {
     }
   }, [character1, character2]);
 
-  const handleCharacterSelect = (player, character) => {
-    console.log(`Setting player-${player} character: ${character}`);
-    switch (player) {
-      case 1:
-        setCharacter1(character);
-        break;
-      case 2:
-        setCharacter2(character);
-        break;
-      default:
-        console.log("Player select error.");
-        break;
-    }
-  };
-
   return (
     <div>
-      <h1 className="text-6xl py-5 mb-10 text-center text-[#77CA00]">{`${set.slots[0].entrant.name} vs ${set.slots[1].entrant.name}`}</h1>
+      <h1 className="text-6xl py-5 mb-10 text-center text-[#77CA00]">{`${player1Name} vs ${player2Name}`}</h1>
       <div
         className="back-to-char-select flex absolute items-center cursor-pointer top-7 left-5"
         onClick={
@@ -53,42 +33,25 @@ const CounterPick = ({ set, setActiveDiv }) => {
         <h1 className="text-2xl text-[#77CA00]">Re-select</h1>
       </div>
       <div className="container w-2/3 mx-auto">
-        {!charactersChosen && (
-          <div className="character-select flex justify-around">
-            <div className="entrant text-[#77CA00]">
-              <p className="text-2xl">{set.slots[0].entrant.name}</p>
-              <select
-                name="player1-character"
-                id="player1-character"
-                className="text-black mt-2"
-                onChange={(e) => {
-                  handleCharacterSelect(1, e.target.value);
-                }}
-                defaultValue={character1}
-              >
-                Select your character:
-                {characterSelectDropdown}
-              </select>
-            </div>
-            <div className="entrant text-[#77CA00]">
-              <p className="text-2xl">{set.slots[1].entrant?.name}</p>
-              <select
-                name="player1-character"
-                id="player1-character"
-                className="text-black mt-2"
-                onChange={(e) => {
-                  handleCharacterSelect(2, e.target.value);
-                }}
-                defaultValue={character2}
-              >
-                Select your character:
-                {characterSelectDropdown}
-              </select>
-            </div>
+        {charactersChosen ? (
+          <div className="text-white">
+            Characters Chosen logic to go here probably do stage bans next
           </div>
-        )}
-        {charactersChosen && (
-          <div className="text-white">Characters Chosen</div>
+        ) : (
+          <div className="character-select flex items-start">
+            <CharacterSelect
+              player={1}
+              playerName={player1Name}
+              character={character1}
+              setCharacter={setCharacter1}
+            ></CharacterSelect>
+            <CharacterSelect
+              player={2}
+              playerName={player2Name}
+              character={character2}
+              setCharacter={setCharacter2}
+            ></CharacterSelect>
+          </div>
         )}
       </div>
     </div>
