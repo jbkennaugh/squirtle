@@ -29,8 +29,8 @@ function App() {
       <button
         className="absolute top-7 right-10"
         onClick={() => {
-          // window.location.reload(false);
-          getCharacterData().then((data) => console.log(data));
+          window.location.reload(false);
+          // getCharacterData().then((data) => console.log(data));
         }}
       >
         <img src={refreshIcon} alt="Refresh icon."></img>
