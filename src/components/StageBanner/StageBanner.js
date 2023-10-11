@@ -20,8 +20,11 @@ const StageBanner = ({ gameNumber, stages }) => {
         setSelectedStage(stage);
       }
     }
-    console.log("Selected stage", selectedStage);
   };
+
+  useEffect(() => {
+    console.log("Stage selected", selectedStage);
+  }, [selectedStage]);
 
   return (
     <div className="stage-bans">
