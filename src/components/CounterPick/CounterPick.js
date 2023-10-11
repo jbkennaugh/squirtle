@@ -6,7 +6,7 @@ import CharacterSelect from "../CharacterSelect/CharacterSelect";
 import { useState, useEffect } from "react";
 import StageBanner from "../StageBanner/StageBanner";
 
-const CounterPick = ({ set, setActiveDiv }) => {
+const Counterpick = ({ set, setActiveDiv }) => {
   const [character1, setCharacter1] = useState();
   const [character2, setCharacter2] = useState();
   const [gameNumber, setGameNumber] = useState(1);
@@ -94,4 +94,4 @@ const CounterPick = ({ set, setActiveDiv }) => {
   );
 };
 
-export default CounterPick;
+export default Counterpick;
