@@ -1,15 +1,16 @@
 {
   "stages": {
+    "enableCounterpicks": false,
     "legal": {
       "starters": [
-        "Battlefield",
-        "Final Destination",
-        "Hollow Bastion",
-        "Kalos Pokemon League",
-        "Pokemon Stadium 2",
         "Small Battlefield",
+        "Hollow Bastion",
+        "Battlefield",
         "Smashville",
+        "Pokemon Stadium 2",
         "Town and City",
+        "Kalos Pokemon League",
+        "Final Destination",
         "Yoshi's Story"
       ],
       "counterpicks": []

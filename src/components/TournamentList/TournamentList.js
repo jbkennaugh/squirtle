@@ -1,4 +1,3 @@
-import "./style.css";
 import tournaments from "../../data/tournaments.json";
 
 const TournamentList = () => {

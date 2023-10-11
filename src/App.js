@@ -1,5 +1,4 @@
 import "./App.css";
-import * as queries from "./util/queries";
 import refreshIcon from "./media/icons8-refresh-50.png";
 import Counterpick from "./components/Counterpick/Counterpick";
 import StreamQueue from "./components/StreamQueue/StreamQueue";
@@ -14,15 +13,6 @@ function App() {
       setActiveDiv("setChosen");
     }
   }, [selectedSet]);
-
-  const getCharacterData = async () => {
-    let characterData;
-    queries.buildCharacterData().then((data) => {
-      console.log(JSON.stringify(data));
-      characterData = data;
-    });
-    return characterData;
-  };
 
   return (
     <div className="App">

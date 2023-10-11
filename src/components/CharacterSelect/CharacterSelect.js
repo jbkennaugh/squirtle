@@ -2,13 +2,18 @@ import counterpicks from "../../data/counterpicks.json";
 import cross from "./images/cross.png";
 import tick from "./images/tick.png";
 
-const CharacterSelect = ({ player, playerName, character, setCharacter }) => {
-  const allCharacters = Object.keys(counterpicks.characters).sort();
-
+const CharacterSelect = ({
+  player,
+  playerName,
+  character,
+  setCharacter,
+  allCharacters,
+}) => {
   const handleCharacterSelect = (character) => {
     console.log(`Setting player-${player} character: ${character}`);
     setCharacter(character);
   };
+
   return (
     <div className="entrant flex flex-col justify-around px-5">
       <div className="flex items-center">
@@ -25,13 +30,13 @@ const CharacterSelect = ({ player, playerName, character, setCharacter }) => {
       <div
         name={`player${player}-character`}
         id={`player${player}-character`}
-        className="text-2xl bg-[#77CA00] mt-2 relative inline-block overflow-y-auto border-2 p-2 border-black"
+        className="text-2xl bg-[#77CA00] mt-2 relative inline-block overflow-y-auto border-2 p-2 border-black rounded-md"
       >
         {character ? character : "Select your character:"}
         {allCharacters.map((character) => {
           return (
             <div
-              className={`dropdown-item-${player} bg-[#77CA00] cursor-pointer py-1`}
+              className={`dropdown-item-${player} bg-[#77CA00] cursor-pointer py-1 rounded-lg`}
               key={character}
               value={character}
               onClick={(e) => {
