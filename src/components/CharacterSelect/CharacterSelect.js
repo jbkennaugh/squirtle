@@ -1,3 +1,5 @@
+import "./style.css";
+
 import counterpicks from "../../data/counterpicks.json";
 import cross from "./images/cross.png";
 import tick from "./images/tick.png";
@@ -17,7 +19,7 @@ const CharacterSelect = ({
   return (
     <div className="entrant flex flex-col justify-around px-5">
       <div className="flex items-center">
-        <p className="text-3xl text-[#77CA00]">{playerName}</p>
+        <p className="text-3xl">{playerName}</p>
         <img
           className={
             "ml-5 w-[50px] border" +
@@ -30,9 +32,9 @@ const CharacterSelect = ({
       <div
         name={`player${player}-character`}
         id={`player${player}-character`}
-        className="text-2xl bg-[#77CA00] mt-2 relative inline-block overflow-y-auto border-2 p-2 border-black rounded-md"
+        className="text-2xl text-[#27313d] bg-[#77CA00] mt-2 relative inline-block overflow-y-auto border-2 p-2 border-black rounded-md"
       >
-        {character ? character : "Select your character:"}
+        <h1>{character ? character : "Select your character:"}</h1>
         {allCharacters.map((character) => {
           return (
             <div

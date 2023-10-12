@@ -1,6 +1,6 @@
 import "./App.css";
 import refreshIcon from "./media/icons8-refresh-50.png";
-import Counterpick from "./components/Counterpick/Counterpick";
+import SetReporter from "./components/SetReporter/SetReporter";
 import StreamQueue from "./components/StreamQueue/StreamQueue";
 import { useEffect, useState } from "react";
 
@@ -29,10 +29,10 @@ function App() {
         <StreamQueue setSelectedSet={setSelectedSet}></StreamQueue>
       )}
       {activeDiv === "setChosen" && (
-        <Counterpick
+        <SetReporter
           set={selectedSet}
           setActiveDiv={setActiveDiv}
-        ></Counterpick>
+        ></SetReporter>
       )}
     </div>
   );

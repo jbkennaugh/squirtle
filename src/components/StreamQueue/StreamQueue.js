@@ -27,7 +27,7 @@ const StreamQueue = ({ setSelectedSet }) => {
 
   return (
     <div className="container w-2/3 mx-auto">
-      <h1 className="text-6xl py-5 text-center text-[#77CA00]">{`${getTournamentName()}Stream Sets:`}</h1>
+      <h1 className="text-6xl py-5 text-center ]">{`${getTournamentName()}Stream Sets:`}</h1>
       <ul className="stream-queue">
         {isLoading ? (
           <h1 className="text-4xl py-5 text-center text-white">
@@ -44,7 +44,7 @@ const StreamQueue = ({ setSelectedSet }) => {
             return (
               <li
                 className={
-                  "stream-set py-5 my-3 rounded-lg flex flex-col text-center space-y-5 border-4 border-transparent" +
+                  "stream-set py-5 my-3 rounded-lg flex flex-col text-center space-y-5 border-4 border-transparent text-[#27313d]" +
                   (set.slots[0].entrant && set.slots[1].entrant
                     ? " bg-[#77CA00] hover:border-black hover:cursor-pointer"
                     : " bg-gray-500")

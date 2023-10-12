@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { stageImages } from "./stages";
 
-const StageBanner = ({ gameNumber, stages }) => {
-  const [selectedStage, setSelectedStage] = useState();
+const StageBanner = ({ gameNumber, stages, setSelectedStage }) => {
   const [bannedStages, setBannedStages] = useState([]);
 
   const handleStageSelection = (stage) => {
@@ -22,9 +21,25 @@ const StageBanner = ({ gameNumber, stages }) => {
     }
   };
 
-  useEffect(() => {
-    console.log("Stage selected", selectedStage);
-  }, [selectedStage]);
+  const getHeadingText = (gameNumber) => {
+    let stageBanText;
+    if (gameNumber === 1) {
+      if (bannedStages.length === 7) {
+        stageBanText = "Finally, winner of RPS select your stage.";
+      } else if (bannedStages.length >= 3) {
+        stageBanText = "Now, loser of RPS ban 4 stages...";
+      } else {
+        stageBanText = "First, winner of RPS ban 3 stages...";
+      }
+    } else {
+      if (bannedStages.length === 2) {
+        stageBanText = "Loser of the last game, select your stage.";
+      } else {
+        stageBanText = "Winner of the last game, 2 stages...";
+      }
+    }
+    return stageBanText;
+  };
 
   return (
     <div className="stage-bans">
@@ -32,10 +47,12 @@ const StageBanner = ({ gameNumber, stages }) => {
         <div>Some shit if counterpicks are enabled in the ruleset.</div>
       ) : (
         <div>
-          <h1 className="text-3xl py-5 mb-10 text-center text-[#77CA00]">
-            Stages:
-          </h1>
-          <div className="stage-list flex flex-wrap justify-center">
+          {
+            <h1 className="text-3xl text-white py-5 mb-5 text-center">
+              {getHeadingText(gameNumber)}
+            </h1>
+          }
+          <div className="stage-list flex flex-wrap justify-center  text-[#27313d]">
             {stages.legal.starters.map((stage) => {
               return !bannedStages.includes(stage) ? (
                 <div
