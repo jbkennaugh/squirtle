@@ -13,7 +13,7 @@ const SetReporter = ({ set, setActiveDiv }) => {
   const [selectedStage, setSelectedStage] = useState();
 
   useEffect(() => {
-    console.log(`${gameWinner} wins game ${gameNumber}`);
+    console.log(`Player ${gameWinner} wins game ${gameNumber}`);
     if (gameWinner) {
       setGameNumber(gameNumber + 1);
     }

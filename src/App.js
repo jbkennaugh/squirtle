@@ -1,5 +1,5 @@
 import "./App.css";
-import refreshIcon from "./media/icons8-refresh-50.png";
+import refreshIcon from "./media/refresh.png";
 import SetReporter from "./components/SetReporter/SetReporter";
 import StreamQueue from "./components/StreamQueue/StreamQueue";
 import { useEffect, useState } from "react";
