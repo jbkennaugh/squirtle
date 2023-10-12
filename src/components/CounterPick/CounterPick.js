@@ -5,12 +5,18 @@ import CharacterSelect from "../CharacterSelect/CharacterSelect";
 import { useState, useEffect } from "react";
 import StageBanner from "../StageBanner/StageBanner";
 
-const Counterpick = ({ set, gameNumber, setActiveDiv, setCounterpickDone }) => {
+const Counterpick = ({
+  set,
+  gameNumber,
+  setActiveDiv,
+  setCounterpickDone,
+  selectedStage,
+  setSelectedStage,
+}) => {
   const [character1, setCharacter1] = useState();
   const [character2, setCharacter2] = useState();
   const [allCharacters] = useState(Object.keys(counterpicks.characters).sort());
   const [stages] = useState(counterpicks.stages);
-  const [selectedStage, setSelectedStage] = useState();
   const [charactersChosen, setCharChosen] = useState(false);
   const [characters, setCharacters] = useState({
     player1: [],

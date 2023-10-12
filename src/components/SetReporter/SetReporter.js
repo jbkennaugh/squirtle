@@ -8,12 +8,15 @@ const SetReporter = ({ set, setActiveDiv }) => {
   const [counterpickDone, setCounterpickDone] = useState(false);
   const [player1Name] = useState(set.slots[0].entrant.participants[0].gamerTag);
   const [player2Name] = useState(set.slots[1].entrant.participants[0].gamerTag);
-  const [gameNumber, setGameNumber] = useState(0);
+  const [gameNumber, setGameNumber] = useState(1);
   const [gameWinner, setGameWinner] = useState();
+  const [selectedStage, setSelectedStage] = useState();
 
   useEffect(() => {
     console.log(`${gameWinner} wins game ${gameNumber}`);
-    setGameNumber(gameNumber + 1);
+    if (gameWinner) {
+      setGameNumber(gameNumber + 1);
+    }
   }, [gameWinner]);
 
   return (
@@ -27,7 +30,7 @@ const SetReporter = ({ set, setActiveDiv }) => {
             <img src={backArrow} alt="Back arrow." width="50px"></img>
             <h1 className="text-2xl">Re-select</h1>
           </div>
-          <h1 className="text-6xl py-5 mb-10 text-center">{`${player1Name} vs ${player2Name}`}</h1>
+          <h1 className="text-6xl py-5 mb-10 text-center">{`Game ${gameNumber} on ${selectedStage}`}</h1>
           <div className="flex flex-col">
             <div className="flex  justify-center gap-5 border-y-4 py-10 border-[darkgreen]">
               <WinReporter
@@ -52,6 +55,8 @@ const SetReporter = ({ set, setActiveDiv }) => {
           gameNumber={gameNumber}
           setActiveDiv={setActiveDiv}
           setCounterpickDone={setCounterpickDone}
+          selectedStage={selectedStage}
+          setSelectedStage={setSelectedStage}
         ></Counterpick>
       )}
     </div>
