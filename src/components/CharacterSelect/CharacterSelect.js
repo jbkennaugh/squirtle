@@ -32,13 +32,13 @@ const CharacterSelect = ({
       <div
         name={`player${player}-character`}
         id={`player${player}-character`}
-        className="text-2xl text-[#27313d] bg-[#77CA00] mt-2 relative inline-block overflow-y-auto border-2 p-2 border-black rounded-md"
+        className="text-2xl text-mpsecondary bg-mpprimary mt-2 relative inline-block overflow-y-auto border-2 p-2 border-black rounded-md"
       >
         <h1>{character ? character : "Select your character:"}</h1>
         {allCharacters.map((character) => {
           return (
             <div
-              className={`dropdown-item-${player} bg-[#77CA00] cursor-pointer py-1 rounded-lg`}
+              className={`dropdown-item-${player} bg-mpprimary cursor-pointer py-1 rounded-lg`}
               key={character}
               value={character}
               onClick={(e) => {

@@ -52,12 +52,12 @@ const StageBanner = ({ gameNumber, stages, setSelectedStage }) => {
               {getHeadingText(gameNumber)}
             </h1>
           }
-          <div className="stage-list flex flex-wrap justify-center  text-[#27313d]">
+          <div className="stage-list flex flex-wrap justify-center  text-mpsecondary">
             {stages.legal.starters.map((stage) => {
               return !bannedStages.includes(stage) ? (
                 <div
                   className={
-                    "text-lg p-2 m-3 w-1/5 text-center flex flex-col justify-end rounded-md border-2 border-transparent bg-[#77CA00] hover:border-black hover:cursor-pointer"
+                    "text-lg p-2 m-3 w-1/5 text-center flex flex-col justify-end rounded-md border-2 border-transparent bg-mpprimary hover:border-black hover:cursor-pointer"
                   }
                   onClick={() => handleStageSelection(stage)}
                   key={stage}

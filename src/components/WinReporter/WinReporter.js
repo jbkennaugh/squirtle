@@ -1,27 +1,31 @@
-import greenW from "./images/green-w.png";
-import redW from "./images/red-w.png";
-
 const WinReporter = ({ player, playerName, setGameWinner }) => {
-  const handleWinSelect = () => {
-    setGameWinner(player);
-  };
-
   return (
-    <div className="w-1/3 h-40 px-7 flex gap-10 justify-between items-end border-b-2">
-      <p className="text-4xl py-7 text-white">{playerName}</p>
-      <img
-        className="w-[100px] rounded-xl"
-        src={redW}
-        onMouseOver={(e) => {
-          e.currentTarget.src = greenW;
-        }}
-        onMouseOut={(e) => {
-          e.currentTarget.src = redW;
-        }}
-        onClick={handleWinSelect}
-        alt="W icon for win."
-      ></img>
-    </div>
+    // <button
+    //   type="button"
+    //   className=" hover:text-mpsecondary border border-mpprimary hover:bg-mpprimary rounded-lg px-5 py-2.5 text-center text-4xl mr-2"
+    // >
+    //   {`${playerName} Won`}
+    // </button>
+
+    <li>
+      <input
+        type="radio"
+        id={`player${player}WinReport`}
+        name={player}
+        value={`player${player}wins`}
+        className="hidden peer"
+        required
+      ></input>
+      <label
+        for={`player${player}WinReport`}
+        className="inline-flex items-center justify-between w-full p-5 rounded-lg cursor-pointer hover:text-gray-300 border-gray-700 text-gray-400 bg-gray-800 hover:bg-gray-700"
+      >
+        <div className="block">
+          <div className="w-full text-3xl font-bold">{playerName}</div>
+          <div className="w-full">winner?</div>
+        </div>
+      </label>
+    </li>
   );
 };
 

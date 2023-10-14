@@ -32,7 +32,7 @@ const SetReporter = ({ set, setActiveDiv }) => {
           </div>
           <h1 className="text-6xl py-5 mb-10 text-center">{`Game ${gameNumber} on ${selectedStage}`}</h1>
           <div className="flex flex-col">
-            <div className="flex  justify-center gap-5 border-y-4 py-10 border-[darkgreen]">
+            <ul class="grid w-full gap-6 md:grid-cols-2">
               <WinReporter
                 player={1}
                 playerName={player1Name}
@@ -43,10 +43,13 @@ const SetReporter = ({ set, setActiveDiv }) => {
                 playerName={player2Name}
                 setGameWinner={setGameWinner}
               ></WinReporter>
-            </div>
-            <p className="text-center mt-3 text-3xl hover:cursor-pointer hover:text-[darkgreen]">
-              Submit Scores
-            </p>
+            </ul>
+            <button
+              type="button"
+              className=" hover:text-mpsecondary border border-mpprimary hover:bg-mpprimary rounded-lg px-5 py-2.5 mt-2 text-center text-2xl mr-2"
+            >
+              {`Confirm game #${gameNumber} winner`}
+            </button>
           </div>
         </div>
       ) : (
