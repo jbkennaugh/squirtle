@@ -7,6 +7,29 @@ import { useEffect, useState } from "react";
 function App() {
   const [activeDiv, setActiveDiv] = useState("streamQueue");
   const [selectedSet, setSelectedSet] = useState();
+  /**
+   * Information pushed to setData should be an object with all the data about a set, in the format:
+   * {
+   *  setId: someInt,
+   *  winnerId: "setWinningPlayerId",
+   *  // ordered array from game 1 onwards with info of each game
+   *  games: [
+   *    {
+   *      winner: "playerId",
+   *      player1Character: "someCharacterId",
+   *      player2Character: "someOtherCharacterId",
+   *      stage: "someStageId"
+   *    },
+   *    {
+   *      winner: "playerId",
+   *      player1Character: "someCharacterId",
+   *      player2Character: "someOtherCharacterId",
+   *      stage: "someStageId"
+   *    },
+   *  ],
+   * }
+   */
+  const [setData, updateSetData] = useState([]);
 
   useEffect(() => {
     if (selectedSet) {
@@ -32,8 +55,10 @@ function App() {
         <SetReporter
           set={selectedSet}
           setActiveDiv={setActiveDiv}
+          updateSetData={updateSetData}
         ></SetReporter>
       )}
+      {activeDiv === "scoreReported" && <div></div>}
     </div>
   );
 }

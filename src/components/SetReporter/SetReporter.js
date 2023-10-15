@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Counterpick from "../Counterpick/Counterpick";
 import WinReporter from "../WinReporter/WinReporter";
 
-const SetReporter = ({ set, setActiveDiv }) => {
+const SetReporter = ({ set, setActiveDiv, updateGameData }) => {
   const [counterpickDone, setCounterpickDone] = useState(false);
   const [player1Name] = useState(set.slots[0].entrant.participants[0].gamerTag);
   const [player2Name] = useState(set.slots[1].entrant.participants[0].gamerTag);
@@ -13,30 +13,46 @@ const SetReporter = ({ set, setActiveDiv }) => {
   const [gameNumber, setGameNumber] = useState(1);
   const [bestOf, setBestOf] = useState();
   const [gameWinner, setGameWinner] = useState();
-  const [confirmedWinners, setConfirmedWinners] = useState([]);
+  const [confirmedGamesData, updateConfirmedGamesData] = useState([]);
   const [selectedStage, setSelectedStage] = useState();
 
   useEffect(() => {
-    if (confirmedWinners[gameNumber - 1]) {
+    if (confirmedGamesData[gameNumber - 1]) {
       console.log(
         `Player ${
-          confirmedWinners[gameNumber - 1]
+          confirmedGamesData[gameNumber - 1]
         } wins game ${gameNumber}, resetting states`
       );
       setGameWinner(null);
       setCounterpickDone(false);
       if (player1Wins === bestOf || player2Wins === bestOf) {
-        // setGameNumber(1);
+        const winnerId =
+          player1Wins > player2Wins
+            ? set.slots[0].entrant.id
+            : set.slots[1].entrant.id;
+        const setData = {
+          setId: set.id,
+          winnerId: winnerId,
+          games: confirmedGamesData,
+        };
+
+        updateGameData(setData);
         setActiveDiv("streamQueue");
       } else {
         setGameNumber(gameNumber + 1);
       }
     }
-  }, [confirmedWinners]);
+  }, [confirmedGamesData]);
 
   const handleConfirmedWinner = () => {
     if (gameWinner) {
-      setConfirmedWinners([...confirmedWinners, gameWinner]);
+      const gameInfo = {
+        winner: set.slots[gameWinner - 1].entrant.id,
+        player1Character: "someCharacterId",
+        player2Character: "someOtherCharacterId",
+        stage: "someStageId",
+      };
+      updateConfirmedGamesData([...confirmedGamesData, gameInfo]);
       if (gameWinner === 1) {
         increasePlayer1Wins(player1Wins + 1);
       } else {
