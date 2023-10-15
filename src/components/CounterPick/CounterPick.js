@@ -63,7 +63,7 @@ const Counterpick = ({
         <img src={backArrow} alt="Back arrow." width="50px"></img>
         <h1 className="text-2xl">Re-select</h1>
       </div>
-      <h1 className="text-6xl py-5 mb-10 text-center">{`${player1Name} vs ${player2Name}`}</h1>
+      <h1 className="text-6xl py-5 mb-10 text-center">{`${player1Name} vs ${player2Name} - Game ${gameNumber}`}</h1>
       <div className="container w-2/3 mx-auto">
         {!charactersChosen && (
           <div className="character-select flex items-start">

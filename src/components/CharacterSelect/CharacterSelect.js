@@ -32,13 +32,28 @@ const CharacterSelect = ({
       <div
         name={`player${player}-character`}
         id={`player${player}-character`}
-        className="text-2xl text-mpsecondary bg-mpprimary mt-2 relative inline-block overflow-y-auto border-2 p-2 border-black rounded-md"
+        className="text-2xl mt-2 relative inline-block overflow-y-auto text-mpsecondary bg-mpprimary border-2 border-green-950 rounded-lg"
       >
-        <h1>{character ? character : "Select your character:"}</h1>
+        <h1 className="p-2">
+          {character ? (
+            <div className="flex items-center">
+              <div>
+                <img
+                  className="w-[30px] h-[30px]"
+                  src={counterpicks.characters[`${character}`].image}
+                  alt={`${character} stock icon.`}
+                ></img>
+              </div>
+              <p className="text-3xl pl-[0.625rem]">{character}</p>
+            </div>
+          ) : (
+            "Select your character:"
+          )}
+        </h1>
         {allCharacters.map((character) => {
           return (
             <div
-              className={`dropdown-item-${player} bg-mpprimary cursor-pointer py-1 rounded-lg`}
+              className={`dropdown-item-${player} cursor-pointer py-1 bg-green-900 text-mpprimary hover:bg-mpprimary hover:text-mpsecondary`}
               key={character}
               value={character}
               onClick={(e) => {

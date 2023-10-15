@@ -184,28 +184,6 @@ export async function getTournamentsWithAdmin(userId) {
   return tournaments;
 }
 
-export async function getPTRankings(data) {
-  let PTs = [];
-  data.forEach((player) => {
-    if (player[2] === "ptrainer") {
-      PTs.push(player[0]);
-    }
-  });
-
-  return PTs;
-}
-
-export async function getRankingsByCountry(data, character, country) {
-  let PTs = [];
-  data.forEach((player) => {
-    if (player[2] === character && player[3] === country) {
-      PTs.push(player[0]);
-    }
-  });
-
-  return PTs;
-}
-
 // very temporary function to allow it to know which MeltingPoint weekly it is being used for
 // before making it available to select a tournament.
 export function getWeeklyName() {

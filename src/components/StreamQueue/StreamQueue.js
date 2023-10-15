@@ -46,7 +46,7 @@ const StreamQueue = ({ setSelectedSet }) => {
                 className={
                   "stream-set py-5 my-3 rounded-lg flex flex-col text-center space-y-5 border-4 border-transparent text-mpsecondary" +
                   (set.slots[0].entrant && set.slots[1].entrant
-                    ? " bg-mpprimary hover:border-black hover:cursor-pointer"
+                    ? " bg-mpprimary hover:border-green-950 hover:cursor-pointer"
                     : " bg-gray-500")
                 }
                 onClick={

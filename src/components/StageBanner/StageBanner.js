@@ -57,7 +57,7 @@ const StageBanner = ({ gameNumber, stages, setSelectedStage }) => {
               return !bannedStages.includes(stage) ? (
                 <div
                   className={
-                    "text-lg p-2 m-3 w-1/5 text-center flex flex-col justify-end rounded-md border-2 border-transparent bg-mpprimary hover:border-black hover:cursor-pointer"
+                    "text-lg p-2 m-3 w-1/5 text-center flex flex-col justify-end rounded-md border-2 border-transparent bg-mpprimary hover:border-green-950 hover:cursor-pointer"
                   }
                   onClick={() => handleStageSelection(stage)}
                   key={stage}
