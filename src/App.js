@@ -63,6 +63,10 @@ function App() {
       console.log(setData);
       console.log(JSON.stringify(setData));
       queries.reportSet(setData);
+      setActiveDiv("scoreReported");
+      setTimeout(() => {
+        setActiveDiv("streamQueue");
+      }, 10000);
     }
   }, [setData]);
 
@@ -87,7 +91,13 @@ function App() {
           updateSetData={updateSetData}
         ></SetReporter>
       )}
-      {activeDiv === "scoreReported" && <div></div>}
+      {activeDiv === "scoreReported" && (
+        <div className="container w-2/3 mx-auto">
+          <h1 className="text-center text-6xl mt-[40vh]">
+            Set reported. Returning to stream queue!
+          </h1>
+        </div>
+      )}
     </div>
   );
 }

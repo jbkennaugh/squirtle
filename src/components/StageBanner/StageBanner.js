@@ -33,9 +33,9 @@ const StageBanner = ({ gameNumber, stages, setSelectedStage }) => {
       }
     } else {
       if (bannedStages.length === 2) {
-        stageBanText = "Loser of the last game, select your stage.";
+        stageBanText = "Now, loser of the last game, select your stage.";
       } else {
-        stageBanText = "Winner of the last game, 2 stages...";
+        stageBanText = "Winner of the last game, ban 2 stages...";
       }
     }
     return stageBanText;
