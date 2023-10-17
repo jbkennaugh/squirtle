@@ -1,10 +1,11 @@
 import backArrow from "../../media/back-arrow.png";
+import counterpicks from "../../data/counterpicks.json";
 
 import { useEffect, useState } from "react";
 import Counterpick from "../Counterpick/Counterpick";
 import WinReporter from "../WinReporter/WinReporter";
 
-const SetReporter = ({ set, setActiveDiv, updateGameData }) => {
+const SetReporter = ({ set, setActiveDiv, updateSetData }) => {
   const [counterpickDone, setCounterpickDone] = useState(false);
   const [player1Name] = useState(set.slots[0].entrant.participants[0].gamerTag);
   const [player2Name] = useState(set.slots[1].entrant.participants[0].gamerTag);
@@ -15,17 +16,23 @@ const SetReporter = ({ set, setActiveDiv, updateGameData }) => {
   const [gameWinner, setGameWinner] = useState();
   const [confirmedGamesData, updateConfirmedGamesData] = useState([]);
   const [selectedStage, setSelectedStage] = useState();
+  const [characters, setCharacters] = useState({
+    player1: [],
+    player2: [],
+  });
 
   useEffect(() => {
     if (confirmedGamesData[gameNumber - 1]) {
       console.log(
         `Player ${
-          confirmedGamesData[gameNumber - 1]
+          confirmedGamesData[gameNumber - 1].winner
         } wins game ${gameNumber}, resetting states`
       );
       setGameWinner(null);
       setCounterpickDone(false);
-      if (player1Wins === bestOf || player2Wins === bestOf) {
+      setSelectedStage(null);
+      const maxWins = Math.ceil(bestOf / 2);
+      if (player1Wins === maxWins || player2Wins === maxWins) {
         const winnerId =
           player1Wins > player2Wins
             ? set.slots[0].entrant.id
@@ -33,10 +40,10 @@ const SetReporter = ({ set, setActiveDiv, updateGameData }) => {
         const setData = {
           setId: set.id,
           winnerId: winnerId,
-          games: confirmedGamesData,
+          gameData: confirmedGamesData,
         };
 
-        updateGameData(setData);
+        updateSetData(setData);
         setActiveDiv("streamQueue");
       } else {
         setGameNumber(gameNumber + 1);
@@ -46,11 +53,26 @@ const SetReporter = ({ set, setActiveDiv, updateGameData }) => {
 
   const handleConfirmedWinner = () => {
     if (gameWinner) {
+      const character1Id =
+        counterpicks.characters[`${characters.player1[gameNumber - 1]}`].id;
+      const character2Id =
+        counterpicks.characters[`${characters.player2[gameNumber - 1]}`].id;
+      const stageId = counterpicks.stageInfo[`${selectedStage}`];
+
       const gameInfo = {
-        winner: set.slots[gameWinner - 1].entrant.id,
-        player1Character: "someCharacterId",
-        player2Character: "someOtherCharacterId",
-        stage: "someStageId",
+        winnerId: set.slots[gameWinner - 1].entrant.id,
+        gameNum: gameNumber,
+        stageId: stageId,
+        selections: [
+          {
+            entrantId: set.slots[0].entrant.id,
+            characterId: character1Id,
+          },
+          {
+            entrantId: set.slots[1].entrant.id,
+            characterId: character2Id,
+          },
+        ],
       };
       updateConfirmedGamesData([...confirmedGamesData, gameInfo]);
       if (gameWinner === 1) {
@@ -109,6 +131,8 @@ const SetReporter = ({ set, setActiveDiv, updateGameData }) => {
               setCounterpickDone={setCounterpickDone}
               selectedStage={selectedStage}
               setSelectedStage={setSelectedStage}
+              characters={characters}
+              setCharacters={setCharacters}
             ></Counterpick>
           )}
         </>

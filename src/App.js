@@ -2,6 +2,8 @@ import "./App.css";
 import refreshIcon from "./media/refresh.png";
 import SetReporter from "./components/SetReporter/SetReporter";
 import StreamQueue from "./components/StreamQueue/StreamQueue";
+import * as queries from "./util/queries";
+
 import { useEffect, useState } from "react";
 
 function App() {
@@ -13,29 +15,56 @@ function App() {
    *  setId: someInt,
    *  winnerId: "setWinningPlayerId",
    *  // ordered array from game 1 onwards with info of each game
-   *  games: [
-   *    {
-   *      winner: "playerId",
-   *      player1Character: "someCharacterId",
-   *      player2Character: "someOtherCharacterId",
-   *      stage: "someStageId"
-   *    },
-   *    {
-   *      winner: "playerId",
-   *      player1Character: "someCharacterId",
-   *      player2Character: "someOtherCharacterId",
-   *      stage: "someStageId"
-   *    },
-   *  ],
+   *  "gameData": [
+        {
+          "winnerId": "setWinnersID",
+          "gameNum": 1,
+          "stageId": 3,
+          "selections": [
+            {
+              "entrantId": player1ID,
+              "characterId": player2CharacterIDGame1
+            },
+            {
+              "entrantId": player2ID,
+              "characterId": player2CharacterIDGame1
+            }
+          ]
+        },
+        {
+          "winnerId": 14259653,
+          "gameNum": 2,
+          "entrant1Score": 0,
+          "entrant2Score": 3,
+          "selections": [
+            {
+              "entrantId": player1ID,
+              "characterId": player2CharacterIDGame2
+            },
+            {
+              "entrantId": player2ID,
+              "characterId": player2CharacterIDGame2
+            }
+          ]
+        }
+      ],
    * }
    */
-  const [setData, updateSetData] = useState([]);
+  const [setData, updateSetData] = useState({});
 
   useEffect(() => {
     if (selectedSet) {
       setActiveDiv("setChosen");
     }
   }, [selectedSet]);
+
+  useEffect(() => {
+    if (Object.keys(setData).length !== 0) {
+      console.log(setData);
+      console.log(JSON.stringify(setData));
+      queries.reportSet(setData);
+    }
+  }, [setData]);
 
   return (
     <div className="App">

@@ -184,6 +184,26 @@ export async function getTournamentsWithAdmin(userId) {
   return tournaments;
 }
 
+// returns a list of tournaments where the current user is either admin or organiser
+export async function reportSet(setData) {
+  await fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify({
+      query: queries.reportSet,
+      variables: {
+        setId: setData.setId,
+        winnerId: setData.winnerId,
+        gameData: setData.gameData,
+      },
+    }),
+  })
+    .then((r) => r.json())
+    .then((data) => {
+      console.log(data);
+    });
+}
+
 // very temporary function to allow it to know which MeltingPoint weekly it is being used for
 // before making it available to select a tournament.
 export function getWeeklyName() {
@@ -194,44 +214,6 @@ export function getWeeklyName() {
     147 + Math.ceil(difference / (1000 * 60 * 60 * 24) / 7)
   }`;
   return weeklyName;
-}
-
-export async function buildCharacterData() {
-  let characterData = {};
-
-  await fetch(url, {
-    method: "POST",
-    headers: headers,
-    body: JSON.stringify({
-      query: `query CharactersByGame($gameId: ID!) {
-        videogame(id: $gameId) {
-          id
-          characters {
-            id
-            name
-            images {
-              url
-            }
-          }
-        }
-      }
-      `,
-      variables: {
-        gameId: 1386,
-      },
-    }),
-  })
-    .then((r) => r.json())
-    .then((data) => {
-      data.data.videogame.characters.forEach((char) => {
-        characterData[char.name] = {
-          id: char.id,
-          image: char.images[1].url,
-        };
-      });
-    });
-
-  return characterData;
 }
 
 // export async function updateSeeding(phaseId, seedMapping) {

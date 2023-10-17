@@ -12,16 +12,14 @@ const Counterpick = ({
   setCounterpickDone,
   selectedStage,
   setSelectedStage,
+  characters,
+  setCharacters,
 }) => {
   const [character1, setCharacter1] = useState();
   const [character2, setCharacter2] = useState();
   const [allCharacters] = useState(Object.keys(counterpicks.characters).sort());
   const [stages] = useState(counterpicks.stages);
   const [charactersChosen, setCharChosen] = useState(false);
-  const [characters, setCharacters] = useState({
-    player1: [],
-    player2: [],
-  });
   const [player1Name] = useState(set.slots[0].entrant.participants[0].gamerTag);
   const [player2Name] = useState(set.slots[1].entrant.participants[0].gamerTag);
 
