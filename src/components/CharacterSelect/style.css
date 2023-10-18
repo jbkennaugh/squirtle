@@ -1,14 +1,9 @@
 .dropdown-item-1,
 .dropdown-item-2 {
-  display: none;
-  z-index: 1;
-}
-
-.dropdown-item-1,
-.dropdown-item-2 {
   display: flex;
   align-items: center;
   flex-direction: row;
+  z-index: 1;
 }
 
 #player1-character,
