@@ -14,6 +14,7 @@ const SetReporter = ({ set, setActiveDiv, updateSetData }) => {
   const [gameNumber, setGameNumber] = useState(1);
   const [bestOf, setBestOf] = useState();
   const [gameWinner, setGameWinner] = useState();
+  const [previousGameData, setPreviousGameData] = useState();
   const [confirmedGamesData, updateConfirmedGamesData] = useState([]);
   const [selectedStage, setSelectedStage] = useState();
   const [characters, setCharacters] = useState({
@@ -42,7 +43,7 @@ const SetReporter = ({ set, setActiveDiv, updateSetData }) => {
           winnerId: winnerId,
           gameData: confirmedGamesData,
         };
-
+        setPreviousGameData({});
         updateSetData(setData);
         setActiveDiv("streamQueue");
       } else {
@@ -86,7 +87,7 @@ const SetReporter = ({ set, setActiveDiv, updateSetData }) => {
   };
 
   return (
-    <div>
+    <div className="mt-[15vh]">
       {bestOf ? (
         <>
           {counterpickDone ? (
@@ -98,7 +99,8 @@ const SetReporter = ({ set, setActiveDiv, updateSetData }) => {
                 <img src={backArrow} alt="Back arrow." width="50px"></img>
                 <h1 className="text-2xl">Re-select</h1>
               </div>
-              <h1 className="text-6xl py-5 mb-10 text-center">{`Game ${gameNumber} on ${selectedStage}`}</h1>
+              <h1 className="text-6xl py-5 text-center">{`Game ${gameNumber}`}</h1>
+              <h1 className="text-4xl py-5 mb-2 text-center">{`${selectedStage}`}</h1>
               <div className="flex flex-col">
                 <ul className="grid w-full gap-6 md:grid-cols-2">
                   <WinReporter
@@ -116,7 +118,7 @@ const SetReporter = ({ set, setActiveDiv, updateSetData }) => {
                 </ul>
                 <button
                   type="button"
-                  className=" hover:text-mpsecondary border border-mpprimary hover:bg-mpprimary rounded-lg px-5 py-2.5 mt-2 text-center text-2xl mr-2"
+                  className="hover:text-mpsecondary border border-mpprimary hover:bg-mpprimary rounded-lg px-5 py-2.5 mt-2 text-center text-2xl mr-2"
                   onClick={handleConfirmedWinner}
                 >
                   {`Confirm game #${gameNumber} winner`}
@@ -133,6 +135,8 @@ const SetReporter = ({ set, setActiveDiv, updateSetData }) => {
               setSelectedStage={setSelectedStage}
               characters={characters}
               setCharacters={setCharacters}
+              previousGameData={previousGameData}
+              setPreviousGameData={setPreviousGameData}
             ></Counterpick>
           )}
         </>
