@@ -63,9 +63,9 @@ const StageBanner = ({ gameNumber, stages, setSelectedStage }) => {
                   key={stage}
                 >
                   <img
-                    className="rounded-sm"
+                    className="rounded-sm text-center"
                     src={stageImages[stage]}
-                    alt={`${stage} stage.`}
+                    alt={`${stage}`}
                   ></img>
                 </div>
               ) : (
