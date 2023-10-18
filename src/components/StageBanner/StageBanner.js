@@ -48,7 +48,7 @@ const StageBanner = ({ gameNumber, stages, setSelectedStage }) => {
       ) : (
         <div>
           {
-            <h1 className="text-3xl text-white py-5 mb-5 text-center">
+            <h1 className="text-3xl text-white pb-5 mb-5 text-center">
               {getHeadingText(gameNumber)}
             </h1>
           }

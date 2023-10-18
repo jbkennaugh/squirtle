@@ -4,15 +4,15 @@
   z-index: 1;
 }
 
-#player1-character:hover .dropdown-item-1,
-#player2-character:hover .dropdown-item-2 {
+.dropdown-item-1,
+.dropdown-item-2 {
   display: flex;
   align-items: center;
   flex-direction: row;
 }
 
-#player1-character:hover,
-#player2-character:hover {
+#player1-character,
+#player2-character {
   height: 50vh;
   border-color: #77ca00;
 }
