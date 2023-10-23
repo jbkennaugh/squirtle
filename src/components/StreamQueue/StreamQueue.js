@@ -19,7 +19,7 @@ const StreamQueue = ({ setSelectedSet }) => {
   };
 
   if (!sets) {
-    queries.getStreamQueueByTournament(queries.getWeeklyName()).then((res) => {
+    queries.getStreamQueueByTournament("cruise-control-8").then((res) => {
       updateSets(res);
       setLoading(false);
     });

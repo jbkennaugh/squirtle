@@ -41,17 +41,25 @@ const StageBanner = ({ gameNumber, stages, setSelectedStage }) => {
     return stageBanText;
   };
 
+  const handleResetBans = () => {
+    setBannedStages([]);
+  };
+
   return (
     <div className="stage-bans">
       {stages.allowCounterpicks ? (
         <div>Some shit if counterpicks are enabled in the ruleset.</div>
       ) : (
-        <div>
-          {
-            <h1 className="text-3xl text-white pb-5 mb-5 text-center">
-              {getHeadingText(gameNumber)}
-            </h1>
-          }
+        <div className="flex flex-col items-center">
+          <h1 className="text-3xl text-white pb-5 mb-5 text-center">
+            {getHeadingText(gameNumber)}
+          </h1>
+          <button
+            className="mb-4 mx-5 p-4 hover:text-mpsecondary border border-mpprimary hover:bg-mpprimary rounded-lg py-2.5 text-center text-2xl w-1/2"
+            onClick={handleResetBans}
+          >
+            Reset bans
+          </button>
           <div className="stage-list flex flex-wrap justify-center  text-mpsecondary">
             {stages.legal.starters.map((stage) => {
               return !bannedStages.includes(stage) ? (

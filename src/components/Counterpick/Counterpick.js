@@ -67,10 +67,23 @@ const Counterpick = ({
     }
   }, [character1, character2, selectedStage, setCounterpickDone]);
 
+  const handleResetCharacters = () => {
+    setCharacter1(null);
+    setCharacter2(null);
+    let tempChars = characters;
+    tempChars.player1[gameNumber - 1] = null;
+    tempChars.player2[gameNumber - 1] = null;
+    setCharacters(tempChars);
+  };
+
   const handleRunback = () => {
     setCharacter1(previousGameData.character1);
     setCharacter2(previousGameData.character2);
     setSelectedStage(previousGameData.stage);
+  };
+  const handleSameCharacters = () => {
+    setCharacter1(previousGameData.character1);
+    setCharacter2(previousGameData.character2);
   };
 
   return (
@@ -86,18 +99,32 @@ const Counterpick = ({
         <img src={backArrow} alt="Back arrow." width="50px"></img>
         <h1 className="text-2xl">Re-select</h1>
       </div>
-      <h1 className="text-6xl py-5 mb-2 text-center">{`Game ${gameNumber}`}</h1>
+      <h1 className="text-5xl py-5 mb-2 text-center">{`Game ${gameNumber}`}</h1>
       <div className="container w-4/5 mx-auto">
         {!charactersChosen && (
           <div className="flex flex-col">
             {gameNumber > 1 && (
-              <button
-                className="mb-4 mx-5 p-4 hover:text-mpsecondary border border-mpprimary hover:bg-mpprimary rounded-lg py-2.5 text-center text-2xl mr-2"
-                onClick={handleRunback}
-              >
-                Run it back?
-              </button>
+              <div className="flex justify-center">
+                <button
+                  className="mb-4 mx-5 p-4 hover:text-mpsecondary border border-mpprimary hover:bg-mpprimary rounded-lg py-2.5 text-center text-2xl w-1/2"
+                  onClick={handleRunback}
+                >
+                  Run it back
+                </button>
+                <button
+                  className="mb-4 mx-5 p-4 hover:text-mpsecondary border border-mpprimary hover:bg-mpprimary rounded-lg py-2.5 text-center text-2xl w-1/2"
+                  onClick={handleSameCharacters}
+                >
+                  Same Characters
+                </button>
+              </div>
             )}
+            <button
+              className="mb-4 mx-5 p-4 hover:text-mpsecondary border border-mpprimary hover:bg-mpprimary rounded-lg py-2.5 text-center text-2xl"
+              onClick={handleResetCharacters}
+            >
+              Reset picks
+            </button>
             <div className="character-select flex flex-wrap items-start">
               <CharacterSelect
                 player={1}
