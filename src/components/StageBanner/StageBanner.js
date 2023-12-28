@@ -13,7 +13,7 @@ const StageBanner = ({ gameNumber, stages, setSelectedStage }) => {
         setSelectedStage(stage);
       }
     } else {
-      if (bannedStages.length < 2) {
+      if (bannedStages.length <= 2) {
         setBannedStages(newBannedStages);
       } else {
         setSelectedStage(stage);
