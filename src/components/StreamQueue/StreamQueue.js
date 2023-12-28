@@ -19,7 +19,7 @@ const StreamQueue = ({ setSelectedSet }) => {
   };
 
   if (!sets) {
-    queries.getStreamQueueByTournament("cruise-control-8").then((res) => {
+    queries.getStreamQueueByTournament("snoverdrive-2023").then((res) => {
       updateSets(res);
       setLoading(false);
     });
