@@ -211,7 +211,7 @@ export function getWeeklyName() {
   const difference = new Date() - startDate;
 
   const weeklyName = `extrapoint-${
-    1 + Math.ceil(difference / (1000 * 60 * 60 * 24) / 7)
+    0 + Math.ceil(difference / (1000 * 60 * 60 * 24) / 7)
   }`;
   return weeklyName;
 }

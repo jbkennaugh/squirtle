@@ -1,33 +1,43 @@
 import "./style.css";
 import * as queries from "../../util/queries";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const StreamQueue = ({ setSelectedSet }) => {
   const [sets, updateSets] = useState(null);
   const [isLoading, setLoading] = useState(true);
+  const weeklyName = queries.getWeeklyName();
 
   // very temporary function to allow it to know which MeltingPoint weekly it is being used for
   // before making it get it from a selected tournament.
   const getTournamentName = () => {
-    const weeklyName = queries.getWeeklyName();
     let tournamentName = "";
+    let sep = "";
     weeklyName.split("-").forEach((word) => {
       word = word.charAt(0).toUpperCase() + word.slice(1);
-      tournamentName += word + " ";
+      tournamentName += sep + word;
+      sep = " ";
     });
     return tournamentName;
   };
 
-  if (!sets) {
-    queries.getStreamQueueByTournament("extrapoint-1").then((res) => {
-      updateSets(res);
-      setLoading(false);
-    });
-  }
+  useEffect(() => {
+    // updates sets every 60 seconds
+    if (!sets) {
+      queries.getStreamQueueByTournament(weeklyName).then((res) => {
+        updateSets(res);
+        setLoading(false);
+      });
+    }
+    setInterval(() => {
+      queries.getStreamQueueByTournament(weeklyName).then((res) => {
+        updateSets(res);
+      });
+    }, 60 * 1000);
+  }, []);
 
   return (
     <div className="container w-2/3 mx-auto">
-      <h1 className="text-5xl py-5 text-center">{`ExtraPoint Stream Sets:`}</h1>
+      <h1 className="text-5xl py-5 text-center">{`${getTournamentName()} Stream Sets:`}</h1>
       <ul className="stream-queue">
         {isLoading ? (
           <h1 className="text-4xl py-5 text-center text-white">
