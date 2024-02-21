@@ -204,14 +204,14 @@ export async function reportSet(setData) {
     });
 }
 
-// very temporary function to allow it to know which MeltingPoint weekly it is being used for
+// very temporary function to allow it to know which ExtraPoint weekly it is being used for
 // before making it available to select a tournament.
 export function getWeeklyName() {
-  const startDate = new Date("2023-09-28");
+  const startDate = new Date("2024-02-21");
   const difference = new Date() - startDate;
 
-  const weeklyName = `meltingpoint-${
-    147 + Math.ceil(difference / (1000 * 60 * 60 * 24) / 7)
+  const weeklyName = `extrapoint-${
+    1 + Math.ceil(difference / (1000 * 60 * 60 * 24) / 7)
   }`;
   return weeklyName;
 }
