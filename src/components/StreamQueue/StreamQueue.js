@@ -19,7 +19,7 @@ const StreamQueue = ({ setSelectedSet }) => {
   };
 
   if (!sets) {
-    queries.getStreamQueueByTournament("snoverdrive-2023").then((res) => {
+    queries.getStreamQueueByTournament("extrapoint-1").then((res) => {
       updateSets(res);
       setLoading(false);
     });
@@ -27,7 +27,7 @@ const StreamQueue = ({ setSelectedSet }) => {
 
   return (
     <div className="container w-2/3 mx-auto">
-      <h1 className="text-5xl py-5 text-center">{`Snoverdrive Stream Sets:`}</h1>
+      <h1 className="text-5xl py-5 text-center">{`ExtraPoint Stream Sets:`}</h1>
       <ul className="stream-queue">
         {isLoading ? (
           <h1 className="text-4xl py-5 text-center text-white">
