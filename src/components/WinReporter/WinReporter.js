@@ -5,7 +5,7 @@ const WinReporter = ({ player, playerName, gameWinner, setGameWinner }) => {
         "w-full p-5 rounded-lg cursor-pointer border-2 bg-gray-800 hover:border-mpprimary hover:text-mpprimary" +
         (gameWinner === player
           ? " border-mpprimary text-mpprimary"
-          : " border-gray-700 text-gray-400")
+          : " border-mpprimarydark text-mpprimarydark")
       }
       onClick={() => setGameWinner(player)}
     >
@@ -16,8 +16,12 @@ const WinReporter = ({ player, playerName, gameWinner, setGameWinner }) => {
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-14 h-14"
+          className={
+            "w-14 h-14" +
+            (gameWinner === player
+              ? " stroke-mpprimary"
+              : " stroke-mpprimarydark")
+          }
         >
           <path
             strokeLinecap="round"

@@ -35,7 +35,7 @@ const StageBanner = ({ gameNumber, stages, setSelectedStage }) => {
       if (bannedStages.length === 3) {
         stageBanText = "Now, loser of the last game, select your stage.";
       } else {
-        stageBanText = "Winner of the last game, ban 2 stages...";
+        stageBanText = "Winner of the last game, ban 3 stages...";
       }
     }
     return stageBanText;
@@ -65,7 +65,7 @@ const StageBanner = ({ gameNumber, stages, setSelectedStage }) => {
               return !bannedStages.includes(stage) ? (
                 <div
                   className={
-                    "text-lg m-3 w-1/4 text-center flex flex-col justify-end rounded-md border-2 border-transparent bg-mpprimary hover:border-green-950 hover:cursor-pointer"
+                    "text-lg m-3 w-1/4 text-center flex flex-col justify-end rounded-md border-2 border-transparent bg-mpprimary hover:border-mpprimarydark hover:cursor-pointer"
                   }
                   onClick={() => handleStageSelection(stage)}
                   key={stage}

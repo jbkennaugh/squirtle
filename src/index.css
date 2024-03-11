@@ -3,7 +3,11 @@
 @tailwind utilities;
 
 html {
-  background-color: #27313d;
-  color: #77ca00;
+  background-color: #10223e;
+  color: #aec4d4;
   font-weight: bold;
+}
+
+.entrant {
+  width: 50%;
 }

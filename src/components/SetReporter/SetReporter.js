@@ -1,4 +1,3 @@
-import backArrow from "../../media/back-arrow.png";
 import counterpicks from "../../data/counterpicks.json";
 
 import { useEffect, useState } from "react";
@@ -96,7 +95,20 @@ const SetReporter = ({ set, setActiveDiv, updateSetData }) => {
                 className="back-to-char-select flex absolute items-center cursor-pointer top-7 left-5"
                 onClick={() => setBestOf(null)}
               >
-                <img src={backArrow} alt="Back arrow." width="50px"></img>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 25 25"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-12"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+                  />
+                </svg>
                 <h1 className="text-2xl">Re-select</h1>
               </div>
               <h1 className="text-6xl py-5 text-center">{`Game ${gameNumber}`}</h1>
@@ -118,7 +130,7 @@ const SetReporter = ({ set, setActiveDiv, updateSetData }) => {
                 </ul>
                 <button
                   type="button"
-                  className="hover:text-mpsecondary border border-mpprimary hover:bg-mpprimary rounded-lg px-5 py-2.5 mt-2 text-center text-2xl mr-2"
+                  className="text-mpsecondary border border-mpprimary bg-mpprimary rounded-lg px-5 py-2.5 mt-2 text-center text-2xl mr-2"
                   onClick={handleConfirmedWinner}
                 >
                   {`Confirm game #${gameNumber} winner`}
@@ -146,7 +158,20 @@ const SetReporter = ({ set, setActiveDiv, updateSetData }) => {
             className="back-to-char-select flex absolute items-center cursor-pointer top-7 left-5"
             onClick={() => setActiveDiv("streamQueue")}
           >
-            <img src={backArrow} alt="Back arrow." width="50px"></img>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 25 25"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-12"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+              />
+            </svg>
             <h1 className="text-2xl">Re-select</h1>
           </div>
           <h1 className="text-6xl py-5 mb-10 text-center">Select Set Length</h1>

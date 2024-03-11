@@ -1,4 +1,3 @@
-import "./style.css";
 import * as queries from "../../util/queries";
 import { useEffect, useState } from "react";
 
@@ -37,7 +36,7 @@ const StreamQueue = ({ setSelectedSet }) => {
 
   return (
     <div className="container w-2/3 mx-auto">
-      <h1 className="text-5xl py-5 text-center">{`${getTournamentName()} Stream Sets:`}</h1>
+      <h1 className="text-5xl text-mpprimary py-5 text-center">{`${getTournamentName()} Stream Sets:`}</h1>
       <ul className="stream-queue">
         {isLoading ? (
           <h1 className="text-4xl py-5 text-center text-white">
@@ -56,7 +55,7 @@ const StreamQueue = ({ setSelectedSet }) => {
                 className={
                   "stream-set py-5 my-3 rounded-lg flex flex-col text-center space-y-5 border-4 border-transparent text-mpsecondary" +
                   (set.slots[0].entrant && set.slots[1].entrant
-                    ? " bg-mpprimary hover:border-green-950 hover:cursor-pointer"
+                    ? " bg-mpprimary hover:border-mpprimarydark hover:cursor-pointer"
                     : " bg-gray-500")
                 }
                 onClick={

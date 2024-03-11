@@ -1,5 +1,4 @@
 import counterpicks from "../../data/counterpicks.json";
-import backArrow from "../../media/back-arrow.png";
 
 import CharacterSelect from "../CharacterSelect/CharacterSelect";
 import { useState, useEffect } from "react";
@@ -36,11 +35,6 @@ const Counterpick = ({
       let tempChars = characters;
       characters.player2[gameNumber - 1] = character2;
       setCharacters(tempChars);
-    }
-    if (
-      (characters.player1[gameNumber - 1] && characters.player2[gameNumber - 1])
-    ) {
-      setCharChosen(true);
     }
   }, [characters, character1, character2, gameNumber]);
 
@@ -81,9 +75,19 @@ const Counterpick = ({
     setCharacter2(previousGameData.character2);
     setSelectedStage(previousGameData.stage);
   };
+
   const handleSameCharacters = () => {
     setCharacter1(previousGameData.character1);
     setCharacter2(previousGameData.character2);
+  };
+
+  const handleCharacterSelect = () => {
+    if (
+      characters.player1[gameNumber - 1] &&
+      characters.player2[gameNumber - 1]
+    ) {
+      setCharChosen(true);
+    }
   };
 
   return (
@@ -96,7 +100,20 @@ const Counterpick = ({
             : () => setActiveDiv("streamQueue")
         }
       >
-        <img src={backArrow} alt="Back arrow." width="50px"></img>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 25 25"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-12"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+          />
+        </svg>
         <h1 className="text-2xl">Re-select</h1>
       </div>
       <h1 className="text-5xl py-5 mb-2 text-center">{`Game ${gameNumber}`}</h1>
@@ -106,25 +123,33 @@ const Counterpick = ({
             {gameNumber > 1 && (
               <div className="flex justify-center">
                 <button
-                  className="mb-4 mx-5 p-4 hover:text-mpsecondary border border-mpprimary hover:bg-mpprimary rounded-lg py-2.5 text-center text-2xl w-1/2"
+                  className="mb-4 mx-5 p-4 text-mpsecondary border border-mpprimary bg-mpprimary rounded-lg py-2.5 text-center text-2xl w-1/3"
                   onClick={handleRunback}
                 >
-                  Run it back
+                  {`Run it back (${previousGameData.stage})`}
                 </button>
                 <button
-                  className="mb-4 mx-5 p-4 hover:text-mpsecondary border border-mpprimary hover:bg-mpprimary rounded-lg py-2.5 text-center text-2xl w-1/2"
+                  className="mb-4 mx-5 p-4 text-mpsecondary border border-mpprimary bg-mpprimary rounded-lg py-2.5 text-center text-2xl w-1/3"
                   onClick={handleSameCharacters}
                 >
                   Same Characters
                 </button>
               </div>
             )}
-            <button
-              className="mb-4 mx-5 p-4 hover:text-mpsecondary border border-mpprimary hover:bg-mpprimary rounded-lg py-2.5 text-center text-2xl"
-              onClick={handleResetCharacters}
-            >
-              Reset picks
-            </button>
+            <div className="flex justify-center">
+              <button
+                className="mb-4 mx-5 p-4 border border-mpprimary rounded-lg py-2.5 text-center text-2xl w-1/3"
+                onClick={handleResetCharacters}
+              >
+                Reset picks
+              </button>
+              <button
+                className="mb-4 mx-5 p-4 text-mpsecondary border border-mpprimary bg-mpprimary rounded-lg py-2.5 text-center text-2xl w-1/3"
+                onClick={handleCharacterSelect}
+              >
+                Confirm
+              </button>
+            </div>
             <div className="character-select flex flex-wrap items-start">
               <CharacterSelect
                 player={1}
