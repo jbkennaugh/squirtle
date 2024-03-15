@@ -18,11 +18,13 @@ const Counterpick = ({
 }) => {
   const [character1, setCharacter1] = useState();
   const [character2, setCharacter2] = useState();
-  const [allCharacters] = useState(Object.keys(counterpicks.characters).sort());
   const [stages] = useState(counterpicks.stages);
   const [charactersChosen, setCharChosen] = useState(false);
   const [player1Name] = useState(set.slots[0].entrant.participants[0].gamerTag);
   const [player2Name] = useState(set.slots[1].entrant.participants[0].gamerTag);
+  const allCharacters = Object.entries(counterpicks.characters).sort((a, b) => {
+    return a[1].order - b[1]-order;
+  });
 
   // prettier-ignore
   useEffect(() => {
