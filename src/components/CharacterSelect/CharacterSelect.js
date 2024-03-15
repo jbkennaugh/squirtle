@@ -16,13 +16,6 @@ const CharacterSelect = ({
     setShowCharacterModal(false);
   };
 
-  console.log("availHeight: ", window.screen.availHeight);
-  console.log("availWidth: ", window.screen.availWidth);
-  console.log("height: ", window.screen.height);
-  console.log("width: ", window.screen.width);
-  console.log("nativeHeight: ", window.screen.height * window.devicePixelRatio);
-  console.log("nativeWidth: ", window.screen.width * window.devicePixelRatio);
-
   return (
     <div className="entrant flex flex-col justify-around px-5">
       <div className="flex items-center justify-center">
@@ -53,7 +46,7 @@ const CharacterSelect = ({
       </div>
       {showCharacterModal ? (
         <>
-          <div className="fixed inset-0 z-50 flex flex-col items-center justify-center h-2/3 my-auto">
+          <div className="fixed top-0 bottom-0 right-0 left-0 z-50 flex flex-col items-center justify-center h-2/3 my-auto">
             <div className="relative mx-16 flex items-center justify-center flex-grow flex-wrap border-8  bg-mpsecondary border-mpprimarydark rounded-lg pb-16">
               {allCharacters.map((characterMap) => {
                 let character = characterMap[0];
@@ -101,7 +94,10 @@ const CharacterSelect = ({
               </div>
             </div>
           </div>
-          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+          <div
+            className="opacity-25 fixed inset-0 z-40 bg-black"
+            onClick={() => setShowCharacterModal(false)}
+          ></div>
         </>
       ) : null}
     </div>
