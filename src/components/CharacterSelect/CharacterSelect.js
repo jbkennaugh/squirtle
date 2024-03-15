@@ -46,8 +46,8 @@ const CharacterSelect = ({
       </div>
       {showCharacterModal ? (
         <>
-          <div className="fixed top-0 bottom-0 right-0 left-0 z-50 flex flex-col items-center justify-center h-2/3 my-auto">
-            <div className="relative mx-16 flex items-center justify-center flex-grow flex-wrap border-8  bg-mpsecondary border-mpprimarydark rounded-lg pb-16">
+          <div className="fixed top-0 bottom-0 right-0 left-0 z-50 flex flex-col items-center justify-center w-11/12 h-2/3 mx-auto my-auto">
+            <div className="relative flex items-center justify-center flex-grow flex-wrap border-8  bg-mpsecondary border-mpprimarydark rounded-lg pb-16">
               {allCharacters.map((characterMap) => {
                 let character = characterMap[0];
                 return (
@@ -78,7 +78,7 @@ const CharacterSelect = ({
                 );
               })}
             </div>
-            <div className="-mt-16 z-50 flex justify-between w-3/5">
+            <div className="-mt-16 z-50 flex justify-between w-5/6">
               <div
                 className="text-2xl text-mpprimary border-2 border-mpprimary rounded-md py-1 px-4"
                 onClick={() => setShowCharacterModal(false)}
@@ -94,7 +94,7 @@ const CharacterSelect = ({
             </div>
           </div>
           <div
-            className="opacity-25 fixed inset-0 z-40 bg-black"
+            className="opacity-25 top-0 bottom-0 left-0 right-0 fixed z-40 bg-black"
             onClick={() => setShowCharacterModal(false)}
           ></div>
         </>
