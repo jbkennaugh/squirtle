@@ -52,7 +52,7 @@ const CharacterSelect = ({
                 let character = characterMap[0];
                 return (
                   <div
-                    className="cursor-pointer py-1  w-[7.69%] flex items-center justify-center"
+                    className="cursor-pointer py-1  w-[7.69%] h-[14.29%] flex items-center justify-center"
                     key={character}
                     value={character}
                     onClick={(e) => {
@@ -70,7 +70,6 @@ const CharacterSelect = ({
                       }
                     >
                       <img
-                        className="w-12 h-12"
                         src={characterMap[1].image}
                         alt={`${character} stock icon.`}
                       ></img>

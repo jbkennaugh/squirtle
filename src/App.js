@@ -59,8 +59,6 @@ function App() {
 
   useEffect(() => {
     if (Object.keys(setData).length !== 0) {
-      console.log(setData);
-      console.log(JSON.stringify(setData));
       queries.reportSet(setData);
       setActiveDiv("scoreReported");
       setTimeout(() => {

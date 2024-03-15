@@ -5,7 +5,6 @@ const TournamentList = () => {
     <div className="tournament-list-container">
       <ul className="tournament-list">
         {Object.keys(tournaments).map((tournamentName) => {
-          console.log(tournamentName);
           return <li>{tournamentName}</li>;
         })}
       </ul>
