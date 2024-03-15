@@ -47,49 +47,51 @@ const CharacterSelect = ({
       {showCharacterModal ? (
         <>
           <div className="fixed top-0 bottom-0 right-0 left-0 z-50 flex flex-col items-center justify-center w-11/12 h-2/3 mx-auto my-auto">
-            <div className="relative flex items-center justify-center flex-grow flex-wrap border-8  bg-mpsecondary border-mpprimarydark rounded-lg pb-16">
-              {allCharacters.map((characterMap) => {
-                let character = characterMap[0];
-                return (
-                  <div
-                    className="cursor-pointer py-1  w-[7.69%] h-[14.29%] flex items-center justify-center"
-                    key={character}
-                    value={character}
-                    onClick={(e) => {
-                      setFocusedCharacter(
-                        e.currentTarget.getAttribute("value")
-                      );
-                    }}
-                  >
+            <div className="relative border-8 bg-mpsecondary border-mpprimarydark rounded-lg">
+              <div className="flex flex-wrap items-center justify-center flex-grow">
+                {allCharacters.map((characterMap) => {
+                  let character = characterMap[0];
+                  return (
                     <div
-                      className={
-                        "rounded-lg p-3 border-2" +
-                        (character == focusedCharacter
-                          ? " bg-mpprimarydark border-mpprimary"
-                          : " hover:bg-mpprimary border-transparent")
-                      }
+                      className="cursor-pointer py-1  w-[7.69%] h-[14.29%] flex items-center justify-center"
+                      key={character}
+                      value={character}
+                      onClick={(e) => {
+                        setFocusedCharacter(
+                          e.currentTarget.getAttribute("value")
+                        );
+                      }}
                     >
-                      <img
-                        src={characterMap[1].image}
-                        alt={`${character} stock icon.`}
-                      ></img>
+                      <div
+                        className={
+                          "rounded-lg p-3 border-2" +
+                          (character === focusedCharacter
+                            ? " bg-mpprimarydark border-mpprimary"
+                            : " hover:bg-mpprimary border-transparent")
+                        }
+                      >
+                        <img
+                          src={characterMap[1].image}
+                          alt={`${character} stock icon.`}
+                        ></img>
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
-            <div className="-mt-16 z-50 flex justify-between w-5/6">
-              <div
-                className="text-2xl text-mpprimary border-2 border-mpprimary rounded-md py-1 px-4"
-                onClick={() => setShowCharacterModal(false)}
-              >
-                Cancel
+                  );
+                })}
               </div>
-              <div
-                className="text-2xl text-mpsecondary bg-mpprimary border-2 border-mpprimarydark rounded-md py-1 px-4"
-                onClick={() => handleCharacterSelect(focusedCharacter)}
-              >
-                Confirm
+              <div className="z-50 flex justify-between mx-10 mb-3">
+                <div
+                  className="text-2xl text-mpprimary border-2 border-mpprimary rounded-md py-1 px-4"
+                  onClick={() => setShowCharacterModal(false)}
+                >
+                  Cancel
+                </div>
+                <div
+                  className="text-2xl text-mpsecondary bg-mpprimary border-2 border-mpprimarydark rounded-md py-1 px-4"
+                  onClick={() => handleCharacterSelect(focusedCharacter)}
+                >
+                  Confirm
+                </div>
               </div>
             </div>
           </div>
