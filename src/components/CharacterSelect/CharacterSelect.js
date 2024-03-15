@@ -15,7 +15,6 @@ const CharacterSelect = ({
     setCharacter(character);
     setShowCharacterModal(false);
   };
-
   return (
     <div className="entrant flex flex-col justify-around px-5">
       <div className="flex items-center justify-center">
@@ -47,11 +46,13 @@ const CharacterSelect = ({
       {showCharacterModal ? (
         <>
           <div className="fixed inset-0 z-50 flex flex-col items-center justify-center h-2/3 my-auto">
-            <div className="relative w-auto mx-auto max-w-7xl flex items-center justify-center flex-grow flex-wrap border-8  bg-mpsecondary border-mpprimarydark rounded-lg pb-16">
-              {allCharacters.map((character) => {
+            <div className="relative mx-16 flex items-center justify-center flex-grow flex-wrap border-8  bg-mpsecondary border-mpprimarydark rounded-lg pb-16">
+              {allCharacters.map((characterMap) => {
+                console.log(characterMap);
+                let character = characterMap[0];
                 return (
                   <div
-                    className={`dropdown-item-${player} cursor-pointer py-1  w-[7.69%] flex items-center justify-center`}
+                    className="cursor-pointer py-1  w-[7.69%] flex items-center justify-center"
                     key={character}
                     value={character}
                     onClick={(e) => {
@@ -70,7 +71,7 @@ const CharacterSelect = ({
                     >
                       <img
                         className="w-12 h-12"
-                        src={counterpicks.characters[`${character}`].image}
+                        src={characterMap[1].image}
                         alt={`${character} stock icon.`}
                       ></img>
                     </div>
