@@ -23,7 +23,7 @@ const Counterpick = ({
   const [player1Name] = useState(set.slots[0].entrant.participants[0].gamerTag);
   const [player2Name] = useState(set.slots[1].entrant.participants[0].gamerTag);
   const allCharacters = Object.entries(counterpicks.characters).sort((a, b) => {
-    return a[1].order - b[1]-order;
+    return a[1].order - b[1].order;
   });
 
   // prettier-ignore
