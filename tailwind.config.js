@@ -6,7 +6,7 @@ module.exports = {
       colors: {
         mpprimary: "#aec4d4",
         mpprimarydark: "#57626a",
-        mpsecondary: "#10223e",
+        mpsecondary: "#112544",
       },
     },
   },
