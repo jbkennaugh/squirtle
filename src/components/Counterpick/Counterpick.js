@@ -96,10 +96,8 @@ const Counterpick = ({
     <div>
       <div
         className="back-to-char-select flex absolute items-center cursor-pointer top-7 left-5"
-        onClick={
-          charactersChosen
-            ? () => setCharChosen(false)
-            : () => setActiveDiv("streamQueue")
+        onClick={() =>
+          charactersChosen ? setCharChosen(false) : setActiveDiv("streamQueue")
         }
       >
         <svg

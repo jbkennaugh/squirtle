@@ -93,7 +93,10 @@ const SetReporter = ({ set, setActiveDiv, updateSetData }) => {
             <div className="w-1/2 mx-auto">
               <div
                 className="back-to-char-select flex absolute items-center cursor-pointer top-7 left-5"
-                onClick={() => setBestOf(null)}
+                onClick={() => {
+                  setCounterpickDone(false);
+                  setSelectedStage(null);
+                }}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
