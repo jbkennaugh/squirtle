@@ -60,14 +60,21 @@ const StageBanner = ({ gameNumber, stages, setSelectedStage }) => {
           >
             Reset bans
           </button>
-          <div className="stage-list flex flex-wrap justify-center  text-mpsecondary">
+          <div className="flex flex-wrap justify-center text-mpsecondary">
             {stages.legal.starters.map((stage) => {
-              return !bannedStages.includes(stage) ? (
+              return (
                 <div
                   className={
-                    "text-lg m-3 w-1/4 text-center flex flex-col justify-end rounded-md border-2 border-transparent bg-mpprimary hover:border-mpprimarydark hover:cursor-pointer"
+                    "text-lg m-3 w-1/4 text-center flex flex-col justify-end rounded-md border-2 border-transparent" +
+                    bannedStages.includes(stage)
+                      ? " bg-gray-500"
+                      : " bg-mpprimary hover:border-mpprimarydark hover:cursor-pointer"
                   }
-                  onClick={() => handleStageSelection(stage)}
+                  onClick={() =>
+                    bannedStages.includes(stage)
+                      ? null
+                      : handleStageSelection(stage)
+                  }
                   key={stage}
                 >
                   <img
@@ -75,21 +82,6 @@ const StageBanner = ({ gameNumber, stages, setSelectedStage }) => {
                     src={stageImages[stage]}
                     alt={`${stage}`}
                   ></img>
-                </div>
-              ) : (
-                <div
-                  className={
-                    "text-lg m-3 w-1/4 text-center flex flex-col justify-end rounded-md border-2 border-transparent bg-gray-500"
-                  }
-                  key={stage}
-                >
-                  <div className="bg-red-500">
-                    <img
-                      className="rounded-sm opacity-50"
-                      src={stageImages[stage]}
-                      alt={`${stage} stage.`}
-                    ></img>
-                  </div>
                 </div>
               );
             })}
