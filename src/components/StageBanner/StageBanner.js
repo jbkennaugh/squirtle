@@ -62,14 +62,14 @@ const StageBanner = ({ gameNumber, stages, setSelectedStage }) => {
           </button>
           <div className="flex flex-wrap justify-center text-mpsecondary">
             {stages.legal.starters.map((stage) => {
+              let isBanned = bannedStages.includes(stage);
+              let divClasses = isBanned
+                ? " bg-red-500"
+                : " bg-mpprimary hover:border-mpprimarydark hover:cursor-pointer";
+              let imgClasses = isBanned ? " opacity-50" : "";
               return (
                 <div
-                  className={
-                    "text-lg m-3 w-1/4 text-center flex flex-col justify-end rounded-md border-2 border-transparent" +
-                    bannedStages.includes(stage)
-                      ? " bg-gray-500"
-                      : " bg-mpprimary hover:border-mpprimarydark hover:cursor-pointer"
-                  }
+                  className={`text-lg m-3 w-1/4 text-center flex flex-col justify-end rounded-md border-2 border-transparent ${divClasses}`}
                   onClick={() =>
                     bannedStages.includes(stage)
                       ? null
@@ -78,7 +78,7 @@ const StageBanner = ({ gameNumber, stages, setSelectedStage }) => {
                   key={stage}
                 >
                   <img
-                    className="rounded-sm text-center"
+                    className={`rounded-sm text-center ${imgClasses}`}
                     src={stageImages[stage]}
                     alt={`${stage}`}
                   ></img>
