@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 const StreamQueue = ({ setSelectedSet }) => {
   const [sets, updateSets] = useState(null);
   const [isLoading, setLoading] = useState(true);
-  const weeklyName = "extrapoint-10"; //queries.getWeeklyName();
+  const weeklyName = queries.getWeeklyName();
 
   // very temporary function to allow it to know which MeltingPoint weekly it is being used for
   // before making it get it from a selected tournament.
