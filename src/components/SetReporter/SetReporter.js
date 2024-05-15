@@ -32,22 +32,22 @@ const SetReporter = ({ set, setActiveDiv, updateSetData }) => {
       setCounterpickDone(false);
       setSelectedStage(null);
       const maxWins = Math.ceil(bestOf / 2);
+      const setData = {
+        setId: set.id,
+        gameData: confirmedGamesData,
+      };
       if (player1Wins === maxWins || player2Wins === maxWins) {
         const winnerId =
           player1Wins > player2Wins
             ? set.slots[0].entrant.id
             : set.slots[1].entrant.id;
-        const setData = {
-          setId: set.id,
-          winnerId: winnerId,
-          gameData: confirmedGamesData,
-        };
+        setData.winnerId = winnerId;
         setPreviousGameData({});
-        updateSetData(setData);
         setActiveDiv("streamQueue");
       } else {
         setGameNumber(gameNumber + 1);
       }
+      updateSetData(setData);
     }
   }, [confirmedGamesData]);
 

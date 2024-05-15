@@ -60,10 +60,12 @@ function App() {
   useEffect(() => {
     if (Object.keys(setData).length !== 0) {
       queries.reportSet(setData);
-      setActiveDiv("scoreReported");
-      setTimeout(() => {
-        setActiveDiv("streamQueue");
-      }, 10000);
+      if (setData.winnerId) {
+        setActiveDiv("scoreReported");
+        setTimeout(() => {
+          setActiveDiv("streamQueue");
+        }, 10000);
+      }
     }
   }, [setData]);
 

@@ -5,5 +5,5 @@
   "standings": "query EventStandings($eventId: ID!, $page: Int!, $perPage: Int!) {event(id: $eventId) {id name standings(query: {perPage: $perPage,page: $page}){nodes {placement entrant {id name}}}}}",
   "sets": "query EventSets($eventId: ID!, $page: Int!, $perPage: Int!) { event(id: $eventId) {sets(page: $page perPage: $perPage sortType: STANDARD) {pageInfo {total} nodes {id slots {entrant {name}}}}}}",
   "tournamentsByRole": "query TournamentsByAdmin($userId: ID!, $role: String!) {user(id: $userId) {tournaments(query: {filter: {tournamentView:'admin' upcoming: true}}) {nodes {name}}}}",
-  "reportSet": "mutation reportSet($setId: ID!, $winnerId: ID!, $gameData: [BracketSetGameDataInput]) {reportBracketSet(setId: $setId, winnerId: $winnerId, gameData: $gameData) {id state}}"
+  "reportSet": "mutation reportSet($setId: ID!, $winnerId: ID, $gameData: [BracketSetGameDataInput]) {reportBracketSet(setId: $setId, winnerId: $winnerId, gameData: $gameData) {id state}}"
 }
