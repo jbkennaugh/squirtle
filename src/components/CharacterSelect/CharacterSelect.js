@@ -64,14 +64,14 @@ const CharacterSelect = ({
                     >
                       <div
                         className={
-                          " rounded-lg p-3 border-2 w-full h-full" +
+                          " rounded-lg border-2 w-full h-full" +
                           (character === focusedCharacter
                             ? " bg-mpprimarydark border-mpprimary"
                             : " hover:bg-mpprimary border-transparent")
                         }
                       >
                         <img
-                          className="w-full h-full"
+                          className="w-full h-full p-1"
                           src={characterMap[1].image}
                           alt={`${character} stock icon.`}
                         ></img>
