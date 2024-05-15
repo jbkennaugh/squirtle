@@ -3,20 +3,28 @@ import { stageImages } from "./stages";
 
 const StageBanner = ({ gameNumber, stages, setSelectedStage }) => {
   const [bannedStages, setBannedStages] = useState([]);
+  const [isGentleman, setGentleman] = useState(false);
 
   const handleStageSelection = (stage) => {
-    const newBannedStages = [...bannedStages, stage];
-    if (gameNumber === 1) {
-      if (bannedStages.length < 7) {
-        setBannedStages(newBannedStages);
-      } else {
-        setSelectedStage(stage);
-      }
+    if (isGentleman) {
+      setSelectedStage(stage);
+      setGentleman(false);
     } else {
-      if (bannedStages.length <= 2) {
-        setBannedStages(newBannedStages);
+      const newBannedStages = [...bannedStages, stage];
+      if (gameNumber === 1) {
+        if (bannedStages.length < 7) {
+          setBannedStages(newBannedStages);
+        } else {
+          setSelectedStage(stage);
+          setGentleman(false);
+        }
       } else {
-        setSelectedStage(stage);
+        if (bannedStages.length <= 2) {
+          setBannedStages(newBannedStages);
+        } else {
+          setSelectedStage(stage);
+          setGentleman(false);
+        }
       }
     }
   };
@@ -54,18 +62,34 @@ const StageBanner = ({ gameNumber, stages, setSelectedStage }) => {
           <h1 className="text-3xl text-white pb-5 mb-5 text-center">
             {getHeadingText(gameNumber)}
           </h1>
-          <button
-            className="mb-4 mx-5 p-4 hover:text-mpsecondary border border-mpprimary hover:bg-mpprimary rounded-lg py-2.5 text-center text-2xl w-1/2"
-            onClick={handleResetBans}
-          >
-            Reset bans
-          </button>
+          <div className="flex">
+            <button
+              className="mb-4 mx-5 p-4 border border-mpprimary rounded-lg py-2.5 text-center text-2xl w-2/3"
+              onClick={handleResetBans}
+            >
+              Reset bans
+            </button>
+            <button
+              className={`mb-4 mx-5 p-4 border-4 bg-mpprimary rounded-lg py-2.5 text-center text-2xl ${
+                isGentleman
+                  ? "text-green-700 border-green-700"
+                  : "text-red-700 border-red-700"
+              }`}
+              onClick={() => setGentleman(!isGentleman)}
+            >
+              {isGentleman ? "Gentleman On" : "Gentleman Off"}
+            </button>
+          </div>
+
           <div className="flex flex-wrap justify-center text-mpsecondary">
             {stages.legal.starters.map((stage) => {
               let isBanned = bannedStages.includes(stage);
               let divClasses = isBanned
                 ? " bg-red-500"
-                : " bg-mpprimary hover:border-mpprimarydark hover:cursor-pointer";
+                : " bg-mpprimary hover:cursor-pointer";
+              divClasses += isGentleman
+                ? " hover:border-green-500 hover:border-4"
+                : " hover:border-mpprimarydark";
               let imgClasses = isBanned ? " opacity-50" : "";
               return (
                 <div
