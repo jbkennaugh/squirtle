@@ -112,21 +112,27 @@ const SetReporter = ({ set, setActiveDiv, updateSetData }) => {
                     d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
                   />
                 </svg>
-                <h1 className="text-2xl">Re-select</h1>
+                <h1 className="text-2xl">
+                  {counterpickDone
+                    ? `Redo game #${gameNumber} bans`
+                    : "Reselect set"}
+                </h1>
               </div>
               <h1 className="text-6xl py-5 text-center">{`Game ${gameNumber}`}</h1>
-              <h1 className="text-4xl py-5 mb-2 text-center">{`${selectedStage}`}</h1>
+              <h1 className="text-4xl py-5 text-center">{`${selectedStage}`}</h1>
               <div className="flex flex-col">
                 <ul className="grid w-full gap-6 md:grid-cols-2">
                   <WinReporter
                     player={1}
                     playerName={player1Name}
+                    playerCharacter={characters.player1[gameNumber - 1]}
                     gameWinner={gameWinner}
                     setGameWinner={setGameWinner}
                   ></WinReporter>
                   <WinReporter
                     player={2}
                     playerName={player2Name}
+                    playerCharacter={characters.player2[gameNumber - 1]}
                     gameWinner={gameWinner}
                     setGameWinner={setGameWinner}
                   ></WinReporter>

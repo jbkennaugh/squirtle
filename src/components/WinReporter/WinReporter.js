@@ -1,4 +1,10 @@
-const WinReporter = ({ player, playerName, gameWinner, setGameWinner }) => {
+const WinReporter = ({
+  player,
+  playerName,
+  playerCharacter,
+  gameWinner,
+  setGameWinner,
+}) => {
   return (
     <div
       className={
@@ -10,7 +16,10 @@ const WinReporter = ({ player, playerName, gameWinner, setGameWinner }) => {
       onClick={() => setGameWinner(player)}
     >
       <div className="flex justify-between items-center">
-        <div className="w-full text-3xl font-bold">{playerName}</div>
+        <div className="w-full font-bold">
+          <p className="text-3xl ">{playerName}</p>
+          <p className="text-xl">{playerCharacter}</p>
+        </div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

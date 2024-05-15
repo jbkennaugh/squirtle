@@ -114,7 +114,9 @@ const Counterpick = ({
             d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
           />
         </svg>
-        <h1 className="text-2xl">Re-select</h1>
+        <h1 className="text-2xl">
+          {charactersChosen ? "Reselect characters" : "Reselect set"}
+        </h1>
       </div>
       <h1 className="text-5xl py-5 mb-2 text-center">{`Game ${gameNumber}`}</h1>
       <div className="container w-4/5 mx-auto">
