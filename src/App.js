@@ -53,6 +53,7 @@ function App() {
 
   useEffect(() => {
     if (selectedSet) {
+      queries.markSetInProgress(selectedSet.id);
       setActiveDiv("setChosen");
     }
   }, [selectedSet]);

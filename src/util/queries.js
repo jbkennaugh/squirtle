@@ -204,6 +204,42 @@ export async function reportSet(setData) {
     });
 }
 
+// marks a set as in progress - useful if you want to see which set is being reported by if it is underway
+export async function markSetInProgress(setId) {
+  await fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify({
+      query: queries.markSetInProgress,
+      variables: {
+        setId: setId,
+      },
+    }),
+  })
+    .then((r) => r.json())
+    .then((data) => {
+      console.log(data);
+    });
+}
+
+// resets a set and all associated data
+export async function resetSet(setId) {
+  await fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify({
+      query: queries.resetSet,
+      variables: {
+        setId: setId,
+      },
+    }),
+  })
+    .then((r) => r.json())
+    .then((data) => {
+      console.log(data);
+    });
+}
+
 // very temporary function to allow it to know which ExtraPoint weekly it is being used for
 // before making it available to select a tournament.
 export function getWeeklyName() {
