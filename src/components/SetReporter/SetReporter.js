@@ -163,6 +163,8 @@ const SetReporter = ({ set, setActiveDiv, updateSetData }) => {
                 setCharacters={setCharacters}
                 previousGameData={previousGameData}
                 setPreviousGameData={setPreviousGameData}
+                bestOf={bestOf}
+                setBestOf={setBestOf}
               ></Counterpick>
             )}
           </>

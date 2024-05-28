@@ -15,6 +15,8 @@ const Counterpick = ({
   setCharacters,
   previousGameData,
   setPreviousGameData,
+  bestOf,
+  setBestOf,
 }) => {
   const [character1, setCharacter1] = useState();
   const [character2, setCharacter2] = useState();
@@ -122,6 +124,31 @@ const Counterpick = ({
         <h1 className="text-2xl">
           {charactersChosen ? "Reselect characters" : "Reselect set"}
         </h1>
+      </div>
+      <div className="flex flex-col absolute items-center cursor-pointer top-24 left-5 w-1/4 text-xl">
+        <h1 className="text-2xl">Best Of:</h1>
+        <div className="flex justify-around w-full">
+          <button
+            className={`border rounded-lg text-center p-2 ${
+              bestOf === 3
+                ? "text-mpsecondary bg-mpprimary"
+                : "text-mpprimary  border-mpprimary border "
+            }`}
+            onClick={() => setBestOf(3)}
+          >
+            Best of 3
+          </button>
+          <button
+            className={`rounded-lg text-center p-2 ${
+              bestOf === 5
+                ? "text-mpsecondary bg-mpprimary"
+                : "text-mpprimary border-mpprimary border"
+            }`}
+            onClick={() => setBestOf(5)}
+          >
+            Best of 5
+          </button>
+        </div>
       </div>
       <h1 className="text-5xl py-5 mb-2 text-center">{`Game ${gameNumber}`}</h1>
       <div className="container w-4/5 mx-auto">
