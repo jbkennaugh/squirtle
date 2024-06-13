@@ -101,7 +101,7 @@ const SetReporter = ({ set }) => {
 
   return (
     <div className="mt-[15vh]">
-      <div className="w-1/2 mx-auto">
+      <div className="w-3/4 mx-auto">
         {bestOf ? (
           <>
             {counterpickDone ? (
