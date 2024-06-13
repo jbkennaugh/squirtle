@@ -3,11 +3,11 @@ import CharacterSelect from "../CharacterSelect/CharacterSelect";
 import * as queries from "../../util/queries";
 import StageBanner from "../StageBanner/StageBanner";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Counterpick = ({
   set,
   gameNumber,
-  setActiveDiv,
   setCounterpickDone,
   selectedStage,
   setSelectedStage,
@@ -18,6 +18,7 @@ const Counterpick = ({
   bestOf,
   setBestOf,
 }) => {
+  const navigate = useNavigate();
   const [character1, setCharacter1] = useState();
   const [character2, setCharacter2] = useState();
   const [stages] = useState(counterpicks.stages);
@@ -97,13 +98,13 @@ const Counterpick = ({
   return (
     <div>
       <div
-        className="back-to-char-select flex absolute items-center cursor-pointer top-7 left-5"
+        className="flex absolute items-center cursor-pointer top-7 left-5"
         onClick={
           charactersChosen
             ? () => setCharChosen(false)
             : () => {
                 queries.resetSet(set.id).then((res) => console.log(res));
-                setActiveDiv("streamQueue");
+                navigate("/streamQueue");
               }
         }
       >
@@ -202,16 +203,13 @@ const Counterpick = ({
             </div>
           </div>
         )}
-        {charactersChosen &&
-          (selectedStage ? (
-            <div></div>
-          ) : (
-            <StageBanner
-              gameNumber={gameNumber}
-              stages={stages}
-              setSelectedStage={setSelectedStage}
-            ></StageBanner>
-          ))}
+        {charactersChosen && (
+          <StageBanner
+            gameNumber={gameNumber}
+            stages={stages}
+            setSelectedStage={setSelectedStage}
+          ></StageBanner>
+        )}
       </div>
     </div>
   );
