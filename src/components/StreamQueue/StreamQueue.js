@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { intervalCollection } from "time-events-manager";
 import * as queries from "../../util/queries";
 import { useEffect, useState } from "react";
 
@@ -32,6 +33,7 @@ const StreamQueue = ({ setSelectedSet }) => {
     }
     // updates sets every 5 seconds
     setInterval(() => {
+      console.log("Getting sets");
       queries.getStreamQueueByTournament(weeklyName).then((res) => {
         updateSets(res);
       });
@@ -66,6 +68,7 @@ const StreamQueue = ({ setSelectedSet }) => {
                   set.slots[0].entrant && set.slots[1].entrant
                     ? () => {
                         setSelectedSet(set);
+                        intervalCollection.removeAll();
                         navigate("/setReporter");
                       }
                     : null
