@@ -9,8 +9,8 @@ import { useNavigate } from "react-router-dom";
 const SetReporter = ({ set }) => {
   const navigate = useNavigate();
   const [counterpickDone, setCounterpickDone] = useState(false);
-  const [player1Name] = useState(set.slots[0].entrant.participants[0].gamerTag);
-  const [player2Name] = useState(set.slots[1].entrant.participants[0].gamerTag);
+  const [player1Name, setP1Name] = useState();
+  const [player2Name, setP2Name] = useState();
   const [player1Wins, increasePlayer1Wins] = useState(0);
   const [player2Wins, increasePlayer2Wins] = useState(0);
   const [gameNumber, setGameNumber] = useState(1);
@@ -24,6 +24,18 @@ const SetReporter = ({ set }) => {
     player2: [],
   });
   const [setData, updateSetData] = useState({});
+
+  useEffect(() => {
+    console.log(set);
+    if (!set) {
+      console.log("Hello");
+      navigate("/streamQueue");
+    } else {
+      setP1Name(set.slots[0].entrant.participants[0].gamerTag);
+      setP2Name(set.slots[1].entrant.participants[0].gamerTag);
+    }
+  }, []);
+
   useEffect(() => {
     if (Object.keys(setData).length !== 0) {
       queries.reportSet(setData);
@@ -101,7 +113,7 @@ const SetReporter = ({ set }) => {
 
   return (
     <div className="mt-[15vh]">
-      <div className="w-1/2 mx-auto">
+      <div className="w-3/4 mx-auto">
         {bestOf ? (
           <>
             {counterpickDone ? (

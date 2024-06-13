@@ -42,6 +42,10 @@ function App() {
       <Router>
         <Routes>
           <Route path="/tournamentList" element={<TournamentList />} />
+          <Route // temporary have stream queue at root until login is setup
+            path="/"
+            element={<StreamQueue setSelectedSet={setSelectedSet} />}
+          />
           <Route
             path="/streamQueue"
             element={<StreamQueue setSelectedSet={setSelectedSet} />}
