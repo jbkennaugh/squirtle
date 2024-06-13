@@ -243,7 +243,7 @@ export async function resetSet(setId) {
 // very temporary function to allow it to know which ExtraPoint weekly it is being used for
 // before making it available to select a tournament.
 export function getWeeklyName() {
-  const startDate = new Date("2024-02-15");
+  const startDate = new Date("2024-02-18");
   const difference = new Date() - startDate;
 
   const weeklyName = `extrapoint-${
