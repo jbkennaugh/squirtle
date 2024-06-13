@@ -1,74 +1,20 @@
 import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import SetReporter from "./components/SetReporter/SetReporter";
 import StreamQueue from "./components/StreamQueue/StreamQueue";
+import TournamentList from "./components/TournamentList/TournamentList";
 import * as queries from "./util/queries";
 
 import { useEffect, useState } from "react";
 
 function App() {
-  const [activeDiv, setActiveDiv] = useState("streamQueue");
   const [selectedSet, setSelectedSet] = useState();
-  /**
-   * Information pushed to setData should be an object with all the data about a set, in the format:
-   * {
-   *  setId: someInt,
-   *  winnerId: "setWinningPlayerId",
-   *  // ordered array from game 1 onwards with info of each game
-   *  "gameData": [
-        {
-          "winnerId": "setWinnersID",
-          "gameNum": 1,
-          "stageId": 3,
-          "selections": [
-            {
-              "entrantId": player1ID,
-              "characterId": player2CharacterIDGame1
-            },
-            {
-              "entrantId": player2ID,
-              "characterId": player2CharacterIDGame1
-            }
-          ]
-        },
-        {
-          "winnerId": 14259653,
-          "gameNum": 2,
-          "entrant1Score": 0,
-          "entrant2Score": 3,
-          "selections": [
-            {
-              "entrantId": player1ID,
-              "characterId": player2CharacterIDGame2
-            },
-            {
-              "entrantId": player2ID,
-              "characterId": player2CharacterIDGame2
-            }
-          ]
-        }
-      ],
-   * }
-   */
-  const [setData, updateSetData] = useState({});
 
   useEffect(() => {
     if (selectedSet) {
       queries.markSetInProgress(selectedSet.id);
-      setActiveDiv("setChosen");
     }
   }, [selectedSet]);
-
-  useEffect(() => {
-    if (Object.keys(setData).length !== 0) {
-      queries.reportSet(setData);
-      if (setData.winnerId) {
-        setActiveDiv("scoreReported");
-        setTimeout(() => {
-          setActiveDiv("streamQueue");
-        }, 10000);
-      }
-    }
-  }, [setData]);
 
   return (
     <div className="App">
@@ -93,23 +39,29 @@ function App() {
           />
         </svg>
       </button>
-      {activeDiv === "streamQueue" && (
-        <StreamQueue setSelectedSet={setSelectedSet}></StreamQueue>
-      )}
-      {activeDiv === "setChosen" && (
-        <SetReporter
-          set={selectedSet}
-          setActiveDiv={setActiveDiv}
-          updateSetData={updateSetData}
-        ></SetReporter>
-      )}
-      {activeDiv === "scoreReported" && (
-        <div className="container w-2/3 mx-auto">
-          <h1 className="text-center text-6xl mt-[40vh]">
-            Set reported. Returning to stream queue!
-          </h1>
-        </div>
-      )}
+      <Router>
+        <Routes>
+          <Route path="/tournamentList" element={<TournamentList />} />
+          <Route
+            path="/streamQueue"
+            element={<StreamQueue setSelectedSet={setSelectedSet} />}
+          />
+          <Route
+            path="/setReporter"
+            element={<SetReporter set={selectedSet} />}
+          />
+          <Route
+            path="/setReported"
+            element={
+              <div className="container w-2/3 mx-auto">
+                <h1 className="text-center text-6xl mt-[40vh]">
+                  Set reported. Returning to stream queue!
+                </h1>
+              </div>
+            }
+          />
+        </Routes>
+      </Router>
     </div>
   );
 }

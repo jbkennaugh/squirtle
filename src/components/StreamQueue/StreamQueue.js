@@ -1,10 +1,14 @@
+import { useNavigate } from "react-router-dom";
 import * as queries from "../../util/queries";
 import { useEffect, useState } from "react";
 
 const StreamQueue = ({ setSelectedSet }) => {
+  const navigate = useNavigate();
   const [sets, updateSets] = useState(null);
   const [isLoading, setLoading] = useState(true);
-  const weeklyName = queries.getWeeklyName();
+  const weeklyName = process.env.REACT_APP_TEST_MODE
+    ? "ep-testing"
+    : queries.getWeeklyName();
 
   // very temporary function to allow it to know which MeltingPoint weekly it is being used for
   // before making it get it from a selected tournament.
@@ -20,18 +24,18 @@ const StreamQueue = ({ setSelectedSet }) => {
   };
 
   useEffect(() => {
-    // updates sets every 60 seconds
     if (!sets) {
       queries.getStreamQueueByTournament(weeklyName).then((res) => {
         updateSets(res);
         setLoading(false);
       });
     }
+    // updates sets every 5 seconds
     setInterval(() => {
       queries.getStreamQueueByTournament(weeklyName).then((res) => {
         updateSets(res);
       });
-    }, 60 * 1000);
+    }, 5 * 1000);
   }, []);
 
   return (
@@ -60,7 +64,10 @@ const StreamQueue = ({ setSelectedSet }) => {
                 }
                 onClick={
                   set.slots[0].entrant && set.slots[1].entrant
-                    ? () => setSelectedSet(set)
+                    ? () => {
+                        setSelectedSet(set);
+                        navigate("/setReporter");
+                      }
                     : null
                 }
                 key={`${player1Name}Vs${player2Name}Rnd${set.fullRoundText}`}

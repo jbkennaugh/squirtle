@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import Counterpick from "../Counterpick/Counterpick";
 import WinReporter from "../WinReporter/WinReporter";
 import * as queries from "../../util/queries";
+import { useNavigate } from "react-router-dom";
 
-const SetReporter = ({ set, setActiveDiv, updateSetData }) => {
+const SetReporter = ({ set }) => {
+  const navigate = useNavigate();
   const [counterpickDone, setCounterpickDone] = useState(false);
   const [player1Name] = useState(set.slots[0].entrant.participants[0].gamerTag);
   const [player2Name] = useState(set.slots[1].entrant.participants[0].gamerTag);
@@ -21,6 +23,18 @@ const SetReporter = ({ set, setActiveDiv, updateSetData }) => {
     player1: [],
     player2: [],
   });
+  const [setData, updateSetData] = useState({});
+  useEffect(() => {
+    if (Object.keys(setData).length !== 0) {
+      queries.reportSet(setData);
+      if (setData.winnerId) {
+        navigate("/setReported");
+        setTimeout(() => {
+          navigate("/streamQueue");
+        }, 10000);
+      }
+    }
+  }, [setData]);
 
   useEffect(() => {
     if (confirmedGamesData[gameNumber - 1]) {
@@ -44,7 +58,6 @@ const SetReporter = ({ set, setActiveDiv, updateSetData }) => {
             : set.slots[1].entrant.id;
         setData.winnerId = winnerId;
         setPreviousGameData({});
-        setActiveDiv("streamQueue");
       } else {
         setGameNumber(gameNumber + 1);
       }
@@ -89,40 +102,42 @@ const SetReporter = ({ set, setActiveDiv, updateSetData }) => {
   return (
     <div className="mt-[15vh]">
       <div className="w-1/2 mx-auto">
-        <div
-          className="back-to-char-select flex absolute items-center cursor-pointer top-7 left-5"
-          onClick={() => {
-            queries.resetSet(set.id).then((res) => console.log(res));
-            if (bestOf) {
-              setCounterpickDone(false);
-              setSelectedStage(null);
-            } else {
-              setActiveDiv("streamQueue");
-            }
-          }}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 25 25"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-12"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
-            />
-          </svg>
-          <h1 className="text-2xl">
-            {counterpickDone ? `Redo game #${gameNumber} bans` : "Reselect set"}
-          </h1>
-        </div>
         {bestOf ? (
           <>
             {counterpickDone ? (
               <>
+                <div
+                  className="flex absolute items-center cursor-pointer top-7 left-5"
+                  onClick={() => {
+                    queries.resetSet(set.id).then((res) => console.log(res));
+                    if (bestOf) {
+                      setCounterpickDone(false);
+                      setSelectedStage(null);
+                    } else {
+                      navigate("/streamQueue");
+                    }
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 25 25"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-12"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+                    />
+                  </svg>
+                  <h1 className="text-2xl">
+                    {counterpickDone
+                      ? `Redo game #${gameNumber} bans`
+                      : "Reselect set"}
+                  </h1>
+                </div>
                 <h1 className="text-6xl py-5 text-center">{`Game ${gameNumber}`}</h1>
                 <h1 className="text-4xl py-5 text-center">{`${selectedStage}`}</h1>
                 <div className="flex flex-col">
@@ -155,7 +170,6 @@ const SetReporter = ({ set, setActiveDiv, updateSetData }) => {
               <Counterpick
                 set={set}
                 gameNumber={gameNumber}
-                setActiveDiv={setActiveDiv}
                 setCounterpickDone={setCounterpickDone}
                 selectedStage={selectedStage}
                 setSelectedStage={setSelectedStage}
