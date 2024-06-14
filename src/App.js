@@ -54,16 +54,6 @@ function App() {
             path="/setReporter"
             element={<SetReporter set={selectedSet} />}
           />
-          <Route
-            path="/setReported"
-            element={
-              <div className="container w-2/3 mx-auto">
-                <h1 className="text-center text-6xl mt-[40vh]">
-                  Set reported. Returning to stream queue!
-                </h1>
-              </div>
-            }
-          />
         </Routes>
       </Router>
     </div>

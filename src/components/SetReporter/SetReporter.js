@@ -19,6 +19,7 @@ const SetReporter = ({ set }) => {
   const [previousGameData, setPreviousGameData] = useState();
   const [confirmedGamesData, updateConfirmedGamesData] = useState([]);
   const [selectedStage, setSelectedStage] = useState();
+  const [setReported, isSetReported] = useState(false);
   const [characters, setCharacters] = useState({
     player1: [],
     player2: [],
@@ -28,7 +29,6 @@ const SetReporter = ({ set }) => {
   useEffect(() => {
     console.log(set);
     if (!set) {
-      console.log("Hello");
       navigate("/streamQueue");
     } else {
       setP1Name(set.slots[0].entrant.participants[0].gamerTag);
@@ -40,7 +40,7 @@ const SetReporter = ({ set }) => {
     if (Object.keys(setData).length !== 0) {
       queries.reportSet(setData);
       if (setData.winnerId) {
-        navigate("/setReported");
+        isSetReported(true);
         setTimeout(() => {
           navigate("/streamQueue");
         }, 10000);
@@ -114,110 +114,118 @@ const SetReporter = ({ set }) => {
   return (
     <div className="mt-[15vh]">
       <div className="w-3/4 mx-auto">
-        {bestOf ? (
+        {!setReported ? (
           <>
-            {counterpickDone ? (
+            <div
+              className="flex absolute items-center cursor-pointer top-7 left-5"
+              onClick={() => {
+                queries.resetSet(set.id).then((res) => console.log(res));
+                if (bestOf) {
+                  setCounterpickDone(false);
+                  setSelectedStage(null);
+                } else {
+                  navigate("/streamQueue");
+                }
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 25 25"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-12"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+                />
+              </svg>
+              <h1 className="text-2xl">
+                {counterpickDone
+                  ? `Redo game #${gameNumber} bans`
+                  : "Reselect set"}
+              </h1>
+            </div>
+            {bestOf ? (
               <>
-                <div
-                  className="flex absolute items-center cursor-pointer top-7 left-5"
-                  onClick={() => {
-                    queries.resetSet(set.id).then((res) => console.log(res));
-                    if (bestOf) {
-                      setCounterpickDone(false);
-                      setSelectedStage(null);
-                    } else {
-                      navigate("/streamQueue");
-                    }
-                  }}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 25 25"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-12"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
-                    />
-                  </svg>
-                  <h1 className="text-2xl">
-                    {counterpickDone
-                      ? `Redo game #${gameNumber} bans`
-                      : "Reselect set"}
-                  </h1>
-                </div>
-                <h1 className="text-6xl py-5 text-center">{`Game ${gameNumber}`}</h1>
-                <h1 className="text-4xl py-5 text-center">{`${selectedStage}`}</h1>
-                <div className="flex flex-col">
-                  <ul className="grid w-full gap-6 md:grid-cols-2">
-                    <WinReporter
-                      player={1}
-                      playerName={player1Name}
-                      playerCharacter={characters.player1[gameNumber - 1]}
-                      gameWinner={gameWinner}
-                      setGameWinner={setGameWinner}
-                    ></WinReporter>
-                    <WinReporter
-                      player={2}
-                      playerName={player2Name}
-                      playerCharacter={characters.player2[gameNumber - 1]}
-                      gameWinner={gameWinner}
-                      setGameWinner={setGameWinner}
-                    ></WinReporter>
-                  </ul>
-                  <button
-                    type="button"
-                    className="text-mpsecondary border border-mpprimary bg-mpprimary rounded-lg px-5 py-2.5 mt-2 text-center text-2xl mr-2"
-                    onClick={handleConfirmedWinner}
-                  >
-                    {`Confirm game #${gameNumber} winner`}
-                  </button>
-                </div>
+                {counterpickDone ? (
+                  <>
+                    <h1 className="text-6xl py-5 text-center">{`Game ${gameNumber}`}</h1>
+                    <h1 className="text-4xl py-5 text-center">{`${selectedStage}`}</h1>
+                    <div className="flex flex-col">
+                      <ul className="grid w-full gap-6 md:grid-cols-2">
+                        <WinReporter
+                          player={1}
+                          playerName={player1Name}
+                          playerCharacter={characters.player1[gameNumber - 1]}
+                          gameWinner={gameWinner}
+                          setGameWinner={setGameWinner}
+                        ></WinReporter>
+                        <WinReporter
+                          player={2}
+                          playerName={player2Name}
+                          playerCharacter={characters.player2[gameNumber - 1]}
+                          gameWinner={gameWinner}
+                          setGameWinner={setGameWinner}
+                        ></WinReporter>
+                      </ul>
+                      <button
+                        type="button"
+                        className="text-mpsecondary border border-mpprimary bg-mpprimary rounded-lg px-5 py-2.5 mt-2 text-center text-2xl mr-2"
+                        onClick={handleConfirmedWinner}
+                      >
+                        {`Confirm game #${gameNumber} winner`}
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <Counterpick
+                    set={set}
+                    gameNumber={gameNumber}
+                    setCounterpickDone={setCounterpickDone}
+                    selectedStage={selectedStage}
+                    setSelectedStage={setSelectedStage}
+                    characters={characters}
+                    setCharacters={setCharacters}
+                    previousGameData={previousGameData}
+                    setPreviousGameData={setPreviousGameData}
+                    bestOf={bestOf}
+                    setBestOf={setBestOf}
+                  ></Counterpick>
+                )}
               </>
             ) : (
-              <Counterpick
-                set={set}
-                gameNumber={gameNumber}
-                setCounterpickDone={setCounterpickDone}
-                selectedStage={selectedStage}
-                setSelectedStage={setSelectedStage}
-                characters={characters}
-                setCharacters={setCharacters}
-                previousGameData={previousGameData}
-                setPreviousGameData={setPreviousGameData}
-                bestOf={bestOf}
-                setBestOf={setBestOf}
-              ></Counterpick>
+              <>
+                <h1 className="text-6xl py-5 mb-10 text-center">
+                  Select Set Length
+                </h1>
+                <div className="flex gap-5">
+                  <div
+                    className="w-full p-5 rounded-lg cursor-pointer border-2 bg-gray-800 hover:border-mpprimary hover:text-mpprimary border-gray-700 text-gray-400"
+                    onClick={() => setBestOf(3)}
+                  >
+                    <div className="flex justify-between items-center">
+                      <div className="w-full text-3xl font-bold">Best of 3</div>
+                    </div>
+                  </div>
+                  <div
+                    className="w-full p-5 rounded-lg cursor-pointer border-2 bg-gray-800 hover:border-mpprimary hover:text-mpprimary border-gray-700 text-gray-400"
+                    onClick={() => setBestOf(5)}
+                  >
+                    <div className="flex justify-between items-center">
+                      <div className="w-full text-3xl font-bold">Best of 5</div>
+                    </div>
+                  </div>
+                </div>
+              </>
             )}
           </>
         ) : (
-          <>
-            <h1 className="text-6xl py-5 mb-10 text-center">
-              Select Set Length
-            </h1>
-            <div className="flex gap-5">
-              <div
-                className="w-full p-5 rounded-lg cursor-pointer border-2 bg-gray-800 hover:border-mpprimary hover:text-mpprimary border-gray-700 text-gray-400"
-                onClick={() => setBestOf(3)}
-              >
-                <div className="flex justify-between items-center">
-                  <div className="w-full text-3xl font-bold">Best of 3</div>
-                </div>
-              </div>
-              <div
-                className="w-full p-5 rounded-lg cursor-pointer border-2 bg-gray-800 hover:border-mpprimary hover:text-mpprimary border-gray-700 text-gray-400"
-                onClick={() => setBestOf(5)}
-              >
-                <div className="flex justify-between items-center">
-                  <div className="w-full text-3xl font-bold">Best of 5</div>
-                </div>
-              </div>
-            </div>
-          </>
+          <h1 className="text-center text-6xl mt-[40vh]">
+            Set reported. Returning to stream queue!
+          </h1>
         )}
       </div>
     </div>
