@@ -26,9 +26,7 @@ const SetReporter = ({ set }) => {
   const [setData, updateSetData] = useState({});
 
   useEffect(() => {
-    console.log(set);
     if (!set) {
-      console.log("Hello");
       navigate("/streamQueue");
     } else {
       setP1Name(set.slots[0].entrant.participants[0].gamerTag);

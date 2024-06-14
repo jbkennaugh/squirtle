@@ -33,7 +33,6 @@ const StreamQueue = ({ setSelectedSet }) => {
     }
     // updates sets every 5 seconds
     setInterval(() => {
-      console.log("Getting sets");
       queries.getStreamQueueByTournament(weeklyName).then((res) => {
         updateSets(res);
       });
