@@ -44,7 +44,7 @@ const CharacterSelect = ({
           )}
         </h1>
       </div>
-      {showCharacterModal ? (
+      {showCharacterModal && (
         <>
           <div className="fixed top-0 bottom-0 right-0 left-0 z-50 flex flex-col items-center justify-center w-11/12 h-2/3 mx-auto my-auto">
             <div className="relative border-8 bg-mpprimary border-mpprimarydark rounded-lg">
@@ -101,7 +101,7 @@ const CharacterSelect = ({
             onClick={() => setShowCharacterModal(false)}
           ></div>
         </>
-      ) : null}
+      )}
     </div>
   );
 };

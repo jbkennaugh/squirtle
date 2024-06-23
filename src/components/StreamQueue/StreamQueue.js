@@ -1,7 +1,10 @@
+import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { intervalCollection } from "time-events-manager";
+
 import * as queries from "../../util/queries";
-import { useEffect, useState } from "react";
+import * as auth from "../../util/authentication";
 
 const StreamQueue = ({ setSelectedSet }) => {
   const navigate = useNavigate();
@@ -25,6 +28,9 @@ const StreamQueue = ({ setSelectedSet }) => {
   };
 
   useEffect(() => {
+    auth
+      .isTokenExpired()
+      .then((isExpired) => (isExpired ? navigate("/login") : null));
     if (!sets) {
       queries.getStreamQueueByTournament(weeklyName).then((res) => {
         updateSets(res);

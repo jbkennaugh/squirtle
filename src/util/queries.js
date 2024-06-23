@@ -1,6 +1,7 @@
+import Cookies from "js-cookie";
 import queries from "../data/all-queries.json";
 
-const apiKey = process.env.REACT_APP_STARTGG_API_KEY;
+const apiKey = Cookies.get("access_token");
 const url = "https://api.start.gg/gql/alpha";
 const headers = {
   "content-type": "application/json",
