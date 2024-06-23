@@ -1,6 +1,7 @@
 import Cookies from "js-cookie";
 import queries from "../data/all-queries.json";
 
+const isTestMode = process.env.REACT_APP_TEST_MODE;
 const apiKey = Cookies.get("access_token");
 const url = "https://api.start.gg/gql/alpha";
 const headers = {
@@ -9,7 +10,26 @@ const headers = {
   Authorization: "Bearer " + apiKey,
 };
 
-// gets event details from ID and Name
+//--------------------------------------------------- QUERIES ----------------------------------------------------------------
+export async function getCurrentUserId() {
+  return await fetch(url, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      Accept: "application/json",
+      Authorization: "Bearer " + apiKey,
+    },
+    body: JSON.stringify({
+      query: queries.currentUser,
+    }),
+  })
+    .then((r) => r.json())
+    .then((data) => {
+      return data.data.currentUser.id;
+    });
+}
+
+// gets event details from tournament and event Name
 export async function getEvent(tournamentName, eventName) {
   const eventSlug = `tournament/${tournamentName}/event/${eventName}`;
   const event = {
@@ -57,14 +77,6 @@ export async function getPhaseId(tournamentName, eventName) {
     });
   return phaseId;
 }
-
-// export async function getAllEventsBySeason(seasonName) {
-//   tournamentNames[`${seasonName}`].forEach((tournamentName) => {
-//     getEventId(tournamentName, "ultimate-singles").then((eventId) =>
-//       getAllSetsByEvent(eventId)
-//     );
-//   });
-// }
 
 export async function getAllSetsByEvent(eventId) {
   await fetch(url, {
@@ -132,9 +144,27 @@ export async function getStreamQueueByTournament(name) {
   return streamQueue;
 }
 
-// returns a list of tournaments where the current user is either admin or organiser
-export async function getTournamentsWithAdmin(userId) {
+// returns a list of events from tournaments where the current user is either admin or organiser
+export async function getTournamentsWithAdmin() {
+  if (isTestMode) {
+    return [
+      {
+        id: "tournament1",
+        name: "Tournament 1",
+        eventName: "Ultimate Singles",
+        slug: "",
+      },
+      {
+        id: "tournament2",
+        name: "Tournament 2",
+        eventName: "Ultimate Doubles",
+        slug: "",
+      },
+    ];
+  }
+
   let tournaments = [];
+  const USER_ID = Cookies.get("user_id");
 
   await fetch(url, {
     method: "POST",
@@ -142,21 +172,24 @@ export async function getTournamentsWithAdmin(userId) {
     body: JSON.stringify({
       query: queries.tournamentsByRole,
       variables: {
-        userId: userId,
+        userId: USER_ID,
         role: "admin",
       },
     }),
   })
     .then((r) => r.json())
     .then((data) => {
-      let tournamentData = {};
       data.data.user.tournaments.nodes.forEach((tournament) => {
-        tournamentData = {
-          id: tournament.id,
-          name: tournament.name,
-        };
+        tournament.events.forEach((event) => {
+          const eventData = {
+            id: tournament.id,
+            name: tournament.name,
+            eventName: event.name,
+            slug: event.slug,
+          };
+          tournaments.push(eventData);
+        });
       });
-      tournaments.push(tournamentData);
     });
 
   await fetch(url, {
@@ -165,25 +198,30 @@ export async function getTournamentsWithAdmin(userId) {
     body: JSON.stringify({
       query: queries.tournamentsByRole,
       variables: {
-        userId: userId,
+        userId: USER_ID,
         role: "organizing",
       },
     }),
   })
     .then((r) => r.json())
     .then((data) => {
-      let tournamentData = {};
       data.data.user.tournaments.nodes.forEach((tournament) => {
-        tournamentData = {
-          id: tournament.id,
-          name: tournament.name,
-        };
+        tournament.events.forEach((event) => {
+          const eventData = {
+            id: tournament.id,
+            name: tournament.name,
+            eventName: event.name,
+            slug: event.slug,
+          };
+          tournaments.push(eventData);
+        });
       });
-      tournaments.push(tournamentData);
     });
 
   return tournaments;
 }
+
+//--------------------------------------------------- MUTATIONS ----------------------------------------------------------------
 
 // returns a list of tournaments where the current user is either admin or organiser
 export async function reportSet(setData) {

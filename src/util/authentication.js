@@ -17,10 +17,10 @@ export async function isTokenExpired() {
 }
 
 export async function getAccessToken() {
-  const scopes = "tournament.manager tournament.reporter";
+  const scopes = "user.identity tournament.manager tournament.reporter";
   const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
   const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
-  const REDIRECT_URI = "http://localhost:3000/login_redirect";
+  const REDIRECT_URI = `${process.env.REACT_APP_BASE_URL}/login_redirect`;
 
   const REFRESH_TOKEN = Cookies.get("refresh_token");
   // not yet working

@@ -1,4 +1,3 @@
-import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { intervalCollection } from "time-events-manager";
@@ -6,9 +5,9 @@ import { intervalCollection } from "time-events-manager";
 import * as queries from "../../util/queries";
 import * as auth from "../../util/authentication";
 
-const StreamQueue = ({ setSelectedSet }) => {
+const StreamQueue = ({ setSelectedSet, tournament }) => {
   const navigate = useNavigate();
-  const [sets, updateSets] = useState(null);
+  const [sets, updateSets] = useState();
   const [isLoading, setLoading] = useState(true);
   const weeklyName = process.env.REACT_APP_TEST_MODE
     ? "ep-testing"
@@ -47,7 +46,7 @@ const StreamQueue = ({ setSelectedSet }) => {
 
   return (
     <div className="container w-2/3 mx-auto">
-      <h1 className="text-5xl text-mpprimary py-5 text-center">{`${getTournamentName()} Stream Sets:`}</h1>
+      <h1 className="text-5xl text-mpprimary py-5 text-center">{`${tournament.name} (${tournament.eventName}) Stream Sets:`}</h1>
       <ul className="stream-queue">
         {isLoading ? (
           <h1 className="text-4xl py-5 text-center text-white">

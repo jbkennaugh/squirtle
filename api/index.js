@@ -2,11 +2,10 @@ const express = require("express");
 const axios = require("axios");
 const app = express();
 
-const scopes =
-  "user.identity,user.email,tournament.manager,tournament.reporter";
+const scopes = "user.identity tournament.manager tournament.reporter";
 const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
-const REDIRECT_URI = "http://localhost:3000/login_redirect";
+const REDIRECT_URI = `${process.env.REACT_APP_BASE_URL}/login_redirect`;
 
 app.get("/login_redirect", function (req, res) {
   const {
@@ -39,7 +38,7 @@ app.get("/login_redirect", function (req, res) {
       const REFRESH_TOKEN = body.data.refresh_token;
       const EXPIRES_IN = body.data.expires_in;
       res.redirect(
-        `http://localhost:3000/login?access_token=${ACCESS_TOKEN}&refresh_token=${REFRESH_TOKEN}&expires_in=${EXPIRES_IN}`
+        `${process.env.REACT_APP_BASE_URL}/login?access_token=${ACCESS_TOKEN}&refresh_token=${REFRESH_TOKEN}&expires_in=${EXPIRES_IN}`
       );
     })
     .catch((e) => {

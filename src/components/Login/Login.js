@@ -1,19 +1,20 @@
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import start_gg_logo from "../../media/startgg-logo.png";
 import * as auth from "../../util/authentication";
+import * as queries from "../../util/queries";
 
 const Login = () => {
   const navigate = useNavigate();
   const [isLoggedin, setIsLoggedin] = useState(false);
 
-  const handleLogin = () => {
+  const attemptLogin = () => {
     auth.getAccessToken();
   };
 
-  useState(() => {
+  const handleLogin = async () => {
     auth.isTokenExpired().then((isExpired) => {
       if (!isExpired) {
         setIsLoggedin(true);
@@ -38,15 +39,24 @@ const Login = () => {
     }
     if (accessToken) {
       Cookies.set("access_token", accessToken[1]);
-      setIsLoggedin(true);
+      await queries.getCurrentUserId().then((userId) => {
+        if (userId) {
+          Cookies.set("user_id", userId);
+          setIsLoggedin(true);
+        }
+      });
     }
+  };
+
+  useEffect(() => {
+    handleLogin();
   });
 
   return !isLoggedin ? (
     <div className="flex justify-center mt-[30%]">
       <button
         className="flex justify-around items-center mb-4 mx-5 p-4 text-mpsecondary border border-mpprimary bg-mpprimary rounded-lg py-2.5 text-center text-3xl w-2/5"
-        onClick={handleLogin}
+        onClick={attemptLogin}
       >
         <img width={80} src={start_gg_logo}></img>
         Log in with Start GG

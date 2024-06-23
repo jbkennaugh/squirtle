@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import Login from "./components/Login/Login";
 
 function App() {
+  const [selectedTournament, setSelectedTournament] = useState();
   const [selectedSet, setSelectedSet] = useState();
 
   useEffect(() => {
@@ -42,14 +43,27 @@ function App() {
       </button>
       <Routes>
         <Route path="/login" Component={Login} />
-        <Route path="/tournamentList" element={<TournamentList />} />
-        <Route // temporary have stream queue at root until login is setup
+        <Route
+          path="/tournamentList"
+          element={
+            <TournamentList
+              tournament={setSelectedTournament}
+              setSelectedTournament={setSelectedTournament}
+            />
+          }
+        />
+        <Route // will redirect to login if auth token does not exist
           path="/"
           element={<StreamQueue setSelectedSet={setSelectedSet} />}
         />
         <Route
           path="/streamQueue"
-          element={<StreamQueue setSelectedSet={setSelectedSet} />}
+          element={
+            <StreamQueue
+              tournament={selectedTournament}
+              setSelectedSet={setSelectedSet}
+            />
+          }
         />
         <Route
           path="/setReporter"
