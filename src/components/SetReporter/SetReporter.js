@@ -27,7 +27,6 @@ const SetReporter = ({ set }) => {
   const [setData, updateSetData] = useState({});
 
   useEffect(() => {
-    console.log(set);
     if (!set) {
       navigate("/streamQueue");
     } else {
