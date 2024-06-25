@@ -5,7 +5,7 @@ import { intervalCollection } from "time-events-manager";
 import * as auth from "../../util/authentication";
 import * as queries from "../../util/queries";
 
-const TournamentList = ({ tournament, setSelectedTournament }) => {
+const TournamentList = ({ setSelectedTournament }) => {
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(true);
   const [tournaments, updateTournaments] = useState();
@@ -15,7 +15,7 @@ const TournamentList = ({ tournament, setSelectedTournament }) => {
       .isTokenExpired()
       .then((isExpired) => (isExpired ? navigate("/login") : null));
 
-    if (!tournament) {
+    if (!tournaments) {
       queries.getTournamentsWithAdmin().then((tournaments) => {
         updateTournaments(tournaments);
         setLoading(false);

@@ -130,10 +130,10 @@ const Counterpick = ({
         <h1 className="text-2xl">Best Of:</h1>
         <div className="flex justify-around w-full">
           <button
-            className={`border rounded-lg text-center p-2 ${
+            className={`rounded-lg text-center p-2 ${
               bestOf === 3
                 ? "text-mpsecondary bg-mpprimary"
-                : "text-mpprimary  border-mpprimary border "
+                : "text-mpprimary  border-mpprimary border"
             }`}
             onClick={() => setBestOf(3)}
           >

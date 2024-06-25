@@ -15,15 +15,6 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
-    auth.isTokenExpired().then((isExpired) => {
-      if (!isExpired) {
-        setIsLoggedin(true);
-        setTimeout(() => {
-          navigate("/streamQueue");
-        }, 4 * 1000);
-      }
-    });
-
     const ACCESS_TOKEN_REGEX = /access_token=([^&]+)/;
     const REFRESH_TOKEN_REGEX = /refresh_token=([^&]+)/;
     const EXPIRES_IN_REGEX = /expires_in=([^&]+)/;
@@ -49,6 +40,19 @@ const Login = () => {
   };
 
   useEffect(() => {
+    if (isLoggedin) {
+      setTimeout(() => {
+        navigate("/streamQueue");
+      }, 4 * 1000);
+    }
+    auth.isTokenExpired().then((isExpired) => {
+      if (!isExpired) {
+        setIsLoggedin(true);
+        setTimeout(() => {
+          navigate("/streamQueue");
+        }, 4 * 1000);
+      }
+    });
     handleLogin();
   });
 

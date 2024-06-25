@@ -13,23 +13,13 @@ const StreamQueue = ({ setSelectedSet, tournament }) => {
     ? "ep-testing"
     : queries.getWeeklyName();
 
-  // very temporary function to allow it to know which MeltingPoint weekly it is being used for
-  // before making it get it from a selected tournament.
-  const getTournamentName = () => {
-    let tournamentName = "";
-    let sep = "";
-    weeklyName.split("-").forEach((word) => {
-      word = word.charAt(0).toUpperCase() + word.slice(1);
-      tournamentName += sep + word;
-      sep = " ";
-    });
-    return tournamentName;
-  };
-
   useEffect(() => {
     auth
       .isTokenExpired()
       .then((isExpired) => (isExpired ? navigate("/login") : null));
+    if (!tournament) {
+      navigate("/tournamentList");
+    }
     if (!sets) {
       queries.getStreamQueueByTournament(weeklyName).then((res) => {
         updateSets(res);
