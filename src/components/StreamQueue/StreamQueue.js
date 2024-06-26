@@ -16,9 +16,17 @@ const StreamQueue = ({ setSelectedSet, tournament }) => {
   useEffect(() => {
     auth
       .isTokenExpired()
-      .then((isExpired) => (isExpired ? navigate("/login") : null));
+      .then((isExpired) => (isExpired ? navigate("/login") : init()));
+  }, []);
+
+  const navigateTo = (path) => {
+    intervalCollection.removeAll();
+    navigate(path);
+  };
+
+  const init = () => {
     if (!tournament) {
-      navigate("/tournamentList");
+      navigateTo("/tournamentList");
     }
     if (!sets) {
       queries.getStreamQueueByTournament(weeklyName).then((res) => {
@@ -32,11 +40,13 @@ const StreamQueue = ({ setSelectedSet, tournament }) => {
         updateSets(res);
       });
     }, 5 * 1000);
-  }, []);
+  };
 
   return (
     <div className="container w-2/3 mx-auto">
-      <h1 className="text-5xl text-mpprimary py-5 text-center">{`${tournament.name} (${tournament.eventName}) Stream Sets:`}</h1>
+      {tournament && (
+        <h1 className="text-5xl text-mpprimary py-5 text-center">{`${tournament.name} (${tournament.eventName}) Stream Sets:`}</h1>
+      )}
       <ul className="stream-queue">
         {isLoading ? (
           <h1 className="text-4xl py-5 text-center text-white">
@@ -62,8 +72,7 @@ const StreamQueue = ({ setSelectedSet, tournament }) => {
                   set.slots[0].entrant && set.slots[1].entrant
                     ? () => {
                         setSelectedSet(set);
-                        intervalCollection.removeAll();
-                        navigate("/setReporter");
+                        navigateTo("/setReporter");
                       }
                     : null
                 }

@@ -57,9 +57,9 @@ const Login = () => {
   });
 
   return !isLoggedin ? (
-    <div className="flex justify-center mt-[30%]">
+    <div className="flex justify-center mt-[20%]">
       <button
-        className="flex justify-around items-center mb-4 mx-5 p-4 text-mpsecondary border border-mpprimary bg-mpprimary rounded-lg py-2.5 text-center text-3xl w-2/5"
+        className="flex justify-around items-center mb-4 p-4 text-mpsecondary border border-mpprimary bg-mpprimary rounded-lg py-2.5 text-center text-3xl w-2/5"
         onClick={attemptLogin}
       >
         <img width={80} src={start_gg_logo}></img>
