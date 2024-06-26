@@ -179,6 +179,7 @@ export async function getTournamentsWithAdmin() {
   })
     .then((r) => r.json())
     .then((data) => {
+      console.log(data);
       data.data.user.tournaments.nodes.forEach((tournament) => {
         tournament.events.forEach((event) => {
           const eventData = {
@@ -205,6 +206,7 @@ export async function getTournamentsWithAdmin() {
   })
     .then((r) => r.json())
     .then((data) => {
+      console.log(data);
       data.data.user.tournaments.nodes.forEach((tournament) => {
         tournament.events.forEach((event) => {
           const eventData = {
