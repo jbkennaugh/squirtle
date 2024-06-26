@@ -12,6 +12,8 @@ const headers = {
 
 //--------------------------------------------------- QUERIES ----------------------------------------------------------------
 export async function getCurrentUserId() {
+  console.log(apiKey);
+  console.log(Cookies.get("access_token"));
   return await fetch(url, {
     method: "POST",
     headers: {
