@@ -21,7 +21,7 @@ const StreamQueue = ({ setSelectedSet, tournament }) => {
 
   const init = () => {
     if (!tournament) {
-      navigateTo("/tournamentList");
+      navigateTo(navigate, "/tournamentList");
     }
     if (!sets) {
       getStreamQueueByTournament(weeklyName).then((res) => {
