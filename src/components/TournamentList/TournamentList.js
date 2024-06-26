@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { intervalCollection } from "time-events-manager";
 
-import * as auth from "../../util/authentication";
-import * as queries from "../../util/queries";
+import { isTokenExpired } from "../../util/authentication";
+import { getTournamentsWithAdmin } from "../../util/queries";
+import { navigateTo } from "../../util/navigate";
 
 const TournamentList = ({ setSelectedTournament }) => {
   const navigate = useNavigate();
@@ -11,23 +11,25 @@ const TournamentList = ({ setSelectedTournament }) => {
   const [tournaments, updateTournaments] = useState();
 
   useEffect(() => {
-    auth
-      .isTokenExpired()
-      .then((isExpired) => (isExpired ? navigate("/login") : null));
+    isTokenExpired().then((isExpired) =>
+      isExpired ? navigateTo(navigate, "/login") : init()
+    );
+  }, []);
 
+  const init = () => {
     if (!tournaments) {
-      queries.getTournamentsWithAdmin().then((tournaments) => {
+      getTournamentsWithAdmin().then((tournaments) => {
         updateTournaments(tournaments);
         setLoading(false);
       });
     }
     // updates tournaments every 30 seconds
     setInterval(() => {
-      queries.getTournamentsWithAdmin().then((tournaments) => {
+      getTournamentsWithAdmin().then((tournaments) => {
         updateTournaments(tournaments);
       });
     }, 30 * 1000);
-  }, []);
+  };
 
   return (
     <div className="container w-2/3 mx-auto">
@@ -51,8 +53,7 @@ const TournamentList = ({ setSelectedTournament }) => {
                   tournament.id
                     ? () => {
                         setSelectedTournament(tournament);
-                        intervalCollection.removeAll();
-                        navigate("/streamQueue");
+                        navigateTo(navigate, "/streamQueue");
                       }
                     : null
                 }

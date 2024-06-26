@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { intervalCollection } from "time-events-manager";
 
-import * as queries from "../../util/queries";
-import * as auth from "../../util/authentication";
+import { getStreamQueueByTournament, getWeeklyName } from "../../util/queries";
+import { isTokenExpired } from "../../util/authentication";
+import { navigateTo } from "../../util/navigate";
 
 const StreamQueue = ({ setSelectedSet, tournament }) => {
   const navigate = useNavigate();
@@ -11,32 +11,27 @@ const StreamQueue = ({ setSelectedSet, tournament }) => {
   const [isLoading, setLoading] = useState(true);
   const weeklyName = process.env.REACT_APP_TEST_MODE
     ? "ep-testing"
-    : queries.getWeeklyName();
+    : getWeeklyName();
 
   useEffect(() => {
-    auth
-      .isTokenExpired()
-      .then((isExpired) => (isExpired ? navigate("/login") : init()));
+    isTokenExpired().then((isExpired) =>
+      isExpired ? navigateTo(navigate, "/login") : init()
+    );
   }, []);
-
-  const navigateTo = (path) => {
-    intervalCollection.removeAll();
-    navigate(path);
-  };
 
   const init = () => {
     if (!tournament) {
       navigateTo("/tournamentList");
     }
     if (!sets) {
-      queries.getStreamQueueByTournament(weeklyName).then((res) => {
+      getStreamQueueByTournament(weeklyName).then((res) => {
         updateSets(res);
         setLoading(false);
       });
     }
     // updates sets every 5 seconds
     setInterval(() => {
-      queries.getStreamQueueByTournament(weeklyName).then((res) => {
+      getStreamQueueByTournament(weeklyName).then((res) => {
         updateSets(res);
       });
     }, 5 * 1000);
@@ -72,7 +67,7 @@ const StreamQueue = ({ setSelectedSet, tournament }) => {
                   set.slots[0].entrant && set.slots[1].entrant
                     ? () => {
                         setSelectedSet(set);
-                        navigateTo("/setReporter");
+                        navigateTo(navigate, "/setReporter");
                       }
                     : null
                 }
