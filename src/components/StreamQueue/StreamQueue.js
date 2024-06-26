@@ -36,8 +36,30 @@ const StreamQueue = ({ setSelectedSet, tournament }) => {
 
   return (
     <div className="container w-2/3 mx-auto">
+      <div
+        className="flex absolute items-center cursor-pointer top-7 left-5"
+        onClick={() => {
+          navigateTo(navigate, "/tournamentList");
+        }}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 25 25"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-12"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+          />
+        </svg>
+        <h1 className="text-2xl">Select event</h1>
+      </div>
       {tournament && (
-        <h1 className="text-5xl text-mpprimary py-5 text-center">{`${tournament.name} (${tournament.eventName}) Stream Sets:`}</h1>
+        <h1 className="text-5xl text-mpprimary py-5 text-center">{`${tournament.name} (${tournament.eventName})`}</h1>
       )}
       <ul className="stream-queue">
         {isLoading ? (

@@ -33,6 +33,9 @@ const TournamentList = ({ setSelectedTournament }) => {
 
   return (
     <div className="container w-2/3 mx-auto">
+      <h1 className="text-5xl text-mpprimary py-5 text-center">
+        Select tournament
+      </h1>
       <ul className="stream-queue">
         {isLoading ? (
           <h1 className="text-4xl py-5 text-center text-white">
