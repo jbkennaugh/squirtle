@@ -17,22 +17,27 @@ const StreamQueue = ({ setSelectedSet, tournament }) => {
   }, []);
 
   const init = () => {
-    console.log("Tournament", tournament);
     if (!tournament) {
       navigateTo(navigate, "/tournamentList");
+    } else {
+      console.log(tournament);
+      if (!sets) {
+        getStreamQueueByEvent(tournament.name, tournament.eventId).then(
+          (res) => {
+            updateSets(res);
+            setLoading(false);
+          }
+        );
+      }
+      // updates sets every 5 seconds
+      setInterval(() => {
+        getStreamQueueByEvent(tournament.name, tournament.eventId).then(
+          (res) => {
+            updateSets(res);
+          }
+        );
+      }, 5 * 1000);
     }
-    if (!sets) {
-      getStreamQueueByEvent(tournament.name, tournament.eventId).then((res) => {
-        updateSets(res);
-        setLoading(false);
-      });
-    }
-    // updates sets every 5 seconds
-    setInterval(() => {
-      getStreamQueueByEvent(tournament.name, tournament.eventId).then((res) => {
-        updateSets(res);
-      });
-    }, 5 * 1000);
   };
 
   return (
