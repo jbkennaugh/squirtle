@@ -12,14 +12,13 @@ const headers = {
 
 //--------------------------------------------------- QUERIES ----------------------------------------------------------------
 export async function getCurrentUserId() {
-  console.log(apiKey);
-  console.log(Cookies.get("access_token"));
+  const accessToken = Cookies.get("access_token");
   return await fetch(url, {
     method: "POST",
     headers: {
       "content-type": "application/json",
       Accept: "application/json",
-      Authorization: "Bearer " + apiKey,
+      Authorization: "Bearer " + accessToken,
     },
     body: JSON.stringify({
       query: queries.currentUser,
@@ -27,7 +26,6 @@ export async function getCurrentUserId() {
   })
     .then((r) => r.json())
     .then((data) => {
-      console.log(data);
       return data.data.currentUser.id;
     });
 }
@@ -182,7 +180,6 @@ export async function getTournamentsWithAdmin() {
   })
     .then((r) => r.json())
     .then((data) => {
-      console.log(data);
       data.data.user.tournaments.nodes.forEach((tournament) => {
         tournament.events.forEach((event) => {
           const eventData = {
@@ -209,7 +206,6 @@ export async function getTournamentsWithAdmin() {
   })
     .then((r) => r.json())
     .then((data) => {
-      console.log(data);
       data.data.user.tournaments.nodes.forEach((tournament) => {
         tournament.events.forEach((event) => {
           const eventData = {
