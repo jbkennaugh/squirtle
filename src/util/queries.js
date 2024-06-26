@@ -123,7 +123,7 @@ export async function getStandingsByEvent(eventId) {
     .then((data) => console.log(JSON.stringify(data.data, null, 2)));
 }
 
-export async function getStreamQueueByTournament(name) {
+export async function getStreamQueueByEvent(name, eventId) {
   const slug = `tournament/${name}`;
   let streamQueue;
 
@@ -138,9 +138,12 @@ export async function getStreamQueueByTournament(name) {
     }),
   })
     .then((r) => r.json())
-    .then(
-      (data) => (streamQueue = data.data.tournament?.streamQueue?.[0].sets)
-    );
+    .then((data) => {
+      console.log(data.data.tournament?.streamQueue?.[0].sets, eventId);
+      streamQueue = data.data.tournament?.streamQueue?.[0].sets.filter(
+        (set) => set.event.id === eventId
+      );
+    });
 
   return streamQueue;
 }
@@ -185,6 +188,7 @@ export async function getTournamentsWithAdmin() {
           const eventData = {
             id: tournament.id,
             name: tournament.name,
+            eventId: event.id,
             eventName: event.name,
             slug: event.slug,
           };

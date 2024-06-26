@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { getStreamQueueByTournament, getWeeklyName } from "../../util/queries";
+import { getStreamQueueByEvent } from "../../util/queries";
 import { isTokenExpired } from "../../util/authentication";
 import { navigateTo } from "../../util/navigate";
 
@@ -9,9 +9,6 @@ const StreamQueue = ({ setSelectedSet, tournament }) => {
   const navigate = useNavigate();
   const [sets, updateSets] = useState();
   const [isLoading, setLoading] = useState(true);
-  const weeklyName = process.env.REACT_APP_TEST_MODE
-    ? "ep-testing"
-    : getWeeklyName();
 
   useEffect(() => {
     isTokenExpired().then((isExpired) =>
@@ -24,14 +21,14 @@ const StreamQueue = ({ setSelectedSet, tournament }) => {
       navigateTo(navigate, "/tournamentList");
     }
     if (!sets) {
-      getStreamQueueByTournament(weeklyName).then((res) => {
+      getStreamQueueByEvent(tournament.name, tournament.eventId).then((res) => {
         updateSets(res);
         setLoading(false);
       });
     }
     // updates sets every 5 seconds
     setInterval(() => {
-      getStreamQueueByTournament(weeklyName).then((res) => {
+      getStreamQueueByEvent(tournament.name, tournament.eventId).then((res) => {
         updateSets(res);
       });
     }, 5 * 1000);
