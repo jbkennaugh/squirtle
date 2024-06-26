@@ -3,15 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import start_gg_logo from "../../media/startgg-logo.png";
-import * as auth from "../../util/authentication";
-import * as queries from "../../util/queries";
+import { getAccessToken, isTokenExpired } from "../../util/authentication";
+import { getCurrentUserId } from "../../util/queries";
 
 const Login = () => {
   const navigate = useNavigate();
   const [isLoggedin, setIsLoggedin] = useState(false);
 
   const attemptLogin = () => {
-    auth.getAccessToken();
+    getAccessToken();
   };
 
   const handleLogin = async () => {
@@ -30,7 +30,7 @@ const Login = () => {
     }
     if (accessToken) {
       Cookies.set("access_token", accessToken[1]);
-      await queries.getCurrentUserId().then((userId) => {
+      await getCurrentUserId().then((userId) => {
         if (userId) {
           Cookies.set("user_id", userId);
           setIsLoggedin(true);
@@ -45,7 +45,7 @@ const Login = () => {
         navigate("/streamQueue");
       }, 4 * 1000);
     }
-    auth.isTokenExpired().then((isExpired) => {
+    isTokenExpired().then((isExpired) => {
       if (!isExpired) {
         setIsLoggedin(true);
         setTimeout(() => {
@@ -62,7 +62,7 @@ const Login = () => {
         className="flex justify-around items-center mb-4 p-4 text-mpsecondary border border-mpprimary bg-mpprimary rounded-lg py-2.5 text-center text-3xl w-2/5"
         onClick={attemptLogin}
       >
-        <img width={80} src={start_gg_logo}></img>
+        <img width={80} src={start_gg_logo} alt="Start GG logo"></img>
         Log in with Start GG
       </button>
     </div>
