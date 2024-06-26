@@ -124,7 +124,7 @@ export async function getStandingsByEvent(eventId) {
 }
 
 export async function getStreamQueueByEvent(name, eventId) {
-  const slug = `tournament/${name}`;
+  const slug = `tournament/extrapoint-19`;
   let streamQueue;
 
   await fetch(url, {
