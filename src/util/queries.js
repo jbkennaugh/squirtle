@@ -25,6 +25,7 @@ export async function getCurrentUserId() {
   })
     .then((r) => r.json())
     .then((data) => {
+      console.log(data);
       return data.data.currentUser.id;
     });
 }
