@@ -20,7 +20,6 @@ const StreamQueue = ({ setSelectedSet, tournament }) => {
     if (!tournament) {
       navigateTo(navigate, "/tournamentList");
     } else {
-      console.log(tournament);
       if (!sets) {
         getStreamQueueByEvent(tournament.name, tournament.eventId).then(
           (res) => {

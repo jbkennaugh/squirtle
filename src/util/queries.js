@@ -139,7 +139,6 @@ export async function getStreamQueueByEvent(name, eventId) {
   })
     .then((r) => r.json())
     .then((data) => {
-      console.log(data.data.tournament?.streamQueue?.[0].sets, eventId);
       streamQueue = data.data.tournament?.streamQueue?.[0].sets.filter(
         (set) => set.event.id === eventId
       );
