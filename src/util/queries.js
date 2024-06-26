@@ -139,9 +139,11 @@ export async function getStreamQueueByEvent(name, eventId) {
   })
     .then((r) => r.json())
     .then((data) => {
+      
       streamQueue = data.data.tournament?.streamQueue?.[0].sets.filter(
         (set) => set.event.id === eventId
       );
+      streamQueue = data.data.tournament?.streamQueue?.[0].sets
     });
 
   return streamQueue;
@@ -217,7 +219,7 @@ export async function getTournamentsWithAdmin() {
             eventName: event.name,
             slug: event.slug,
           };
-          tournaments.push(eventData);
+          // tournaments.push(eventData);
         });
       });
     });
