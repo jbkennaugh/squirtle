@@ -17,6 +17,7 @@ const StreamQueue = ({ setSelectedSet, tournament }) => {
   }, []);
 
   const init = () => {
+    console.log("Tournament", tournament);
     if (!tournament) {
       navigateTo(navigate, "/tournamentList");
     }
