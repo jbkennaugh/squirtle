@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -5,7 +6,7 @@ import { getStreamQueueByEvent } from "../../util/queries";
 import { isTokenExpired } from "../../util/authentication";
 import { navigateTo } from "../../util/navigate";
 
-const StreamQueue = ({ setSelectedSet, tournament }) => {
+const StreamQueue = ({ setSelectedSet, setTournament, tournament }) => {
   const navigate = useNavigate();
   const [sets, updateSets] = useState();
   const [isLoading, setLoading] = useState(true);
@@ -14,10 +15,13 @@ const StreamQueue = ({ setSelectedSet, tournament }) => {
     isTokenExpired().then((isExpired) =>
       isExpired ? navigateTo(navigate, "/login") : init()
     );
-  }, []);
+  });
 
   const init = () => {
     if (!tournament) {
+      if (Cookies.get("tournament")) {
+        setTournament(Cookies.get("tournament"));
+      }
       navigateTo(navigate, "/tournamentList");
     } else {
       if (!sets) {
@@ -44,6 +48,7 @@ const StreamQueue = ({ setSelectedSet, tournament }) => {
       <div
         className="flex absolute items-center cursor-pointer top-7 left-5"
         onClick={() => {
+          Cookies.remove("tournament");
           navigateTo(navigate, "/tournamentList");
         }}
       >

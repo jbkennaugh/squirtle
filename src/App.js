@@ -19,6 +19,7 @@ function App() {
     "current_time",
     "expires_in",
     "refresh_token",
+    "tournament",
     "user_id",
   ];
 

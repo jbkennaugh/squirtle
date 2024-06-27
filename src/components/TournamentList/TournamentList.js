@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -14,7 +15,7 @@ const TournamentList = ({ setSelectedTournament }) => {
     isTokenExpired().then((isExpired) =>
       isExpired ? navigateTo(navigate, "/login") : init()
     );
-  }, []);
+  });
 
   const init = () => {
     if (!tournaments) {
@@ -23,12 +24,12 @@ const TournamentList = ({ setSelectedTournament }) => {
         setLoading(false);
       });
     }
-    // updates tournaments every 30 seconds
+    // updates tournaments every 10 seconds
     setInterval(() => {
       getTournamentsWithAdmin().then((tournaments) => {
         updateTournaments(tournaments);
       });
-    }, 30 * 1000);
+    }, 10 * 1000);
   };
 
   return (
@@ -56,6 +57,7 @@ const TournamentList = ({ setSelectedTournament }) => {
                   tournament.id
                     ? () => {
                         setSelectedTournament(tournament);
+                        Cookies.set("selectedTournament", tournament);
                         navigateTo(navigate, "/streamQueue");
                       }
                     : null

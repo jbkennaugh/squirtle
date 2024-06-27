@@ -123,8 +123,7 @@ export async function getStandingsByEvent(eventId) {
     .then((data) => console.log(JSON.stringify(data.data, null, 2)));
 }
 
-export async function getStreamQueueByEvent(name, eventId) {
-  const slug = `tournament/extrapoint-19`;
+export async function getStreamQueueByEvent(slug, eventId) {
   let streamQueue;
 
   await fetch(url, {
@@ -139,11 +138,9 @@ export async function getStreamQueueByEvent(name, eventId) {
   })
     .then((r) => r.json())
     .then((data) => {
-      console.log(data)
       streamQueue = data.data.tournament?.streamQueue?.[0].sets.filter(
         (set) => set.event.id === eventId
       );
-      streamQueue = data.data.tournament?.streamQueue?.[0].sets
     });
 
   return streamQueue;
@@ -189,9 +186,9 @@ export async function getTournamentsWithAdmin() {
           const eventData = {
             id: tournament.id,
             name: tournament.name,
+            slug: tournament.slug,
             eventId: event.id,
             eventName: event.name,
-            slug: event.slug,
           };
           tournaments.push(eventData);
         });
@@ -216,10 +213,15 @@ export async function getTournamentsWithAdmin() {
           const eventData = {
             id: tournament.id,
             name: tournament.name,
+            slug: tournament.slug,
+            eventId: event.id,
             eventName: event.name,
-            slug: event.slug,
           };
-          // tournaments.push(eventData);
+          if (
+            !tournaments.find((tournament) => tournament.eventId === event.id)
+          ) {
+            tournaments.push(eventData);
+          }
         });
       });
     });
