@@ -11,7 +11,7 @@ const headers = {
 };
 
 //--------------------------------------------------- QUERIES ----------------------------------------------------------------
-export async function getCurrentUserId() {
+export async function getCurrentUser() {
   const accessToken = Cookies.get("access_token");
   return await fetch(url, {
     method: "POST",
@@ -26,7 +26,13 @@ export async function getCurrentUserId() {
   })
     .then((r) => r.json())
     .then((data) => {
-      return data.data.currentUser.id;
+      let user = data.data.currentUser;
+      if (user) {
+        return {
+          id: user.id,
+          name: user.name,
+        };
+      }
     });
 }
 

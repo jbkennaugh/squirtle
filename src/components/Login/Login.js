@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import start_gg_logo from "../../media/startgg-logo.png";
 import { getAccessToken, isTokenExpired } from "../../util/authentication";
-import { getCurrentUserId } from "../../util/queries";
+import { getCurrentUser } from "../../util/queries";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -30,9 +30,10 @@ const Login = () => {
     }
     if (accessToken) {
       Cookies.set("access_token", accessToken[1]);
-      await getCurrentUserId().then((userId) => {
-        if (userId) {
-          Cookies.set("user_id", userId);
+      await getCurrentUser().then((user) => {
+        if (user) {
+          Cookies.set("user_id", user.id);
+          Cookies.set("user_name", user.name);
           setIsLoggedin(true);
         }
       });
@@ -67,7 +68,9 @@ const Login = () => {
       </button>
     </div>
   ) : (
-    <h1 className="text-center text-6xl mt-[40vh]">User logged in</h1>
+    <h1 className="text-center text-6xl mt-[40vh]">{`${Cookies.get(
+      "user_name"
+    )} logged in`}</h1>
   );
 };
 
