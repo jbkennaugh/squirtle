@@ -8,7 +8,7 @@ import { getCurrentUser } from "../../util/queries";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [isLoggedin, setIsLoggedin] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState();
 
   const attemptLogin = () => {
     getAccessToken();
@@ -34,14 +34,14 @@ const Login = () => {
         if (user) {
           Cookies.set("user_id", user.id);
           Cookies.set("user_name", user.name);
-          setIsLoggedin(true);
+          setLoggedInUser(user);
         }
       });
     }
   };
 
   useEffect(() => {
-    if (isLoggedin) {
+    if (loggedInUser) {
       setTimeout(() => {
         navigate("/streamQueue");
       }, 4 * 1000);
@@ -57,7 +57,7 @@ const Login = () => {
     handleLogin();
   });
 
-  return !isLoggedin ? (
+  return !loggedInUser ? (
     <div className="flex justify-center mt-[20%]">
       <button
         className="flex justify-around items-center mb-4 p-4 text-mpsecondary border border-mpprimary bg-mpprimary rounded-lg py-2.5 text-center text-3xl w-2/5"
@@ -68,9 +68,7 @@ const Login = () => {
       </button>
     </div>
   ) : (
-    <h1 className="text-center text-6xl mt-[40vh]">{`${Cookies.get(
-      "user_name"
-    )} logged in`}</h1>
+    <h1 className="text-center text-6xl mt-[40vh]">{`${loggedInUser.name} logged in`}</h1>
   );
 };
 
