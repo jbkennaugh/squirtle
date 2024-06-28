@@ -1,5 +1,5 @@
 {
-  "currentUser": "query getCurrentUser {currentUser {id name}}",
+  "currentUser": "query getCurrentUser {currentUser {id player{gamerTag}}}",
   "event": "query EventQuery($slug:String) {event(slug: $slug) {id name}}",
   "phaseId": "query PhaseQuery($slug:String) {event(slug: $slug) {phases {id}}}",
   "streamQueue": "query StreamQueueOnTournament($slug: String!) {tournament(slug: $slug) {id streamQueue {stream {streamSource streamName} sets {event {id} id fullRoundText state slots {entrant {id participants {gamerTag} seeds {seedNum}}}}}}}",

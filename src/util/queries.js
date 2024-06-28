@@ -30,7 +30,7 @@ export async function getCurrentUser() {
       if (user) {
         return {
           id: user.id,
-          name: user.name,
+          name: user.player.gamerTag,
         };
       }
     });
