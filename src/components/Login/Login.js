@@ -41,19 +41,16 @@ const Login = () => {
   };
 
   useEffect(() => {
+    isTokenExpired().then((isExpired) => {
+      if (isExpired) {
+        setLoggedInUser(null);
+      }
+    });
     if (loggedInUser) {
       setTimeout(() => {
         navigate("/streamQueue");
       }, 4 * 1000);
     }
-    isTokenExpired().then((isExpired) => {
-      if (!isExpired) {
-        setIsLoggedin(true);
-        setTimeout(() => {
-          navigate("/streamQueue");
-        }, 4 * 1000);
-      }
-    });
     handleLogin();
   });
 
