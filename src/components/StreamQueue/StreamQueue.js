@@ -1,8 +1,9 @@
+import { intervalCollection } from "time-events-manager";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { getStreamQueueByEvent } from "../../util/queries";
+import { getStreamQueueByEvent, getEvent } from "../../util/queries";
 import { isTokenExpired } from "../../util/authentication";
 import { navigateTo } from "../../util/navigate";
 
@@ -19,27 +20,52 @@ const StreamQueue = ({ setSelectedSet, setTournament, tournament }) => {
 
   const init = () => {
     if (!tournament) {
-      if (Cookies.get("tournament")) {
-        setTournament(Cookies.get("tournament"));
+      const eventSlug = Cookies.get("selected_event_slug");
+      if (eventSlug) {
+        getEvent(eventSlug).then((event) => {
+          setTournament({
+            name: event.tournament.name,
+            slug: event.tournament.slug,
+            event: { id: event.id, name: event.name },
+          });
+        });
+      } else {
+        console.log("Wuh oh");
+        const navMessage = `Event slug in cookies is ${eventSlug} so navigating back to list`;
+        navigateTo(navigate, "/tournamentList", navMessage);
       }
-      navigateTo(navigate, "/tournamentList");
     } else {
       if (!sets) {
-        getStreamQueueByEvent(tournament.name, tournament.eventId).then(
+        getStreamQueueByEvent(tournament.slug, tournament.event.id).then(
           (res) => {
             updateSets(res);
             setLoading(false);
           }
         );
       }
-      // updates sets every 5 seconds
-      setInterval(() => {
-        getStreamQueueByEvent(tournament.name, tournament.eventId).then(
-          (res) => {
-            updateSets(res);
-          }
-        );
-      }, 5 * 1000);
+      if (intervalCollection.getAll().length === 0) {
+        // updates sets every 5 seconds - check ensures it isn't added many times
+        setInterval(() => {
+          getStreamQueueByEvent(tournament.slug, tournament.event.id).then(
+            (res) => {
+              updateSets(res);
+            }
+          );
+        }, 5 * 1000);
+      }
+    }
+  };
+
+  const handleBackButton = () => {
+    Cookies.remove("selected_tournament_slug");
+    Cookies.remove("selected_event_id");
+    navigateTo(navigate, "/tournamentList");
+  };
+
+  const handleSetSelection = (set) => {
+    if (set.slots[0].entrant && set.slots[1].entrant) {
+      setSelectedSet(set);
+      navigateTo(navigate, "/setReporter");
     }
   };
 
@@ -47,10 +73,7 @@ const StreamQueue = ({ setSelectedSet, setTournament, tournament }) => {
     <div className="container w-2/3 mx-auto">
       <div
         className="flex absolute items-center cursor-pointer top-7 left-5"
-        onClick={() => {
-          Cookies.remove("tournament");
-          navigateTo(navigate, "/tournamentList");
-        }}
+        onClick={handleBackButton}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -69,7 +92,7 @@ const StreamQueue = ({ setSelectedSet, setTournament, tournament }) => {
         <h1 className="text-2xl">Select event</h1>
       </div>
       {tournament && (
-        <h1 className="text-5xl text-mpprimary py-5 text-center">{`${tournament.name} (${tournament.eventName})`}</h1>
+        <h1 className="text-5xl text-mpprimary py-5 text-center">{`${tournament.name} (${tournament.event.name})`}</h1>
       )}
       <ul className="stream-queue">
         {isLoading ? (
@@ -92,14 +115,7 @@ const StreamQueue = ({ setSelectedSet, setTournament, tournament }) => {
                     ? " bg-mpprimary hover:border-mpprimarydark hover:cursor-pointer"
                     : " bg-gray-500")
                 }
-                onClick={
-                  set.slots[0].entrant && set.slots[1].entrant
-                    ? () => {
-                        setSelectedSet(set);
-                        navigateTo(navigate, "/setReporter");
-                      }
-                    : null
-                }
+                onClick={() => handleSetSelection(set)}
                 key={`${player1Name}Vs${player2Name}Rnd${set.fullRoundText}`}
               >
                 <div className="round text-3xl">{`${set.fullRoundText}`}</div>

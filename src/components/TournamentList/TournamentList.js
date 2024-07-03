@@ -1,3 +1,4 @@
+import { intervalCollection } from "time-events-manager";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +18,15 @@ const TournamentList = ({ setSelectedTournament }) => {
     );
   });
 
+  const handleTournamentSelection = (tournament) => {
+    console.log("tournament selected", tournament);
+    if (tournament.id) {
+      setSelectedTournament(tournament);
+      Cookies.set("selected_event_slug", tournament.event.slug);
+      navigateTo(navigate, "/streamQueue");
+    }
+  };
+
   const init = () => {
     if (!tournaments) {
       getTournamentsWithAdmin().then((tournaments) => {
@@ -24,12 +34,14 @@ const TournamentList = ({ setSelectedTournament }) => {
         setLoading(false);
       });
     }
-    // updates tournaments every 10 seconds
-    setInterval(() => {
-      getTournamentsWithAdmin().then((tournaments) => {
-        updateTournaments(tournaments);
-      });
-    }, 10 * 1000);
+    if (intervalCollection.getAll().length === 0) {
+      // updates tournaments every 10 seconds - check ensures it isn't added many times
+      setInterval(() => {
+        getTournamentsWithAdmin().then((tournaments) => {
+          updateTournaments(tournaments);
+        });
+      }, 10 * 1000);
+    }
   };
 
   return (
@@ -53,21 +65,13 @@ const TournamentList = ({ setSelectedTournament }) => {
                 className={
                   "stream-set py-5 my-3 rounded-lg flex flex-col text-center space-y-5 border-4 border-transparent text-mpsecondary bg-mpprimary hover:border-mpprimarydark hover:cursor-pointer"
                 }
-                onClick={
-                  tournament.id
-                    ? () => {
-                        setSelectedTournament(tournament);
-                        Cookies.set("selectedTournament", tournament);
-                        navigateTo(navigate, "/streamQueue");
-                      }
-                    : null
-                }
-                key={`${tournament.name}-${tournament.eventName}`}
+                onClick={() => handleTournamentSelection(tournament)}
+                key={`${tournament.name}-${tournament.event.name}`}
               >
                 <div className="round text-3xl">{`${tournament.name}`}</div>
                 <div className="flex justify-around pb-5">
                   <div className="entrant">
-                    <p className="text-2xl">{`${tournament.eventName}`}</p>
+                    <p className="text-2xl">{`${tournament.event.name}`}</p>
                   </div>
                 </div>
               </li>

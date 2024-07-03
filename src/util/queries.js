@@ -37,12 +37,8 @@ export async function getCurrentUser() {
 }
 
 // gets event details from tournament and event Name
-export async function getEvent(tournamentName, eventName) {
-  const eventSlug = `tournament/${tournamentName}/event/${eventName}`;
-  const event = {
-    id: null,
-    name: null,
-  };
+export async function getEvent(eventSlug) {
+  const event = {};
   await fetch(url, {
     method: "POST",
     headers: {
@@ -59,8 +55,13 @@ export async function getEvent(tournamentName, eventName) {
   })
     .then((r) => r.json())
     .then((data) => {
-      event.id = data.data.event?.id;
-      event.name = data.data.event?.name;
+      const locatedEvent = data.data.event;
+      event.id = locatedEvent?.id;
+      event.name = locatedEvent?.name;
+      event.tournament = {
+        name: locatedEvent?.tournament?.name,
+        slug: locatedEvent?.tournament?.slug,
+      };
     });
   return event;
 }
@@ -193,8 +194,11 @@ export async function getTournamentsWithAdmin() {
             id: tournament.id,
             name: tournament.name,
             slug: tournament.slug,
-            eventId: event.id,
-            eventName: event.name,
+            event: {
+              id: event.id,
+              name: event.name,
+              slug: event.slug,
+            },
           };
           tournaments.push(eventData);
         });
@@ -220,8 +224,11 @@ export async function getTournamentsWithAdmin() {
             id: tournament.id,
             name: tournament.name,
             slug: tournament.slug,
-            eventId: event.id,
-            eventName: event.name,
+            event: {
+              id: event.id,
+              name: event.name,
+              slug: event.slug,
+            },
           };
           if (
             !tournaments.find((tournament) => tournament.eventId === event.id)

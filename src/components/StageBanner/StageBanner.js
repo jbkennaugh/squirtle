@@ -6,24 +6,28 @@ const StageBanner = ({ gameNumber, stages, setSelectedStage }) => {
   const [isGentleman, setGentleman] = useState(false);
 
   const handleStageSelection = (stage) => {
-    if (isGentleman) {
-      setSelectedStage(stage);
-      setGentleman(false);
+    if (bannedStages.includes(stage)) {
+      console.log("Stage is already banned, no action");
     } else {
-      const newBannedStages = [...bannedStages, stage];
-      if (gameNumber === 1) {
-        if (bannedStages.length < 7) {
-          setBannedStages(newBannedStages);
-        } else {
-          setSelectedStage(stage);
-          setGentleman(false);
-        }
+      if (isGentleman) {
+        setSelectedStage(stage);
+        setGentleman(false);
       } else {
-        if (bannedStages.length <= 2) {
-          setBannedStages(newBannedStages);
+        const newBannedStages = [...bannedStages, stage];
+        if (gameNumber === 1) {
+          if (bannedStages.length < 7) {
+            setBannedStages(newBannedStages);
+          } else {
+            setSelectedStage(stage);
+            setGentleman(false);
+          }
         } else {
-          setSelectedStage(stage);
-          setGentleman(false);
+          if (bannedStages.length <= 2) {
+            setBannedStages(newBannedStages);
+          } else {
+            setSelectedStage(stage);
+            setGentleman(false);
+          }
         }
       }
     }
@@ -94,11 +98,7 @@ const StageBanner = ({ gameNumber, stages, setSelectedStage }) => {
               return (
                 <div
                   className={`text-lg m-3 w-1/4 text-center flex flex-col justify-end rounded-md border-2 border-transparent ${divClasses}`}
-                  onClick={() =>
-                    bannedStages.includes(stage)
-                      ? null
-                      : handleStageSelection(stage)
-                  }
+                  onClick={() => handleStageSelection(stage)}
                   key={stage}
                 >
                   <img

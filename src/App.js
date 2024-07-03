@@ -14,14 +14,6 @@ function App() {
   const navigate = useNavigate();
   const [selectedTournament, setSelectedTournament] = useState();
   const [selectedSet, setSelectedSet] = useState();
-  const cookies = [
-    "access_token",
-    "current_time",
-    "expires_in",
-    "refresh_token",
-    "tournament",
-    "user_id",
-  ];
 
   useEffect(() => {
     if (selectedSet) {
@@ -31,7 +23,7 @@ function App() {
 
   const logout = () => {
     console.log("Logging out");
-    cookies.forEach((key) => Cookies.remove(key));
+    Object.keys(Cookies.get()).forEach((cookie) => Cookies.remove(cookie));
     navigateTo(navigate, "/login");
   };
 
@@ -64,6 +56,7 @@ function App() {
           element={
             <StreamQueue
               setSelectedSet={setSelectedSet}
+              setTournament={setSelectedTournament}
               tournament={selectedTournament}
             />
           }
@@ -72,8 +65,9 @@ function App() {
           path="/streamQueue"
           element={
             <StreamQueue
-              tournament={selectedTournament}
               setSelectedSet={setSelectedSet}
+              setTournament={setSelectedTournament}
+              tournament={selectedTournament}
             />
           }
         />

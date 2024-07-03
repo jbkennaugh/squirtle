@@ -10,9 +10,9 @@ const CharacterSelect = ({
 }) => {
   const [showCharacterModal, setShowCharacterModal] = useState(false);
   const [focusedCharacter, setFocusedCharacter] = useState(null);
-  const handleCharacterSelect = (character) => {
-    console.log(`Setting player-${player} character: ${character}`);
-    setCharacter(character);
+  const handleCharacterSelect = () => {
+    console.log(`Setting player-${player} character: ${focusedCharacter}`);
+    setCharacter(focusedCharacter);
     setShowCharacterModal(false);
   };
 
@@ -89,7 +89,7 @@ const CharacterSelect = ({
                 </div>
                 <div
                   className="text-2xl text-mpprimary bg-mpsecondary border-2 border-mpsecondary rounded-md py-1 px-4"
-                  onClick={() => handleCharacterSelect(focusedCharacter)}
+                  onClick={handleCharacterSelect}
                 >
                   Confirm
                 </div>

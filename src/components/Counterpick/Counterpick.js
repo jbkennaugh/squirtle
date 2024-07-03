@@ -66,6 +66,15 @@ const Counterpick = ({
     }
   }, [character1, character2, selectedStage, setCounterpickDone]);
 
+  const handleBackButton = () => {
+    if (charactersChosen) {
+      setCharChosen(false);
+    } else {
+      queries.resetSet(set.id).then((res) => console.log(res));
+      navigate("/streamQueue");
+    }
+  };
+
   const handleResetCharacters = () => {
     setCharacter1(null);
     setCharacter2(null);
@@ -99,14 +108,7 @@ const Counterpick = ({
     <div>
       <div
         className="flex absolute items-center cursor-pointer top-7 left-5"
-        onClick={
-          charactersChosen
-            ? () => setCharChosen(false)
-            : () => {
-                queries.resetSet(set.id).then((res) => console.log(res));
-                navigate("/streamQueue");
-              }
-        }
+        onClick={handleBackButton}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

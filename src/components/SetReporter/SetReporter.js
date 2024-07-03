@@ -70,11 +70,21 @@ const SetReporter = ({ set }) => {
         setData.winnerId = winnerId;
         setPreviousGameData({});
       } else {
-        setGameNumber(gameNumber + 1);
+        setGameNumber((gameNumber) => gameNumber + 1);
       }
       updateSetData(setData);
     }
   }, [confirmedGamesData]);
+
+  const handleBackButton = () => {
+    queries.resetSet(set.id).then((res) => console.log(res));
+    if (bestOf) {
+      setCounterpickDone(false);
+      setSelectedStage(null);
+    } else {
+      navigate("/streamQueue");
+    }
+  };
 
   const handleConfirmedWinner = () => {
     if (gameWinner) {
@@ -117,15 +127,7 @@ const SetReporter = ({ set }) => {
           <>
             <div
               className="flex absolute items-center cursor-pointer top-7 left-5"
-              onClick={() => {
-                queries.resetSet(set.id).then((res) => console.log(res));
-                if (bestOf) {
-                  setCounterpickDone(false);
-                  setSelectedStage(null);
-                } else {
-                  navigate("/streamQueue");
-                }
-              }}
+              onClick={handleBackButton}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
