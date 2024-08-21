@@ -30,7 +30,6 @@ const StreamQueue = ({ setSelectedSet, setTournament, tournament }) => {
           });
         });
       } else {
-        console.log("Wuh oh");
         const navMessage = `Event slug in cookies is ${eventSlug} so navigating back to list`;
         navigateTo(navigate, "/tournamentList", navMessage);
       }

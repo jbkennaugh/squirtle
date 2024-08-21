@@ -1,7 +1,12 @@
 import Cookies from "js-cookie";
 import axios from "axios";
 
+const isTestMode = process.env.REACT_APP_TEST_MODE;
+
 export async function isTokenExpired() {
+  if (isTestMode) {
+    return false;
+  }
   if (!Cookies.get("access_token")) {
     console.log("No access token");
     return true;

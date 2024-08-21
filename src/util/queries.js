@@ -2,7 +2,9 @@ import Cookies from "js-cookie";
 import queries from "../data/all-queries.json";
 
 const isTestMode = process.env.REACT_APP_TEST_MODE;
-const apiKey = Cookies.get("access_token");
+const apiKey = isTestMode
+  ? process.env.REACT_APP_API_KEY
+  : Cookies.get("access_token");
 const url = "https://api.start.gg/gql/alpha";
 const headers = {
   "content-type": "application/json",
@@ -155,89 +157,96 @@ export async function getStreamQueueByEvent(slug, eventId) {
 
 // returns a list of events from tournaments where the current user is either admin or organiser
 export async function getTournamentsWithAdmin() {
-  if (isTestMode) {
-    return [
-      {
-        id: "tournament1",
-        name: "Tournament 1",
-        eventName: "Ultimate Singles",
-        slug: "",
-      },
-      {
-        id: "tournament2",
-        name: "Tournament 2",
-        eventName: "Ultimate Doubles",
-        slug: "",
-      },
-    ];
-  }
+  // if (isTestMode) {
+  //   return [
+  //     {
+  //       id: "tournament1",
+  //       name: "Tournament 1",
+  //       eventName: "Ultimate Singles",
+  //       slug: "",
+  //     },
+  //     {
+  //       id: "tournament2",
+  //       name: "Tournament 2",
+  //       eventName: "Ultimate Doubles",
+  //       slug: "",
+  //     },
+  //   ];
+  // }
 
   let tournaments = [];
-  const USER_ID = Cookies.get("user_id");
+  const USER_ID = isTestMode
+    ? process.env.REACT_APP_USER_ID
+    : Cookies.get("user_id");
 
-  await fetch(url, {
-    method: "POST",
-    headers: headers,
-    body: JSON.stringify({
-      query: queries.tournamentsByRole,
-      variables: {
-        userId: USER_ID,
-        role: "admin",
-      },
-    }),
-  })
-    .then((r) => r.json())
-    .then((data) => {
-      data.data.user.tournaments.nodes.forEach((tournament) => {
-        tournament.events.forEach((event) => {
-          const eventData = {
-            id: tournament.id,
-            name: tournament.name,
-            slug: tournament.slug,
-            event: {
-              id: event.id,
-              name: event.name,
-              slug: event.slug,
-            },
-          };
-          tournaments.push(eventData);
-        });
-      });
-    });
-
-  await fetch(url, {
-    method: "POST",
-    headers: headers,
-    body: JSON.stringify({
-      query: queries.tournamentsByRole,
-      variables: {
-        userId: USER_ID,
-        role: "organizing",
-      },
-    }),
-  })
-    .then((r) => r.json())
-    .then((data) => {
-      data.data.user.tournaments.nodes.forEach((tournament) => {
-        tournament.events.forEach((event) => {
-          const eventData = {
-            id: tournament.id,
-            name: tournament.name,
-            slug: tournament.slug,
-            event: {
-              id: event.id,
-              name: event.name,
-              slug: event.slug,
-            },
-          };
-          if (
-            !tournaments.find((tournament) => tournament.eventId === event.id)
-          ) {
+  try {
+    await fetch(url, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify({
+        query: queries.tournamentsByRole,
+        variables: {
+          userId: USER_ID,
+          role: "admin",
+        },
+      }),
+    })
+      .then((r) => r.json())
+      .then((data) => {
+        data.data.user.tournaments.nodes.forEach((tournament) => {
+          tournament.events.forEach((event) => {
+            const eventData = {
+              id: tournament.id,
+              name: tournament.name,
+              slug: tournament.slug,
+              event: {
+                id: event.id,
+                name: event.name,
+                slug: event.slug,
+              },
+            };
             tournaments.push(eventData);
-          }
+          });
         });
       });
-    });
+
+    await fetch(url, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify({
+        query: queries.tournamentsByRole,
+        variables: {
+          userId: USER_ID,
+          role: "organizing",
+        },
+      }),
+    })
+      .then((r) => r.json())
+      .then((data) => {
+        data.data.user.tournaments.nodes.forEach((tournament) => {
+          tournament.events.forEach((event) => {
+            const eventAlreadyFound = tournaments.find(
+              (tournament) => tournament.event.id === event.id
+            );
+            if (!eventAlreadyFound) {
+              const eventData = {
+                id: tournament.id,
+                name: tournament.name,
+                slug: tournament.slug,
+                event: {
+                  id: event.id,
+                  name: event.name,
+                  slug: event.slug,
+                },
+              };
+              tournaments.push(eventData);
+            }
+          });
+        });
+      });
+  } catch (e) {
+    console.log("Error", e);
+  }
 
   return tournaments;
 }
