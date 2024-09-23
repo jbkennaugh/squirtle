@@ -60,6 +60,7 @@ const TournamentList = ({ setSelectedTournament }) => {
           </h1>
         ) : (
           tournaments.map((tournament) => {
+            console.log(tournament)
             return (
               <li
                 className={
