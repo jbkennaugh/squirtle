@@ -1,11 +1,20 @@
 import { useState } from "react";
-import { stageImages } from "./stages";
+import React from "react";
+import Stage from "./Stage";
 
-const StageBanner = ({ gameNumber, stages, setSelectedStage }) => {
-  const [bannedStages, setBannedStages] = useState([]);
+const StageBanner = ({
+  gameNumber,
+  stages,
+  setSelectedStage,
+}: {
+  gameNumber: number;
+  stages: any;
+  setSelectedStage: Function;
+}) => {
+  const [bannedStages, setBannedStages] = useState<string[]>([]);
   const [isGentleman, setGentleman] = useState(false);
 
-  const handleStageSelection = (stage) => {
+  const handleStageSelection = (stage: string) => {
     if (bannedStages.includes(stage)) {
       console.log("Stage is already banned, no action");
     } else {
@@ -33,7 +42,7 @@ const StageBanner = ({ gameNumber, stages, setSelectedStage }) => {
     }
   };
 
-  const getHeadingText = (gameNumber) => {
+  const getHeadingText = (gameNumber: number) => {
     let stageBanText;
     if (gameNumber === 1) {
       if (bannedStages.length === 7) {
@@ -86,29 +95,14 @@ const StageBanner = ({ gameNumber, stages, setSelectedStage }) => {
           </div>
 
           <div className="flex flex-wrap justify-center text-mpsecondary">
-            {stages.legal.starters.map((stage) => {
-              let isBanned = bannedStages.includes(stage);
-              let divClasses = isBanned
-                ? " bg-red-500"
-                : " bg-mpprimary hover:cursor-pointer";
-              divClasses += isGentleman
-                ? " hover:border-green-500 hover:border-4"
-                : " hover:border-mpprimarydark";
-              let imgClasses = isBanned ? " opacity-50" : "";
-              return (
-                <div
-                  className={`text-lg m-3 w-1/4 text-center flex flex-col justify-end rounded-md border-2 border-transparent ${divClasses}`}
-                  onClick={() => handleStageSelection(stage)}
-                  key={stage}
-                >
-                  <img
-                    className={`rounded-sm text-center ${imgClasses}`}
-                    src={stageImages[stage]}
-                    alt={`${stage}`}
-                  ></img>
-                </div>
-              );
-            })}
+            {stages.legal.starters.map((stage: string) => (
+              <Stage
+                bannedStages={bannedStages}
+                isGentleman={isGentleman}
+                handleStageSelection={handleStageSelection}
+                stage={stage}
+              />
+            ))}
           </div>
         </div>
       )}

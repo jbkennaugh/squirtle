@@ -6,6 +6,10 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^29.5.13",
+    "@types/node": "^22.5.5",
+    "@types/react": "^18.3.8",
+    "@types/react-dom": "^18.3.0",
     "axios": "^1.7.2",
     "express": "^4.19.2",
     "js-cookie": "^3.0.5",
@@ -14,6 +18,7 @@
     "react-router-dom": "^6.23.1",
     "react-scripts": "^5.0.1",
     "time-events-manager": "^0.1.1",
+    "typescript": "^5.6.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -44,5 +49,10 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/plugin-transform-private-property-in-object": "^7.22.11",
     "tailwindcss": "^3.3.3"
+  },
+  "overrides": {
+    "react-scripts": {
+      "typescript": "^5.6.2"
+    }
   }
 }

@@ -155,7 +155,7 @@ export async function getStreamQueueByEvent(slug, eventId) {
 
 // returns a list of events from tournaments where the current user is either admin or organiser
 export async function getTournamentsWithAdmin() {
-  if (isTestMode) {
+  if (!isTestMode) {
     return [
       {
         id: "tournament1",
@@ -219,7 +219,7 @@ export async function getTournamentsWithAdmin() {
     .then((r) => r.json())
     .then((data) => {
       data.data.user.tournaments.nodes.forEach((tournament) => {
-        tournament.events.forEach((event) => {
+        tournament.events?.forEach((event) => {
           const eventData = {
             id: tournament.id,
             name: tournament.name,

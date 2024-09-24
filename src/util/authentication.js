@@ -23,7 +23,7 @@ export async function getAccessToken() {
   const REDIRECT_URI = `${process.env.REACT_APP_BASE_URL}/login_redirect`;
 
   const REFRESH_TOKEN = Cookies.get("refresh_token");
-  // not yet working
+  // not yet impl
   if (false) {
     console.log("Refresh token exists, using to get new access token");
     const data = {

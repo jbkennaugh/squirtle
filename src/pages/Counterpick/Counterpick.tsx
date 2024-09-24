@@ -1,9 +1,11 @@
+// @ts-ignore
+import * as queries from "../../util/queries";
 import counterpicks from "../../data/counterpicks.json";
 import CharacterSelect from "../CharacterSelect/CharacterSelect";
-import * as queries from "../../util/queries";
-import StageBanner from "../StageBanner/StageBanner";
+import StageBanner from "../../components/StageBanner/StageBanner";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import React from "react";
 
 const Counterpick = ({
   set,
@@ -17,17 +19,26 @@ const Counterpick = ({
   setPreviousGameData,
   bestOf,
   setBestOf,
+}: {
+  set: any;
+  gameNumber: number;
+  setCounterpickDone: Function;
+  selectedStage: string;
+  setSelectedStage: Function;
+  characters: any;
+  setCharacters: Function;
+  previousGameData: any;
+  setPreviousGameData: Function;
+  bestOf: number;
+  setBestOf: Function;
 }) => {
   const navigate = useNavigate();
-  const [character1, setCharacter1] = useState();
-  const [character2, setCharacter2] = useState();
+  const [character1, setCharacter1] = useState<string | null>();
+  const [character2, setCharacter2] = useState<string | null>();
   const [stages] = useState(counterpicks.stages);
   const [charactersChosen, setCharChosen] = useState(false);
   const [player1Name] = useState(set.slots[0].entrant.participants[0].gamerTag);
   const [player2Name] = useState(set.slots[1].entrant.participants[0].gamerTag);
-  const allCharacters = Object.entries(counterpicks.characters).sort((a, b) => {
-    return a[1].order - b[1].order;
-  });
 
   // prettier-ignore
   useEffect(() => {
@@ -70,7 +81,7 @@ const Counterpick = ({
     if (charactersChosen) {
       setCharChosen(false);
     } else {
-      queries.resetSet(set.id).then((res) => console.log(res));
+      queries.resetSet(set.id).then((res: any) => console.log(res));
       navigate("/streamQueue");
     }
   };
@@ -191,16 +202,14 @@ const Counterpick = ({
               <CharacterSelect
                 player={1}
                 playerName={player1Name}
-                character={character1}
+                currentCharacter={character1 ?? ""}
                 setCharacter={setCharacter1}
-                allCharacters={allCharacters}
               ></CharacterSelect>
               <CharacterSelect
                 player={2}
                 playerName={player2Name}
-                character={character2}
+                currentCharacter={character2 ?? ""}
                 setCharacter={setCharacter2}
-                allCharacters={allCharacters}
               ></CharacterSelect>
             </div>
           </div>

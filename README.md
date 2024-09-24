@@ -46,3 +46,5 @@ Information pushed to setData should be an object with all the data about a set,
       ],
     }
 ```
+
+tap characters and it picks them
