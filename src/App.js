@@ -1,6 +1,7 @@
 import "./App.css";
 import Login from "./components/Login/Login";
 import SetReporter from "./components/SetReporter/SetReporter";
+import { Sidebar } from "./components/Sidebar/sidebar";
 import StreamQueue from "./components/StreamQueue/StreamQueue";
 import TournamentList from "./components/TournamentList/TournamentList";
 
@@ -43,6 +44,7 @@ function App() {
           />
         </svg>
       </button>
+      <Sidebar />
       <Routes>
         <Route path="/login" Component={Login} />
         <Route
