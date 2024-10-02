@@ -45,39 +45,47 @@ const TournamentList = ({ loggedIn, setSelectedTournament }) => {
 
   return (
     <div className="container w-2/3 mx-auto">
-      <h1 className="text-5xl text-mpprimary py-5 text-center">
-        Select tournament
-      </h1>
-      <ul className="stream-queue">
-        {isLoading ? (
-          <h1 className="text-4xl py-5 text-center text-white">
-            Loading tournaments...
+      {loggedIn ? (
+        <>
+          <h1 className="text-5xl text-mpprimary py-5 text-center">
+            Select tournament
           </h1>
-        ) : tournaments == null ? (
-          <h1 className="text-4xl py-5 text-center text-white">
-            No tournaments with admin for current user.
-          </h1>
-        ) : (
-          tournaments.map((tournament) => {
-            return (
-              <li
-                className={
-                  "stream-set py-5 my-3 rounded-lg flex flex-col text-center space-y-5 border-4 border-transparent text-mpsecondary bg-mpprimary hover:border-mpprimarydark hover:cursor-pointer"
-                }
-                onClick={() => handleTournamentSelection(tournament)}
-                key={`${tournament.name}-${tournament.event.name}`}
-              >
-                <div className="round text-3xl">{`${tournament.name}`}</div>
-                <div className="flex justify-around pb-5">
-                  <div className="entrant">
-                    <p className="text-2xl">{`${tournament.event.name}`}</p>
-                  </div>
-                </div>
-              </li>
-            );
-          })
-        )}
-      </ul>
+          <ul className="stream-queue">
+            {isLoading ? (
+              <h1 className="text-4xl py-5 text-center text-white">
+                Loading tournaments...
+              </h1>
+            ) : tournaments == null ? (
+              <h1 className="text-4xl py-5 text-center text-white">
+                No tournaments with admin for current user.
+              </h1>
+            ) : (
+              tournaments.map((tournament) => {
+                return (
+                  <li
+                    className={
+                      "stream-set py-5 my-3 rounded-lg flex flex-col text-center space-y-5 border-4 border-transparent text-mpsecondary bg-mpprimary hover:border-mpprimarydark hover:cursor-pointer"
+                    }
+                    onClick={() => handleTournamentSelection(tournament)}
+                    key={`${tournament.name}-${tournament.event.name}`}
+                  >
+                    <div className="round text-3xl">{`${tournament.name}`}</div>
+                    <div className="flex justify-around pb-5">
+                      <div className="entrant">
+                        <p className="text-2xl">{`${tournament.event.name}`}</p>
+                      </div>
+                    </div>
+                  </li>
+                );
+              })
+            )}
+          </ul>
+        </>
+      ) : (
+        <h1 className="text-5xl text-mpprimary py-5 text-center">
+          Log in to see your tournaments
+        </h1>
+      )}
     </div>
   );
 };

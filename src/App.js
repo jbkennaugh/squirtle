@@ -45,6 +45,7 @@ function App() {
           path="/"
           element={
             <StreamQueue
+              loggedIn={isLoggedIn}
               setSelectedSet={setSelectedSet}
               setTournament={setSelectedTournament}
               tournament={selectedTournament}

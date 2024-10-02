@@ -4,18 +4,22 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { getStreamQueueByEvent, getEvent } from "../../util/queries";
-import { isTokenExpired } from "../../util/authentication";
 import navigateTo from "../../util/navigate";
 
-const StreamQueue = ({ setSelectedSet, setTournament, tournament }) => {
+const StreamQueue = ({
+  loggedIn,
+  setSelectedSet,
+  setTournament,
+  tournament,
+}) => {
   const navigate = useNavigate();
   const [sets, updateSets] = useState();
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    isTokenExpired().then((isExpired) =>
-      isExpired ? navigateTo(navigate, "/login") : init()
-    );
+    if (loggedIn) {
+      init();
+    }
   });
 
   const init = () => {
