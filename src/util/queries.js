@@ -2,7 +2,9 @@ import Cookies from "js-cookie";
 import queries from "../data/all-queries.json";
 
 const isTestMode = process.env.REACT_APP_TEST_MODE;
-const apiKey = Cookies.get("access_token");
+const apiKey = isTestMode
+  ? process.env.REACT_APP_API_KEY
+  : Cookies.get("access_token");
 const url = "https://api.start.gg/gql/alpha";
 const headers = {
   "content-type": "application/json",

@@ -7,6 +7,7 @@ module.exports = {
         mpprimary: "#aec4d4",
         mpprimarydark: "#57626a",
         mpsecondary: "#112544",
+        destructive: "#ff0000",
       },
     },
   },

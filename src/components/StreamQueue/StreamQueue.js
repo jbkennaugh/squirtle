@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import { getStreamQueueByEvent, getEvent } from "../../util/queries";
 import { isTokenExpired } from "../../util/authentication";
-import { navigateTo } from "../../util/navigate";
+import navigateTo from "../../util/navigate";
 
 const StreamQueue = ({ setSelectedSet, setTournament, tournament }) => {
   const navigate = useNavigate();

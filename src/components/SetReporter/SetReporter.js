@@ -1,7 +1,7 @@
 import counterpicks from "../../data/counterpicks.json";
 
 import { useEffect, useState } from "react";
-import Counterpick from "../../pages/Counterpick/Counterpick";
+import Counterpick from "../../pages/Counterpick/counterpick";
 import WinReporter from "../WinReporter/WinReporter";
 import * as queries from "../../util/queries";
 import { useNavigate } from "react-router-dom";

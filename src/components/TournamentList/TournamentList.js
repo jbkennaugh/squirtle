@@ -3,19 +3,18 @@ import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { isTokenExpired } from "../../util/authentication";
 import { getTournamentsWithAdmin } from "../../util/queries";
-import { navigateTo } from "../../util/navigate";
+import navigateTo from "../../util/navigate";
 
-const TournamentList = ({ setSelectedTournament }) => {
+const TournamentList = ({ loggedIn, setSelectedTournament }) => {
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(true);
   const [tournaments, updateTournaments] = useState();
 
   useEffect(() => {
-    isTokenExpired().then((isExpired) =>
-      isExpired ? navigateTo(navigate, "/login") : init()
-    );
+    if (loggedIn) {
+      init();
+    }
   });
 
   const handleTournamentSelection = (tournament) => {

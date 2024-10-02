@@ -1,7 +1,7 @@
 // @ts-ignore
 import * as queries from "../../util/queries";
 import counterpicks from "../../data/counterpicks.json";
-import CharacterSelect from "../CharacterSelect/CharacterSelect";
+import CharacterSelect from "../CharacterSelect/character-select";
 import StageBanner from "../../components/StageBanner/StageBanner";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";

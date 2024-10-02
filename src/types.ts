@@ -1,6 +1,6 @@
 export interface Character {
-  name: string;
   id: number;
+  name: string;
   order: number;
   image: string;
 }

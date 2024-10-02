@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-// @ts-ignore
 import { stageImages } from "./stages";
-import { finished } from "stream";
 
 const Stage = ({
   bannedStages,
@@ -32,11 +30,10 @@ const Stage = ({
     >
       <img
         className={`rounded-sm text-center${imgClasses}`}
-        src={stageImages[stage]}
+        src={stageImages[stage as keyof typeof stageImages]}
         onLoad={() => setLoading(false)}
         alt={`${stage}`}
       ></img>
-      {/* )} */}
     </div>
   );
 };
