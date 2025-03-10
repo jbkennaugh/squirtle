@@ -58,30 +58,30 @@ const StageBanner = ({ gameNumber, stages, setSelectedStage }) => {
   };
 
   return (
-    <div className="stage-bans">
+    <div className="stage-bans mt-20">
       {stages.allowCounterpicks ? (
         <div>Some shit if counterpicks are enabled in the ruleset.</div>
       ) : (
         <div className="flex flex-col items-center">
-          <h1 className="text-3xl text-white pb-5 mb-5 text-center">
+          <h1 className="lg:text-3xl sm:text-2xl text-white pb-5 mb-5 text-center">
             {getHeadingText(gameNumber)}
           </h1>
-          <div className="flex">
+          <div className="flex w-4/5">
             <button
-              className="mb-4 mx-5 p-4 border border-mpprimary rounded-lg py-2.5 text-center text-2xl w-2/3"
+              className="mb-4 mx-5 p-4 border border-mpprimary rounded-lg py-2.5 text-center lg:text-2xl sm:text-lg w-1/2"
               onClick={handleResetBans}
             >
               Reset bans
             </button>
             <button
-              className={`mb-4 mx-5 p-4 border-4 bg-mpprimary rounded-lg py-2.5 text-center text-2xl ${
+              className={`mb-4 mx-5 p-4 border-4 bg-mpprimary rounded-lg py-2.5 text-center lg:text-2xl sm:text-lg w-1/2 ${
                 isGentleman
                   ? "text-green-700 border-green-700"
                   : "text-red-700 border-red-700"
               }`}
               onClick={() => setGentleman(!isGentleman)}
             >
-              {isGentleman ? "Gentleman On" : "Gentleman Off"}
+              {isGentleman ? "Gentleman ON" : "Gentleman OFF"}
             </button>
           </div>
 

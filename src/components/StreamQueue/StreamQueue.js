@@ -89,10 +89,9 @@ const StreamQueue = ({ setSelectedSet, setTournament, tournament }) => {
             d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
           />
         </svg>
-        <h1 className="text-2xl">Select event</h1>
       </div>
       {tournament && (
-        <h1 className="text-5xl text-mpprimary py-5 text-center">{`${tournament.name} (${tournament.event.name})`}</h1>
+        <h1 className="lg:text-5xl sm:text-4xl text-mpprimary py-5 text-center">{`${tournament.name} (${tournament.event.name})`}</h1>
       )}
       <ul className="stream-queue">
         {isLoading ? (
@@ -118,26 +117,30 @@ const StreamQueue = ({ setSelectedSet, setTournament, tournament }) => {
                 onClick={() => handleSetSelection(set)}
                 key={`${player1Name}Vs${player2Name}Rnd${set.fullRoundText}`}
               >
-                <div className="round text-3xl">{`${set.fullRoundText}`}</div>
+                <div className="round lg:text-3xl sm:text-2xl">{`${set.fullRoundText}`}</div>
                 <div className="flex justify-around pb-5">
                   {set.slots[0].entrant ? (
                     <div className="entrant">
-                      <p className="text-2xl">{`${player1Name}`}</p>
-                      <p className="text-xl text-gray-600">{`seed: ${set.slots[0].entrant.seeds[0].seedNum}`}</p>
+                      <p className="lg:text-2xl sm:text-xl">{`${player1Name}`}</p>
+                      <p className="lg:text-xl sm:text-lg text-gray-600">{`seed: ${set.slots[0].entrant.seeds[0].seedNum}`}</p>
                     </div>
                   ) : (
                     <div className="entrant">
-                      <p className="text-2xl text-red-500">To be decided.</p>
+                      <p className="lg:text-2xl sm:text-xl text-red-500">
+                        To be decided.
+                      </p>
                     </div>
                   )}
                   {set.slots[1].entrant ? (
                     <div className="entrant">
-                      <p className="text-2xl">{`${player2Name}`}</p>
-                      <p className="text-xl text-gray-600">{`seed: ${set.slots[1].entrant.seeds[0].seedNum}`}</p>
+                      <p className="lg:text-2xl sm:text-xl">{`${player2Name}`}</p>
+                      <p className="lg:text-xl sm:text-lg text-gray-600">{`seed: ${set.slots[1].entrant.seeds[0].seedNum}`}</p>
                     </div>
                   ) : (
                     <div className="entrant">
-                      <p className="text-2xl text-red-500">To be decided.</p>
+                      <p className="lg:text-2xl sm:text-xl text-red-500">
+                        To be decided.
+                      </p>
                     </div>
                   )}
                 </div>

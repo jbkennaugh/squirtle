@@ -25,6 +25,7 @@ const SetReporter = ({ set }) => {
     player2: [],
   });
   const [setData, updateSetData] = useState({});
+  const bestOfOptions = [3, 5];
 
   useEffect(() => {
     if (!set) {
@@ -121,8 +122,8 @@ const SetReporter = ({ set }) => {
   };
 
   return (
-    <div className="mt-[15vh]">
-      <div className="w-3/4 mx-auto">
+    <div className="mt-4">
+      <div className="lg:w-3/4 sm:w-4/5 mx-auto">
         {!setReported ? (
           <>
             <div
@@ -143,18 +144,13 @@ const SetReporter = ({ set }) => {
                   d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
                 />
               </svg>
-              <h1 className="text-2xl">
-                {counterpickDone
-                  ? `Redo game #${gameNumber} bans`
-                  : "Reselect set"}
-              </h1>
             </div>
             {bestOf ? (
               <>
                 {counterpickDone ? (
                   <>
-                    <h1 className="text-6xl py-5 text-center">{`Game ${gameNumber}`}</h1>
-                    <h1 className="text-4xl py-5 text-center">{`${selectedStage}`}</h1>
+                    <h1 className="lg:text-6xl sm:text-5xl py-5 text-center">{`Game ${gameNumber}`}</h1>
+                    <h1 className="lg:text-4xl sm:text-4xl py-5 text-center">{`${selectedStage}`}</h1>
                     <div className="flex flex-col">
                       <ul className="grid w-full gap-6 md:grid-cols-2">
                         <WinReporter
@@ -199,26 +195,22 @@ const SetReporter = ({ set }) => {
               </>
             ) : (
               <>
-                <h1 className="text-6xl py-5 mb-10 text-center">
-                  Select Set Length
+                <h1 className="lg:text-5xl sm:text-4xl py-5 mb-10 text-center">
+                  Set Length
                 </h1>
                 <div className="flex gap-5">
-                  <div
-                    className="w-full p-5 rounded-lg cursor-pointer border-2 bg-gray-800 hover:border-mpprimary hover:text-mpprimary border-gray-700 text-gray-400"
-                    onClick={() => setBestOf(3)}
-                  >
-                    <div className="flex justify-between items-center">
-                      <div className="w-full text-3xl font-bold">Best of 3</div>
-                    </div>
-                  </div>
-                  <div
-                    className="w-full p-5 rounded-lg cursor-pointer border-2 bg-gray-800 hover:border-mpprimary hover:text-mpprimary border-gray-700 text-gray-400"
-                    onClick={() => setBestOf(5)}
-                  >
-                    <div className="flex justify-between items-center">
-                      <div className="w-full text-3xl font-bold">Best of 5</div>
-                    </div>
-                  </div>
+                  {bestOfOptions.map((bestOf) => {
+                    return (
+                      <div
+                        className="w-full p-5 rounded-lg cursor-pointer border-2 bg-gray-800 hover:border-mpprimary hover:text-mpprimary border-gray-700 text-gray-400"
+                        onClick={() => setBestOf(bestOf)}
+                      >
+                        <div className="flex justify-between items-center">
+                          <div className="w-full text-3xl font-bold">{`Best of ${bestOf}`}</div>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </>
             )}

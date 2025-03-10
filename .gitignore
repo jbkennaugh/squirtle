@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+# development
+DEVELOPMENT_README.md
+
 # testing
 /coverage
 

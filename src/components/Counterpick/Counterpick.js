@@ -124,86 +124,79 @@ const Counterpick = ({
             d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
           />
         </svg>
-        <h1 className="text-2xl">
-          {charactersChosen ? "Reselect characters" : "Reselect set"}
-        </h1>
       </div>
-      <div className="flex flex-col absolute items-center cursor-pointer top-24 left-5 w-1/4 text-xl">
-        <h1 className="text-2xl">Best Of:</h1>
-        <div className="flex justify-around w-full">
-          <button
-            className={`rounded-lg text-center p-2 ${
-              bestOf === 3
-                ? "text-mpsecondary bg-mpprimary"
-                : "text-mpprimary  border-mpprimary border"
-            }`}
-            onClick={() => setBestOf(3)}
-          >
-            Best of 3
-          </button>
-          <button
-            className={`rounded-lg text-center p-2 ${
-              bestOf === 5
-                ? "text-mpsecondary bg-mpprimary"
-                : "text-mpprimary border-mpprimary border"
-            }`}
-            onClick={() => setBestOf(5)}
-          >
-            Best of 5
-          </button>
-        </div>
-      </div>
-      <h1 className="text-5xl py-5 mb-2 text-center">{`Game ${gameNumber}`}</h1>
-      <div className="container w-4/5 mx-auto">
+      <div className="container top-96 mx-auto">
         {!charactersChosen && (
-          <div className="flex flex-col">
-            {gameNumber > 1 && (
+          <>
+            <h1 className="lg:text-5xl sm:text-3xl py-5 mt-20 mb-2 text-center">{`Game ${gameNumber}`}</h1>
+            <div className="flex flex-col">
+              {gameNumber > 1 && (
+                <div className="flex justify-center">
+                  <button
+                    className="mb-4 mx-5 p-4 text-mpsecondary border border-mpprimary bg-mpprimary rounded-lg py-2.5 text-center lg:text-2xl sm:text-lg w-1/3"
+                    onClick={handleRunback}
+                  >
+                    Full runback
+                  </button>
+                  <button
+                    className="mb-4 mx-5 p-4 text-mpsecondary border border-mpprimary bg-mpprimary rounded-lg py-2.5 text-center lg:text-2xl sm:text-lg w-1/3"
+                    onClick={handleSameCharacters}
+                  >
+                    Same Characters
+                  </button>
+                </div>
+              )}
               <div className="flex justify-center">
                 <button
-                  className="mb-4 mx-5 p-4 text-mpsecondary border border-mpprimary bg-mpprimary rounded-lg py-2.5 text-center text-2xl w-1/3"
-                  onClick={handleRunback}
+                  className="mb-4 mx-5 p-4 border border-mpprimary rounded-lg py-2.5 text-center lg:text-2xl sm:text-lg w-1/3"
+                  onClick={handleResetCharacters}
                 >
-                  {`Run it back (${previousGameData.stage})`}
+                  Reset picks
                 </button>
                 <button
-                  className="mb-4 mx-5 p-4 text-mpsecondary border border-mpprimary bg-mpprimary rounded-lg py-2.5 text-center text-2xl w-1/3"
-                  onClick={handleSameCharacters}
+                  className="mb-4 mx-5 p-4 text-mpsecondary border border-mpprimary bg-mpprimary rounded-lg py-2.5 text-center lg:text-2xl sm:text-lg w-1/3"
+                  onClick={handleCharacterSelect}
                 >
-                  Same Characters
+                  Confirm
                 </button>
               </div>
-            )}
-            <div className="flex justify-center">
-              <button
-                className="mb-4 mx-5 p-4 border border-mpprimary rounded-lg py-2.5 text-center text-2xl w-1/3"
-                onClick={handleResetCharacters}
-              >
-                Reset picks
-              </button>
-              <button
-                className="mb-4 mx-5 p-4 text-mpsecondary border border-mpprimary bg-mpprimary rounded-lg py-2.5 text-center text-2xl w-1/3"
-                onClick={handleCharacterSelect}
-              >
-                Confirm
-              </button>
+              <div className="character-select flex flex-wrap items-start">
+                <CharacterSelect
+                  player={1}
+                  playerName={player1Name}
+                  character={character1}
+                  setCharacter={setCharacter1}
+                  allCharacters={allCharacters}
+                ></CharacterSelect>
+                <CharacterSelect
+                  player={2}
+                  playerName={player2Name}
+                  character={character2}
+                  setCharacter={setCharacter2}
+                  allCharacters={allCharacters}
+                ></CharacterSelect>
+              </div>
             </div>
-            <div className="character-select flex flex-wrap items-start">
-              <CharacterSelect
-                player={1}
-                playerName={player1Name}
-                character={character1}
-                setCharacter={setCharacter1}
-                allCharacters={allCharacters}
-              ></CharacterSelect>
-              <CharacterSelect
-                player={2}
-                playerName={player2Name}
-                character={character2}
-                setCharacter={setCharacter2}
-                allCharacters={allCharacters}
-              ></CharacterSelect>
+            <div className="flex flex-col absolute items-center cursor-pointer bottom-12 left-5 w-2/5 text-2xl">
+              <h1 className="pb-1">Set best of:</h1>
+              <div className="flex justify-around w-full">
+                {[3, 5].map((bestOfOption) => {
+                  return (
+                    <button
+                      className={`rounded-lg text-center p-2 w-2/5 ${
+                        bestOf === bestOfOption
+                          ? "text-mpsecondary bg-mpprimary"
+                          : "text-mpprimary  border-mpprimary border"
+                      }`}
+                      onClick={() => setBestOf(bestOfOption)}
+                    >
+                      {bestOfOption}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          </>
         )}
         {charactersChosen && (
           <StageBanner

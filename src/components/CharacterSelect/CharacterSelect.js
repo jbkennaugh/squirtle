@@ -19,25 +19,24 @@ const CharacterSelect = ({
   return (
     <div className="entrant flex flex-col justify-around px-5">
       <div className="flex items-center justify-center">
-        <p className="text-4xl">{playerName}</p>
+        <p className="lg:text-4xl sm:text-2xl">{playerName}</p>
       </div>
       <div
         name={`player${player}-character`}
         id={`player${player}-character`}
-        className="text-2xl mt-2 relative text-mpsecondary bg-mpprimary border-2 border-mpprimarydark rounded-lg cursor-pointer h-20 flex items-center justify-center"
+        className="lg:text-2xl sm:text-base mt-2 relative text-mpsecondary bg-mpprimary border-2 border-mpprimarydark rounded-lg cursor-pointer h-20 flex items-center justify-center"
         onClick={() => setShowCharacterModal(true)}
       >
-        <h1 className="p-2 text-center">
+        <h1 className="p-2 text-center w-full sm:text-xl lg:text-3xl">
           {character ? (
             <div className="flex items-center justify-center">
-              <div>
+              <div className="lg:w-[12.5%] sm:w-1/3 sm:max-w-[40px]">
                 <img
-                  className="w-[50px] h-[50px]"
                   src={counterpicks.characters[`${character}`].image}
                   alt={`${character} stock icon.`}
                 ></img>
               </div>
-              <p className="text-4xl pl-[0.625rem]">{character}</p>
+              <p className="pl-2">{character}</p>
             </div>
           ) : (
             "Select your character"
@@ -47,7 +46,7 @@ const CharacterSelect = ({
       {showCharacterModal && (
         <>
           <div className="fixed top-0 bottom-0 right-0 left-0 z-50 flex flex-col items-center justify-center w-11/12 h-2/3 mx-auto my-auto">
-            <div className="relative border-8 bg-mpprimary border-mpprimarydark rounded-lg">
+            <div className="relative border-4 bg-mpprimary border-mpprimarydark rounded-lg">
               <div className="flex flex-wrap items-center justify-center flex-grow m-5 bg-mpsecondary rounded-lg">
                 {allCharacters.map((characterMap) => {
                   let character = characterMap[0];
@@ -80,7 +79,7 @@ const CharacterSelect = ({
                   );
                 })}
               </div>
-              <div className="z-50 flex justify-between mx-10 mb-3">
+              <div className="z-50 flex justify-end gap-4 mx-10 mb-5">
                 <div
                   className="text-2xl text-mpsecondary border-2 border-mpsecondary rounded-md py-1 px-4"
                   onClick={() => setShowCharacterModal(false)}

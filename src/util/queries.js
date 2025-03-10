@@ -148,25 +148,27 @@ export async function getStreamQueueByEvent(slug, eventId) {
       streamQueue = data.data.tournament?.streamQueue?.[0].sets.filter(
         (set) => set.event.id === eventId
       );
-    });
+    })
+    .catch((error) => console.log(error));
 
   return streamQueue;
 }
 
 // returns a list of events from tournaments where the current user is either admin or organiser
 export async function getTournamentsWithAdmin() {
-  if (isTestMode) {
+  if (!isTestMode) {
+    // console.log("isTestMode", isTestMode);
     return [
       {
         id: "tournament1",
         name: "Tournament 1",
-        eventName: "Ultimate Singles",
+        event: { name: "Ultimate Singles" },
         slug: "",
       },
       {
         id: "tournament2",
         name: "Tournament 2",
-        eventName: "Ultimate Doubles",
+        event: { name: "Ultimate Doubles" },
         slug: "",
       },
     ];
