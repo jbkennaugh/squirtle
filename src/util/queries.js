@@ -156,7 +156,7 @@ export async function getStreamQueueByEvent(slug, eventId) {
 
 // returns a list of events from tournaments where the current user is either admin or organiser
 export async function getTournamentsWithAdmin() {
-  if (!isTestMode) {
+  if (isTestMode) {
     // console.log("isTestMode", isTestMode);
     return [
       {
