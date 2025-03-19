@@ -177,25 +177,6 @@ const Counterpick = ({
                 ></CharacterSelect>
               </div>
             </div>
-            <div className="flex flex-col absolute items-center cursor-pointer bottom-12 left-5 w-2/5 text-2xl">
-              <h1 className="pb-1">Set best of:</h1>
-              <div className="flex justify-around w-full">
-                {[3, 5].map((bestOfOption) => {
-                  return (
-                    <button
-                      className={`rounded-lg text-center p-2 w-2/5 ${
-                        bestOf === bestOfOption
-                          ? "text-mpsecondary bg-mpprimary"
-                          : "text-mpprimary  border-mpprimary border"
-                      }`}
-                      onClick={() => setBestOf(bestOfOption)}
-                    >
-                      {bestOfOption}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
           </>
         )}
         {charactersChosen && (
