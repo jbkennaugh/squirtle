@@ -82,7 +82,7 @@ const TournamentList = ({ loggedIn, setSelectedTournament }) => {
           </ul>
         </>
       ) : (
-        <h1 className="text-5xl text-mpprimary py-5 text-center">
+        <h1 className="text-3xl text-mpprimary mt-12 py-5 text-center">
           Log in to see your tournaments
         </h1>
       )}

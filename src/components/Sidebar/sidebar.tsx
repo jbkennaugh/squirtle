@@ -31,11 +31,11 @@ export function Sidebar({
   };
 
   return (
-    <Drawer direction="left">
-      <DrawerTrigger asChild>
+    <Drawer direction="right">
+      <DrawerTrigger asChild className="absolute right-0 top-0 mt-0">
         <Menu className="p-2 h-14 w-14" />
       </DrawerTrigger>
-      <DrawerContent className="w-1/4 h-full bg-mpprimary text-mpsecondary">
+      <DrawerContent className="w-1/4 h-full left-3/4 bg-mpprimary text-mpsecondary">
         <div className="h-full flex flex-col justify-between">
           <div className="p-4 pb-0 grow">{/** To be implemented */}</div>
           <DrawerFooter className="flex-row items-center justify-end">

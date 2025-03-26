@@ -93,7 +93,6 @@ const StreamQueue = ({
             d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
           />
         </svg>
-        <h1 className="text-2xl">Select event</h1>
       </div>
       {tournament && (
         <h1 className="text-5xl text-mpprimary py-5 text-center">{`${tournament.name} (${tournament.event.name})`}</h1>
