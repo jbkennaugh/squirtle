@@ -1,18 +1,13 @@
-import counterpicks from "../../data/counterpicks.json";
 import { useState } from "react";
+import counterpicks from "../../data/counterpicks.json";
 
-const CharacterSelect = ({
-  player,
-  playerName,
-  character,
-  setCharacter,
-  allCharacters,
-}) => {
+const CharacterSelect = ({ player, playerName, character, setCharacter, allCharacters }) => {
   const [showCharacterModal, setShowCharacterModal] = useState(false);
   const [focusedCharacter, setFocusedCharacter] = useState(null);
-  const handleCharacterSelect = () => {
-    console.log(`Setting player-${player} character: ${focusedCharacter}`);
-    setCharacter(focusedCharacter);
+  const handleCharacterSelect = (character) => {
+    setFocusedCharacter(character);
+    console.log(`Setting player-${player} character: ${character}`);
+    setCharacter(character);
     setShowCharacterModal(false);
   };
 
@@ -31,10 +26,7 @@ const CharacterSelect = ({
           {character ? (
             <div className="flex items-center justify-center">
               <div className="lg:w-[12.5%] sm:w-1/3 sm:max-w-[40px]">
-                <img
-                  src={counterpicks.characters[`${character}`].image}
-                  alt={`${character} stock icon.`}
-                ></img>
+                <img src={counterpicks.characters[`${character}`].image} alt={`${character} stock icon.`}></img>
               </div>
               <p className="pl-2">{character}</p>
             </div>
@@ -55,11 +47,7 @@ const CharacterSelect = ({
                       className="cursor-pointer p-1  w-[7.69%] h-[14.29%] flex items-center justify-center"
                       key={character}
                       value={character}
-                      onClick={(e) => {
-                        setFocusedCharacter(
-                          e.currentTarget.getAttribute("value")
-                        );
-                      }}
+                      onClick={(e) => handleCharacterSelect(e.currentTarget.getAttribute("value"))}
                     >
                       <div
                         className={
@@ -79,7 +67,7 @@ const CharacterSelect = ({
                   );
                 })}
               </div>
-              <div className="z-50 flex justify-end gap-4 mx-10 mb-5">
+              <div className="z-50 flex justify-end gap-4 mx-10 mb-5 sm:hidden">
                 <div
                   className="text-2xl text-mpsecondary border-2 border-mpsecondary rounded-md py-1 px-4"
                   onClick={() => setShowCharacterModal(false)}
