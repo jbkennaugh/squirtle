@@ -21,6 +21,11 @@ function App() {
     }
   }, [selectedSet]);
 
+  useEffect(() => {
+    // attempt at forcing fullscreen
+    document.querySelector("body").requestFullscreen();
+  }, []);
+
   const logout = () => {
     console.log("Logging out");
     Object.keys(Cookies.get()).forEach((cookie) => Cookies.remove(cookie));
@@ -33,12 +38,7 @@ function App() {
         <Route path="/login" Component={Login} />
         <Route
           path="/tournamentList"
-          element={
-            <TournamentList
-              setSelectedTournament={setSelectedTournament}
-              logout={logout}
-            />
-          }
+          element={<TournamentList setSelectedTournament={setSelectedTournament} logout={logout} />}
         />
         <Route // will redirect to login if auth token does not exist
           path="/"
@@ -60,10 +60,7 @@ function App() {
             />
           }
         />
-        <Route
-          path="/setReporter"
-          element={<SetReporter set={selectedSet} />}
-        />
+        <Route path="/setReporter" element={<SetReporter set={selectedSet} />} />
       </Routes>
     </div>
   );
