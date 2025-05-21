@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import start_gg_logo from "../../media/startgg-logo.png";
 import { getAccessToken, isTokenExpired } from "../../util/authentication";
@@ -48,11 +48,11 @@ const Login = () => {
     });
     if (loggedInUser) {
       setTimeout(() => {
-        navigate("/streamQueue");
+        navigate("/tournamentList");
       }, 4 * 1000);
     }
     handleLogin();
-  });
+  }, [loggedInUser]);
 
   return !loggedInUser ? (
     <div className="flex justify-center mt-[20%]">

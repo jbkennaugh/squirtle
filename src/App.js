@@ -42,13 +42,7 @@ function App() {
         />
         <Route // will redirect to login if auth token does not exist
           path="/"
-          element={
-            <StreamQueue
-              setSelectedSet={setSelectedSet}
-              setTournament={setSelectedTournament}
-              tournament={selectedTournament}
-            />
-          }
+          element={<TournamentList setSelectedTournament={setSelectedTournament} logout={logout} />}
         />
         <Route
           path="/streamQueue"
